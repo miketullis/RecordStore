@@ -1,8 +1,10 @@
 ﻿@model IEnumerable<RecordStore.UI.MVC.Models.AlbumViewModel>
 
 @{
-    ViewBag.Title = "AlbumViewModel";
+    ViewBag.Title = "AlbumViewIndex";
 }
+
+
 
 <div id="rrWrapper">
 
@@ -15,7 +17,7 @@
             <thead>
                 <tr>
                     <th>
-                        @Html.DisplayNameFor(model => model.AlbumImage)
+                        @*@Html.DisplayNameFor(model => model.AlbumImage)*@
                     </th>
                     <th>
                         @Html.DisplayNameFor(model => model.AlbumName)
@@ -43,6 +45,7 @@
                     </th>
                     <th></th>
                 </tr>
+
             </thead>
 
             <tbody>
@@ -93,6 +96,7 @@
                         </td>
                     </tr>
                 }
+
             </tbody>
         </table>
     }
@@ -109,6 +113,3 @@
         });
     </script>
 }
-
-
-
