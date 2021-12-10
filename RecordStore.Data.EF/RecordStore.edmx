@@ -1,0 +1,817 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="RecordStoreModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Album">
+          <Key>
+            <PropertyRef Name="AlbumID" />
+          </Key>
+          <Property Name="AlbumID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="AlbumName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="ReleaseYear" Type="date" />
+          <Property Name="Description" Type="nvarchar(max)" />
+          <Property Name="LabelID" Type="int" Nullable="false" />
+          <Property Name="CompilationAlbum" Type="bit" Nullable="false" />
+          <Property Name="CatalogNum" Type="nvarchar" MaxLength="25" />
+          <Property Name="Price" Type="money" />
+          <Property Name="IsInPrint" Type="bit" Nullable="false" />
+          <Property Name="FormatID" Type="int" Nullable="false" />
+          <Property Name="UnitsInStock" Type="int" />
+          <Property Name="AlbumStatusID" Type="int" Nullable="false" />
+          <Property Name="AlbumImage" Type="varchar" MaxLength="100" />
+          <Property Name="Num" Type="int" />
+          <Property Name="Tracks" Type="int" />
+          <Property Name="IsFeatured" Type="bit" />
+        </EntityType>
+        <EntityType Name="AlbumArtist">
+          <Key>
+            <PropertyRef Name="AlbumArtistID" />
+          </Key>
+          <Property Name="AlbumArtistID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="AlbumID" Type="int" Nullable="false" />
+          <Property Name="ArtistID" Type="int" Nullable="false" />
+          <Property Name="PrimaryArtist" Type="bit" />
+        </EntityType>
+        <EntityType Name="AlbumGenre">
+          <Key>
+            <PropertyRef Name="AlbumGenreID" />
+          </Key>
+          <Property Name="AlbumGenreID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="AlbumID" Type="int" Nullable="false" />
+          <Property Name="GenreID" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="AlbumStatus">
+          <Key>
+            <PropertyRef Name="AlbumStatusID" />
+          </Key>
+          <Property Name="AlbumStatusID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="AlbumStatusName" Type="nvarchar(max)" />
+          <Property Name="StatusNotes" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="Artist">
+          <Key>
+            <PropertyRef Name="ArtistID" />
+          </Key>
+          <Property Name="ArtistID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ArtistName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="IsStillActive" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="AspNetUsers">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="Email" Type="nvarchar" MaxLength="256" />
+          <Property Name="EmailConfirmed" Type="bit" Nullable="false" />
+          <Property Name="PasswordHash" Type="nvarchar(max)" />
+          <Property Name="SecurityStamp" Type="nvarchar(max)" />
+          <Property Name="PhoneNumber" Type="nvarchar(max)" />
+          <Property Name="PhoneNumberConfirmed" Type="bit" Nullable="false" />
+          <Property Name="TwoFactorEnabled" Type="bit" Nullable="false" />
+          <Property Name="LockoutEndDateUtc" Type="datetime" />
+          <Property Name="LockoutEnabled" Type="bit" Nullable="false" />
+          <Property Name="AccessFailedCount" Type="int" Nullable="false" />
+          <Property Name="UserName" Type="nvarchar" MaxLength="256" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Department">
+          <Key>
+            <PropertyRef Name="DepartmentID" />
+          </Key>
+          <Property Name="DepartmentID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="DepartmentName" Type="char" MaxLength="15" Nullable="false" />
+          <Property Name="DeptDescription" Type="nvarchar" MaxLength="100" />
+        </EntityType>
+        <EntityType Name="Employee">
+          <Key>
+            <PropertyRef Name="EmployeeID" />
+          </Key>
+          <Property Name="EmployeeID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="FirstName" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="LastName" Type="varchar" MaxLength="25" Nullable="false" />
+          <Property Name="Position" Type="char" MaxLength="20" />
+          <Property Name="PayRate" Type="money" />
+          <Property Name="IsFullTime" Type="bit" Nullable="false" />
+          <Property Name="Address" Type="nvarchar" MaxLength="50" />
+          <Property Name="City" Type="nvarchar" MaxLength="25" />
+          <Property Name="State" Type="char" MaxLength="2" />
+          <Property Name="ZipCode" Type="nvarchar" MaxLength="10" />
+          <Property Name="Phone" Type="nvarchar" MaxLength="24" />
+          <Property Name="Birthday" Type="datetime" />
+          <Property Name="HireDate" Type="datetime" />
+          <Property Name="DirectReportID" Type="int" />
+          <Property Name="DepartmentID" Type="int" />
+        </EntityType>
+        <EntityType Name="Format">
+          <Key>
+            <PropertyRef Name="FormatID" />
+          </Key>
+          <Property Name="FormatID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="FormatType" Type="nvarchar" MaxLength="25" Nullable="false" />
+          <Property Name="MultiFormat" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Genre">
+          <Key>
+            <PropertyRef Name="GenreID" />
+          </Key>
+          <Property Name="GenreID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="GenreName" Type="char" MaxLength="25" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Label">
+          <Key>
+            <PropertyRef Name="LabelID" />
+          </Key>
+          <Property Name="LabelID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="LabelName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Country" Type="nvarchar" MaxLength="50" />
+          <Property Name="IsStillDistributing" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="UserDetails">
+          <Key>
+            <PropertyRef Name="UserID" />
+          </Key>
+          <Property Name="UserID" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="FirstName" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="LastName" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Interests" Type="nvarchar(max)" />
+        </EntityType>
+        <Association Name="FK_Album_AlbumStatus">
+          <End Role="AlbumStatus" Type="Self.AlbumStatus" Multiplicity="1" />
+          <End Role="Album" Type="Self.Album" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AlbumStatus">
+              <PropertyRef Name="AlbumStatusID" />
+            </Principal>
+            <Dependent Role="Album">
+              <PropertyRef Name="AlbumStatusID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Album_Format">
+          <End Role="Format" Type="Self.Format" Multiplicity="1" />
+          <End Role="Album" Type="Self.Album" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Format">
+              <PropertyRef Name="FormatID" />
+            </Principal>
+            <Dependent Role="Album">
+              <PropertyRef Name="FormatID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Album_Label">
+          <End Role="Label" Type="Self.Label" Multiplicity="1" />
+          <End Role="Album" Type="Self.Album" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Label">
+              <PropertyRef Name="LabelID" />
+            </Principal>
+            <Dependent Role="Album">
+              <PropertyRef Name="LabelID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_AlbumArtist_Album">
+          <End Role="Album" Type="Self.Album" Multiplicity="1" />
+          <End Role="AlbumArtist" Type="Self.AlbumArtist" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Album">
+              <PropertyRef Name="AlbumID" />
+            </Principal>
+            <Dependent Role="AlbumArtist">
+              <PropertyRef Name="AlbumID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_AlbumArtist_Artist">
+          <End Role="Artist" Type="Self.Artist" Multiplicity="1" />
+          <End Role="AlbumArtist" Type="Self.AlbumArtist" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Artist">
+              <PropertyRef Name="ArtistID" />
+            </Principal>
+            <Dependent Role="AlbumArtist">
+              <PropertyRef Name="ArtistID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_AlbumGenre_Album">
+          <End Role="Album" Type="Self.Album" Multiplicity="1" />
+          <End Role="AlbumGenre" Type="Self.AlbumGenre" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Album">
+              <PropertyRef Name="AlbumID" />
+            </Principal>
+            <Dependent Role="AlbumGenre">
+              <PropertyRef Name="AlbumID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_AlbumGenre_Genre">
+          <End Role="Genre" Type="Self.Genre" Multiplicity="1" />
+          <End Role="AlbumGenre" Type="Self.AlbumGenre" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Genre">
+              <PropertyRef Name="GenreID" />
+            </Principal>
+            <Dependent Role="AlbumGenre">
+              <PropertyRef Name="GenreID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Employees_Department">
+          <End Role="Department" Type="Self.Department" Multiplicity="0..1" />
+          <End Role="Employee" Type="Self.Employee" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Department">
+              <PropertyRef Name="DepartmentID" />
+            </Principal>
+            <Dependent Role="Employee">
+              <PropertyRef Name="DepartmentID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Employees_Employees">
+          <End Role="Employee" Type="Self.Employee" Multiplicity="0..1" />
+          <End Role="Employee1" Type="Self.Employee" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employee">
+              <PropertyRef Name="EmployeeID" />
+            </Principal>
+            <Dependent Role="Employee1">
+              <PropertyRef Name="DirectReportID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserDetails_AspNetUsers">
+          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1" />
+          <End Role="UserDetails" Type="Self.UserDetails" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="UserDetails">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="RecordStoreModelStoreContainer">
+          <EntitySet Name="Album" EntityType="Self.Album" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="AlbumArtist" EntityType="Self.AlbumArtist" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="AlbumGenre" EntityType="Self.AlbumGenre" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="AlbumStatus" EntityType="Self.AlbumStatus" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Artist" EntityType="Self.Artist" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="AspNetUsers" EntityType="Self.AspNetUsers" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Department" EntityType="Self.Department" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Employee" EntityType="Self.Employee" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Format" EntityType="Self.Format" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Genre" EntityType="Self.Genre" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Label" EntityType="Self.Label" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="UserDetails" EntityType="Self.UserDetails" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Album_AlbumStatus" Association="Self.FK_Album_AlbumStatus">
+            <End Role="AlbumStatus" EntitySet="AlbumStatus" />
+            <End Role="Album" EntitySet="Album" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Album_Format" Association="Self.FK_Album_Format">
+            <End Role="Format" EntitySet="Format" />
+            <End Role="Album" EntitySet="Album" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Album_Label" Association="Self.FK_Album_Label">
+            <End Role="Label" EntitySet="Label" />
+            <End Role="Album" EntitySet="Album" />
+          </AssociationSet>
+          <AssociationSet Name="FK_AlbumArtist_Album" Association="Self.FK_AlbumArtist_Album">
+            <End Role="Album" EntitySet="Album" />
+            <End Role="AlbumArtist" EntitySet="AlbumArtist" />
+          </AssociationSet>
+          <AssociationSet Name="FK_AlbumArtist_Artist" Association="Self.FK_AlbumArtist_Artist">
+            <End Role="Artist" EntitySet="Artist" />
+            <End Role="AlbumArtist" EntitySet="AlbumArtist" />
+          </AssociationSet>
+          <AssociationSet Name="FK_AlbumGenre_Album" Association="Self.FK_AlbumGenre_Album">
+            <End Role="Album" EntitySet="Album" />
+            <End Role="AlbumGenre" EntitySet="AlbumGenre" />
+          </AssociationSet>
+          <AssociationSet Name="FK_AlbumGenre_Genre" Association="Self.FK_AlbumGenre_Genre">
+            <End Role="Genre" EntitySet="Genre" />
+            <End Role="AlbumGenre" EntitySet="AlbumGenre" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Employees_Department" Association="Self.FK_Employees_Department">
+            <End Role="Department" EntitySet="Department" />
+            <End Role="Employee" EntitySet="Employee" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Employees_Employees" Association="Self.FK_Employees_Employees">
+            <End Role="Employee" EntitySet="Employee" />
+            <End Role="Employee1" EntitySet="Employee" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserDetails_AspNetUsers" Association="Self.FK_UserDetails_AspNetUsers">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="UserDetails" EntitySet="UserDetails" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="RecordStoreModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="RecordStoreEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Album" EntityType="RecordStoreModel.Album" />
+          <EntitySet Name="AlbumArtist" EntityType="RecordStoreModel.AlbumArtist" />
+          <EntitySet Name="AlbumGenre" EntityType="RecordStoreModel.AlbumGenre" />
+          <EntitySet Name="AlbumStatus" EntityType="RecordStoreModel.AlbumStatus" />
+          <EntitySet Name="Artist" EntityType="RecordStoreModel.Artist" />
+          <EntitySet Name="Department" EntityType="RecordStoreModel.Department" />
+          <EntitySet Name="Employee" EntityType="RecordStoreModel.Employee" />
+          <EntitySet Name="Format" EntityType="RecordStoreModel.Format" />
+          <EntitySet Name="Genre" EntityType="RecordStoreModel.Genre" />
+          <EntitySet Name="Label" EntityType="RecordStoreModel.Label" />
+          <EntitySet Name="UserDetails" EntityType="RecordStoreModel.UserDetails" />
+          <AssociationSet Name="FK_Album_AlbumStatus" Association="RecordStoreModel.FK_Album_AlbumStatus">
+            <End Role="AlbumStatus" EntitySet="AlbumStatus" />
+            <End Role="Album" EntitySet="Album" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Album_Format" Association="RecordStoreModel.FK_Album_Format">
+            <End Role="Format" EntitySet="Format" />
+            <End Role="Album" EntitySet="Album" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Album_Label" Association="RecordStoreModel.FK_Album_Label">
+            <End Role="Label" EntitySet="Label" />
+            <End Role="Album" EntitySet="Album" />
+          </AssociationSet>
+          <AssociationSet Name="FK_AlbumArtist_Album" Association="RecordStoreModel.FK_AlbumArtist_Album">
+            <End Role="Album" EntitySet="Album" />
+            <End Role="AlbumArtist" EntitySet="AlbumArtist" />
+          </AssociationSet>
+          <AssociationSet Name="FK_AlbumGenre_Album" Association="RecordStoreModel.FK_AlbumGenre_Album">
+            <End Role="Album" EntitySet="Album" />
+            <End Role="AlbumGenre" EntitySet="AlbumGenre" />
+          </AssociationSet>
+          <AssociationSet Name="FK_AlbumArtist_Artist" Association="RecordStoreModel.FK_AlbumArtist_Artist">
+            <End Role="Artist" EntitySet="Artist" />
+            <End Role="AlbumArtist" EntitySet="AlbumArtist" />
+          </AssociationSet>
+          <AssociationSet Name="FK_AlbumGenre_Genre" Association="RecordStoreModel.FK_AlbumGenre_Genre">
+            <End Role="Genre" EntitySet="Genre" />
+            <End Role="AlbumGenre" EntitySet="AlbumGenre" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Employees_Department" Association="RecordStoreModel.FK_Employees_Department">
+            <End Role="Department" EntitySet="Department" />
+            <End Role="Employee" EntitySet="Employee" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Employees_Employees" Association="RecordStoreModel.FK_Employees_Employees">
+            <End Role="Employee" EntitySet="Employee" />
+            <End Role="Employee1" EntitySet="Employee" />
+          </AssociationSet>
+          <EntitySet Name="AspNetUsers" EntityType="RecordStoreModel.AspNetUsers" />
+          <AssociationSet Name="FK_UserDetails_AspNetUsers" Association="RecordStoreModel.FK_UserDetails_AspNetUsers">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="UserDetails" EntitySet="UserDetails" />
+          </AssociationSet>
+          </EntityContainer>
+        <EntityType Name="Album">
+          <Key>
+            <PropertyRef Name="AlbumID" />
+          </Key>
+          <Property Name="AlbumID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="AlbumName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ReleaseYear" Type="DateTime" Precision="0" />
+          <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="LabelID" Type="Int32" Nullable="false" />
+          <Property Name="CompilationAlbum" Type="Boolean" Nullable="false" />
+          <Property Name="CatalogNum" Type="String" MaxLength="25" FixedLength="false" Unicode="true" />
+          <Property Name="Price" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="IsInPrint" Type="Boolean" Nullable="false" />
+          <Property Name="FormatID" Type="Int32" Nullable="false" />
+          <Property Name="UnitsInStock" Type="Int32" />
+          <Property Name="AlbumStatusID" Type="Int32" Nullable="false" />
+          <Property Name="AlbumImage" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Num" Type="Int32" />
+          <Property Name="Tracks" Type="Int32" />
+          <NavigationProperty Name="AlbumStatus" Relationship="RecordStoreModel.FK_Album_AlbumStatus" FromRole="Album" ToRole="AlbumStatus" />
+          <NavigationProperty Name="Format" Relationship="RecordStoreModel.FK_Album_Format" FromRole="Album" ToRole="Format" />
+          <NavigationProperty Name="Label" Relationship="RecordStoreModel.FK_Album_Label" FromRole="Album" ToRole="Label" />
+          <NavigationProperty Name="AlbumArtist" Relationship="RecordStoreModel.FK_AlbumArtist_Album" FromRole="Album" ToRole="AlbumArtist" />
+          <NavigationProperty Name="AlbumGenre" Relationship="RecordStoreModel.FK_AlbumGenre_Album" FromRole="Album" ToRole="AlbumGenre" />
+          <Property Name="IsFeatured" Type="Boolean" />
+        </EntityType>
+        <EntityType Name="AlbumArtist">
+          <Key>
+            <PropertyRef Name="AlbumArtistID" />
+          </Key>
+          <Property Name="AlbumArtistID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="AlbumID" Type="Int32" Nullable="false" />
+          <Property Name="ArtistID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Album" Relationship="RecordStoreModel.FK_AlbumArtist_Album" FromRole="AlbumArtist" ToRole="Album" />
+          <NavigationProperty Name="Artist" Relationship="RecordStoreModel.FK_AlbumArtist_Artist" FromRole="AlbumArtist" ToRole="Artist" />
+          <Property Name="PrimaryArtist" Type="Boolean" />
+        </EntityType>
+        <EntityType Name="AlbumGenre">
+          <Key>
+            <PropertyRef Name="AlbumGenreID" />
+          </Key>
+          <Property Name="AlbumGenreID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="AlbumID" Type="Int32" Nullable="false" />
+          <Property Name="GenreID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Album" Relationship="RecordStoreModel.FK_AlbumGenre_Album" FromRole="AlbumGenre" ToRole="Album" />
+          <NavigationProperty Name="Genre" Relationship="RecordStoreModel.FK_AlbumGenre_Genre" FromRole="AlbumGenre" ToRole="Genre" />
+        </EntityType>
+        <EntityType Name="AlbumStatus">
+          <Key>
+            <PropertyRef Name="AlbumStatusID" />
+          </Key>
+          <Property Name="AlbumStatusID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="AlbumStatusName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="StatusNotes" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Album" Relationship="RecordStoreModel.FK_Album_AlbumStatus" FromRole="AlbumStatus" ToRole="Album" />
+        </EntityType>
+        <EntityType Name="Artist">
+          <Key>
+            <PropertyRef Name="ArtistID" />
+          </Key>
+          <Property Name="ArtistID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ArtistName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="IsStillActive" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="AlbumArtist" Relationship="RecordStoreModel.FK_AlbumArtist_Artist" FromRole="Artist" ToRole="AlbumArtist" />
+        </EntityType>
+        <EntityType Name="Department">
+          <Key>
+            <PropertyRef Name="DepartmentID" />
+          </Key>
+          <Property Name="DepartmentID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="DepartmentName" Type="String" Nullable="false" MaxLength="15" FixedLength="true" Unicode="false" />
+          <Property Name="DeptDescription" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Employee" Relationship="RecordStoreModel.FK_Employees_Department" FromRole="Department" ToRole="Employee" />
+        </EntityType>
+        <EntityType Name="Employee">
+          <Key>
+            <PropertyRef Name="EmployeeID" />
+          </Key>
+          <Property Name="EmployeeID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FirstName" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="LastName" Type="String" Nullable="false" MaxLength="25" FixedLength="false" Unicode="false" />
+          <Property Name="Position" Type="String" MaxLength="20" FixedLength="true" Unicode="false" />
+          <Property Name="PayRate" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="IsFullTime" Type="Boolean" Nullable="false" />
+          <Property Name="Address" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="City" Type="String" MaxLength="25" FixedLength="false" Unicode="true" />
+          <Property Name="State" Type="String" MaxLength="2" FixedLength="true" Unicode="false" />
+          <Property Name="ZipCode" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="Phone" Type="String" MaxLength="24" FixedLength="false" Unicode="true" />
+          <Property Name="Birthday" Type="DateTime" Precision="3" />
+          <Property Name="HireDate" Type="DateTime" Precision="3" />
+          <Property Name="DirectReportID" Type="Int32" />
+          <Property Name="DepartmentID" Type="Int32" />
+          <NavigationProperty Name="Department" Relationship="RecordStoreModel.FK_Employees_Department" FromRole="Employee" ToRole="Department" />
+          <NavigationProperty Name="Employee1" Relationship="RecordStoreModel.FK_Employees_Employees" FromRole="Employee" ToRole="Employee1" />
+          <NavigationProperty Name="Employee2" Relationship="RecordStoreModel.FK_Employees_Employees" FromRole="Employee1" ToRole="Employee" />
+        </EntityType>
+        <EntityType Name="Format">
+          <Key>
+            <PropertyRef Name="FormatID" />
+          </Key>
+          <Property Name="FormatID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FormatType" Type="String" Nullable="false" MaxLength="25" FixedLength="false" Unicode="true" />
+          <Property Name="MultiFormat" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="Album" Relationship="RecordStoreModel.FK_Album_Format" FromRole="Format" ToRole="Album" />
+        </EntityType>
+        <EntityType Name="Genre">
+          <Key>
+            <PropertyRef Name="GenreID" />
+          </Key>
+          <Property Name="GenreID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="GenreName" Type="String" Nullable="false" MaxLength="25" FixedLength="true" Unicode="false" />
+          <NavigationProperty Name="AlbumGenre" Relationship="RecordStoreModel.FK_AlbumGenre_Genre" FromRole="Genre" ToRole="AlbumGenre" />
+        </EntityType>
+        <EntityType Name="Label">
+          <Key>
+            <PropertyRef Name="LabelID" />
+          </Key>
+          <Property Name="LabelID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="LabelName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Country" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="IsStillDistributing" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="Album" Relationship="RecordStoreModel.FK_Album_Label" FromRole="Label" ToRole="Album" />
+        </EntityType>
+        <EntityType Name="UserDetails">
+          <Key>
+            <PropertyRef Name="UserID" />
+          </Key>
+          <Property Name="UserID" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="FirstName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="LastName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Interests" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="AspNetUsers" Relationship="RecordStoreModel.FK_UserDetails_AspNetUsers" FromRole="UserDetails" ToRole="AspNetUsers" />
+        </EntityType>
+        <Association Name="FK_Album_AlbumStatus">
+          <End Type="RecordStoreModel.AlbumStatus" Role="AlbumStatus" Multiplicity="1" />
+          <End Type="RecordStoreModel.Album" Role="Album" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AlbumStatus">
+              <PropertyRef Name="AlbumStatusID" />
+            </Principal>
+            <Dependent Role="Album">
+              <PropertyRef Name="AlbumStatusID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Album_Format">
+          <End Type="RecordStoreModel.Format" Role="Format" Multiplicity="1" />
+          <End Type="RecordStoreModel.Album" Role="Album" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Format">
+              <PropertyRef Name="FormatID" />
+            </Principal>
+            <Dependent Role="Album">
+              <PropertyRef Name="FormatID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Album_Label">
+          <End Type="RecordStoreModel.Label" Role="Label" Multiplicity="1" />
+          <End Type="RecordStoreModel.Album" Role="Album" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Label">
+              <PropertyRef Name="LabelID" />
+            </Principal>
+            <Dependent Role="Album">
+              <PropertyRef Name="LabelID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_AlbumArtist_Album">
+          <End Type="RecordStoreModel.Album" Role="Album" Multiplicity="1" />
+          <End Type="RecordStoreModel.AlbumArtist" Role="AlbumArtist" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Album">
+              <PropertyRef Name="AlbumID" />
+            </Principal>
+            <Dependent Role="AlbumArtist">
+              <PropertyRef Name="AlbumID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_AlbumGenre_Album">
+          <End Type="RecordStoreModel.Album" Role="Album" Multiplicity="1" />
+          <End Type="RecordStoreModel.AlbumGenre" Role="AlbumGenre" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Album">
+              <PropertyRef Name="AlbumID" />
+            </Principal>
+            <Dependent Role="AlbumGenre">
+              <PropertyRef Name="AlbumID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_AlbumArtist_Artist">
+          <End Type="RecordStoreModel.Artist" Role="Artist" Multiplicity="1" />
+          <End Type="RecordStoreModel.AlbumArtist" Role="AlbumArtist" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Artist">
+              <PropertyRef Name="ArtistID" />
+            </Principal>
+            <Dependent Role="AlbumArtist">
+              <PropertyRef Name="ArtistID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_AlbumGenre_Genre">
+          <End Type="RecordStoreModel.Genre" Role="Genre" Multiplicity="1" />
+          <End Type="RecordStoreModel.AlbumGenre" Role="AlbumGenre" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Genre">
+              <PropertyRef Name="GenreID" />
+            </Principal>
+            <Dependent Role="AlbumGenre">
+              <PropertyRef Name="GenreID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Employees_Department">
+          <End Type="RecordStoreModel.Department" Role="Department" Multiplicity="0..1" />
+          <End Type="RecordStoreModel.Employee" Role="Employee" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Department">
+              <PropertyRef Name="DepartmentID" />
+            </Principal>
+            <Dependent Role="Employee">
+              <PropertyRef Name="DepartmentID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Employees_Employees">
+          <End Type="RecordStoreModel.Employee" Role="Employee" Multiplicity="0..1" />
+          <End Type="RecordStoreModel.Employee" Role="Employee1" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employee">
+              <PropertyRef Name="EmployeeID" />
+            </Principal>
+            <Dependent Role="Employee1">
+              <PropertyRef Name="DirectReportID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="AspNetUsers">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="Email" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="EmailConfirmed" Type="Boolean" Nullable="false" />
+          <Property Name="PasswordHash" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="SecurityStamp" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="PhoneNumber" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="PhoneNumberConfirmed" Type="Boolean" Nullable="false" />
+          <Property Name="TwoFactorEnabled" Type="Boolean" Nullable="false" />
+          <Property Name="LockoutEndDateUtc" Type="DateTime" Precision="3" />
+          <Property Name="LockoutEnabled" Type="Boolean" Nullable="false" />
+          <Property Name="AccessFailedCount" Type="Int32" Nullable="false" />
+          <Property Name="UserName" Type="String" Nullable="false" MaxLength="256" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="UserDetails" Relationship="RecordStoreModel.FK_UserDetails_AspNetUsers" FromRole="AspNetUsers" ToRole="UserDetails" />
+        </EntityType>
+        <Association Name="FK_UserDetails_AspNetUsers">
+          <End Type="RecordStoreModel.AspNetUsers" Role="AspNetUsers" Multiplicity="1" />
+          <End Type="RecordStoreModel.UserDetails" Role="UserDetails" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="UserDetails">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="RecordStoreModelStoreContainer" CdmEntityContainer="RecordStoreEntities">
+          <EntitySetMapping Name="Album">
+            <EntityTypeMapping TypeName="RecordStoreModel.Album">
+              <MappingFragment StoreEntitySet="Album">
+                <ScalarProperty Name="IsFeatured" ColumnName="IsFeatured" />
+                <ScalarProperty Name="Tracks" ColumnName="Tracks" />
+                <ScalarProperty Name="Num" ColumnName="Num" />
+                <ScalarProperty Name="AlbumImage" ColumnName="AlbumImage" />
+                <ScalarProperty Name="AlbumStatusID" ColumnName="AlbumStatusID" />
+                <ScalarProperty Name="UnitsInStock" ColumnName="UnitsInStock" />
+                <ScalarProperty Name="FormatID" ColumnName="FormatID" />
+                <ScalarProperty Name="IsInPrint" ColumnName="IsInPrint" />
+                <ScalarProperty Name="Price" ColumnName="Price" />
+                <ScalarProperty Name="CatalogNum" ColumnName="CatalogNum" />
+                <ScalarProperty Name="CompilationAlbum" ColumnName="CompilationAlbum" />
+                <ScalarProperty Name="LabelID" ColumnName="LabelID" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="ReleaseYear" ColumnName="ReleaseYear" />
+                <ScalarProperty Name="AlbumName" ColumnName="AlbumName" />
+                <ScalarProperty Name="AlbumID" ColumnName="AlbumID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AlbumArtist">
+            <EntityTypeMapping TypeName="RecordStoreModel.AlbumArtist">
+              <MappingFragment StoreEntitySet="AlbumArtist">
+                <ScalarProperty Name="PrimaryArtist" ColumnName="PrimaryArtist" />
+                <ScalarProperty Name="ArtistID" ColumnName="ArtistID" />
+                <ScalarProperty Name="AlbumID" ColumnName="AlbumID" />
+                <ScalarProperty Name="AlbumArtistID" ColumnName="AlbumArtistID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AlbumGenre">
+            <EntityTypeMapping TypeName="RecordStoreModel.AlbumGenre">
+              <MappingFragment StoreEntitySet="AlbumGenre">
+                <ScalarProperty Name="GenreID" ColumnName="GenreID" />
+                <ScalarProperty Name="AlbumID" ColumnName="AlbumID" />
+                <ScalarProperty Name="AlbumGenreID" ColumnName="AlbumGenreID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AlbumStatus">
+            <EntityTypeMapping TypeName="RecordStoreModel.AlbumStatus">
+              <MappingFragment StoreEntitySet="AlbumStatus">
+                <ScalarProperty Name="StatusNotes" ColumnName="StatusNotes" />
+                <ScalarProperty Name="AlbumStatusName" ColumnName="AlbumStatusName" />
+                <ScalarProperty Name="AlbumStatusID" ColumnName="AlbumStatusID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Artist">
+            <EntityTypeMapping TypeName="RecordStoreModel.Artist">
+              <MappingFragment StoreEntitySet="Artist">
+                <ScalarProperty Name="IsStillActive" ColumnName="IsStillActive" />
+                <ScalarProperty Name="ArtistName" ColumnName="ArtistName" />
+                <ScalarProperty Name="ArtistID" ColumnName="ArtistID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Department">
+            <EntityTypeMapping TypeName="RecordStoreModel.Department">
+              <MappingFragment StoreEntitySet="Department">
+                <ScalarProperty Name="DeptDescription" ColumnName="DeptDescription" />
+                <ScalarProperty Name="DepartmentName" ColumnName="DepartmentName" />
+                <ScalarProperty Name="DepartmentID" ColumnName="DepartmentID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Employee">
+            <EntityTypeMapping TypeName="RecordStoreModel.Employee">
+              <MappingFragment StoreEntitySet="Employee">
+                <ScalarProperty Name="DepartmentID" ColumnName="DepartmentID" />
+                <ScalarProperty Name="DirectReportID" ColumnName="DirectReportID" />
+                <ScalarProperty Name="HireDate" ColumnName="HireDate" />
+                <ScalarProperty Name="Birthday" ColumnName="Birthday" />
+                <ScalarProperty Name="Phone" ColumnName="Phone" />
+                <ScalarProperty Name="ZipCode" ColumnName="ZipCode" />
+                <ScalarProperty Name="State" ColumnName="State" />
+                <ScalarProperty Name="City" ColumnName="City" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="IsFullTime" ColumnName="IsFullTime" />
+                <ScalarProperty Name="PayRate" ColumnName="PayRate" />
+                <ScalarProperty Name="Position" ColumnName="Position" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="EmployeeID" ColumnName="EmployeeID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Format">
+            <EntityTypeMapping TypeName="RecordStoreModel.Format">
+              <MappingFragment StoreEntitySet="Format">
+                <ScalarProperty Name="MultiFormat" ColumnName="MultiFormat" />
+                <ScalarProperty Name="FormatType" ColumnName="FormatType" />
+                <ScalarProperty Name="FormatID" ColumnName="FormatID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Genre">
+            <EntityTypeMapping TypeName="RecordStoreModel.Genre">
+              <MappingFragment StoreEntitySet="Genre">
+                <ScalarProperty Name="GenreName" ColumnName="GenreName" />
+                <ScalarProperty Name="GenreID" ColumnName="GenreID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Label">
+            <EntityTypeMapping TypeName="RecordStoreModel.Label">
+              <MappingFragment StoreEntitySet="Label">
+                <ScalarProperty Name="IsStillDistributing" ColumnName="IsStillDistributing" />
+                <ScalarProperty Name="Country" ColumnName="Country" />
+                <ScalarProperty Name="LabelName" ColumnName="LabelName" />
+                <ScalarProperty Name="LabelID" ColumnName="LabelID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="UserDetails">
+            <EntityTypeMapping TypeName="RecordStoreModel.UserDetails">
+              <MappingFragment StoreEntitySet="UserDetails">
+                <ScalarProperty Name="Interests" ColumnName="Interests" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AspNetUsers">
+            <EntityTypeMapping TypeName="RecordStoreModel.AspNetUsers">
+              <MappingFragment StoreEntitySet="AspNetUsers">
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+                <ScalarProperty Name="AccessFailedCount" ColumnName="AccessFailedCount" />
+                <ScalarProperty Name="LockoutEnabled" ColumnName="LockoutEnabled" />
+                <ScalarProperty Name="LockoutEndDateUtc" ColumnName="LockoutEndDateUtc" />
+                <ScalarProperty Name="TwoFactorEnabled" ColumnName="TwoFactorEnabled" />
+                <ScalarProperty Name="PhoneNumberConfirmed" ColumnName="PhoneNumberConfirmed" />
+                <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
+                <ScalarProperty Name="SecurityStamp" ColumnName="SecurityStamp" />
+                <ScalarProperty Name="PasswordHash" ColumnName="PasswordHash" />
+                <ScalarProperty Name="EmailConfirmed" ColumnName="EmailConfirmed" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="False" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

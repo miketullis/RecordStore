@@ -1,0 +1,68 @@
+﻿@*@model IEnumerable<RecordStore.Data.EF.Label>*@
+@model PagedList.IPagedList<RecordStore.Data.EF.Label>
+@using PagedList.Mvc
+
+@{
+    ViewBag.Title = "Index";
+}
+
+
+<div id="rrWrapper">
+
+    <h2> @ViewBag.Title</h2>
+
+    @*Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount*@
+
+    @Html.PagedListPager(Model, page => Url.Action("Index", new { page }))
+
+    @using (Html.BeginForm("Index", "Label", FormMethod.Get))
+    {
+        <p style="padding-bottom: 1em;">
+            <input type="text" name="searchString" style="max-width:250px;" />
+            <input type="submit" value="Search" />
+
+            @if (User.IsInRole("Admin"))
+            {
+
+                @Html.ActionLink("Add A New Label", "Create")
+            }
+
+        </p>
+    }
+
+    <table class="table">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.FirstOrDefault().LabelName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FirstOrDefault().Country)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FirstOrDefault().IsStillDistributing)
+            </th>
+            <th></th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.LabelName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Country)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.IsStillDistributing)
+                </td>
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new { id = item.LabelID }) |
+                    @Html.ActionLink("Details", "Details", new { id = item.LabelID }) |
+                    @Html.ActionLink("Delete", "Delete", new { id = item.LabelID })
+                </td>
+            </tr>
+        }
+
+    </table>
+</div>

@@ -1,0 +1,68 @@
+﻿/*wrapper/container for footer placement*/
+#rrWrapper {
+    padding-top: 150px; /*height of header*/
+    padding-left: 20%;
+    padding-right: 20%;
+    min-height: calc(100vh - 264px);
+}
+
+#rrContainer {
+    position: relative;
+    min-height: 100vh;
+}
+
+
+
+.navbar-nav .dropdown-menu {
+    /*position: static;*/
+    float: none;
+    color: white;
+    background-color: #232323;
+}
+
+.navbar-nav .dropdown-menu {
+    position: absolute;
+}
+
+.navbar-right {
+    display: inline-block;
+    align-content: center;
+    color: white;
+    background-color: #232323;
+    text-align: center;
+    right: 0;
+}
+
+    .navbar-right hr {
+        border-top: 1.5px solid rgb(255,0,0);
+        margin: 10px 0 10px 0;
+    }
+
+.navbar-nav .dropdown-menu a {
+    color: white;
+    text-align: center;
+    margin: auto;
+}
+
+.dropdown-menu {
+    /*position: absolute;*/
+    top: 100%;
+    left: initial;
+    z-index: 1000;
+    display: none;
+    min-width: 5rem;
+    padding: 1rem 1.5rem 1rem 1.5rem;
+    margin: -1.1rem 2px 2px -1rem;
+    font-size: 1rem;
+    color: #212529;
+    text-align: center;
+    list-style: none;
+    background-color: #fff;
+    background-clip: padding-box;
+    border: 1px solid rgba(0, 0, 0, 0.15);
+    border-radius: 0.25rem;
+}
+
+#albumArt {
+    box-shadow: 0 5px 8px 3px #808080;
+}

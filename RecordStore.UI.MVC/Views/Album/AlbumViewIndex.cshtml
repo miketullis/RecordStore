@@ -1,0 +1,114 @@
+﻿@model IEnumerable<RecordStore.UI.MVC.Models.AlbumViewModel>
+
+@{
+    ViewBag.Title = "AlbumViewModel";
+}
+
+<div id="rrWrapper">
+
+    @if (Model.Count() > 0)
+    {
+        <p>
+            @Html.ActionLink("Create New", "Create", "Album")
+        </p>
+        <table class="table" id="myTable">
+            <thead>
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.AlbumImage)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.AlbumName)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.ArtistName)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.ReleaseYear)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Description)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.LabelName)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.GenreName)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.FormatType)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Price)
+                    </th>
+                    <th></th>
+                </tr>
+            </thead>
+
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @*@Html.DisplayFor(modelItem => item.AlbumImage)*@
+                            <a href="@Url.Action("Details", new { id = item.AlbumID })">
+                                <img src="~/Content/assets/images/albumImages/t_@item.AlbumImage" alt="@item.AlbumName cover" title="@item.AlbumName cover" id="albumArt" />
+                            </a>
+                        </td>
+                        <td>
+                            @*@Html.DisplayFor(modelItem => item.AlbumName)*@
+                            <a href="@Url.Action("Details", new { id = item.AlbumID })" style="font-weight:bold; color: black;">
+                                @Html.DisplayFor(modelItem => item.AlbumName)
+                            </a>
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ArtistName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ReleaseYear)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Description)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.LabelName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.GenreName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.FormatType)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Price)
+                        </td>
+                        <td>
+                            @Html.ActionLink("Edit", "Edit", new { id = item.AlbumID }) |
+                            @Html.ActionLink("Details", "Details", new { id = item.AlbumID }) |
+                            @Html.ActionLink("Delete", "Delete", new { id = item.AlbumID })
+
+                            @*@Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
+                                @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
+                                @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })*@
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+    else
+    {
+        <p> Your search result did not return any results. Please try again or hit "Search" again to refresh.</p>
+    }
+</div>
+
+@section Scripts{
+    <script>
+        $(document).ready(function () {
+            $('#myTable').DataTable();
+        });
+    </script>
+}
+
+
+

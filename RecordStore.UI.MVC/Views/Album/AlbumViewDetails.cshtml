@@ -1,0 +1,196 @@
+﻿@using RecordStore.UI.MVC.Models;//Added to access to the Models
+
+@model RecordStore.UI.MVC.Models.AlbumViewModel
+
+@{
+    ViewBag.Title = "AlbumViewDetails";
+}
+
+<h2>AlbumViewDetails</h2>
+
+<div>
+    <h4>AlbumViewModel</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.AlbumID)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.AlbumID)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.AlbumName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.AlbumName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ReleaseYear)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ReleaseYear)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Description)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Description)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.LabelID)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.LabelID)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CompilationAlbum)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CompilationAlbum)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CatalogNum)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CatalogNum)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Price)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Price)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.IsInPrint)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.IsInPrint)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.FormatID)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.FormatID)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.UnitsInStock)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.UnitsInStock)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.AlbumStatusID)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.AlbumStatusID)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.AlbumImage)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.AlbumImage)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Num)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Num)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Tracks)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Tracks)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.GenreID)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.GenreID)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.GenreName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.GenreName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ArtistID)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ArtistID)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ArtistName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ArtistName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.AlbumStatusName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.AlbumStatusName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.LabelName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.LabelName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.FormatType)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.FormatType)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { /* id = Model.PrimaryKey */ }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

@@ -1,0 +1,93 @@
+﻿@*@model IEnumerable<RecordStore.DATA.EF.Album>*@
+
+@model Dictionary<int, RecordStore.UI.MVC.Models.CartItemViewModel>
+
+@{
+    ViewBag.Title = "Shopping Cart";
+
+    //add local variable for calculations later on the page
+    decimal? cartTotal = 0;
+    int totalCountOfItems = 0;
+}
+
+<div id="rrWrapper">
+
+
+    @if (Model.Count == 0)
+    {
+        <p class="alert alert-warning">@ViewBag.Message</p>
+    }
+    else
+    {
+        <table class="table">
+            <tr>
+                <th> </th>
+                <th>Title</th>
+                <th>Price</th>
+                <th>Quantity</th>
+                <th>Total</th>
+                <th> </th>
+            </tr>
+
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @* Thumbnail image link back to details page *@
+                        <a href="@Url.Action("Details", "Album", new { id = item.Value.Product.AlbumID })">
+                            <img src="~/Content/assets/images/albumImages/t_@item.Value.Product.AlbumImage" alt="@item.Value.Product.AlbumName cover" title="@item.Value.Product.AlbumName cover" />
+                        </a>
+                    </td>
+
+                    <td>
+                        <a href="@Url.Action("Details", "Album", new { id = item.Value.Product.AlbumID })" style="font-weight:bold; color: black;">
+                            @item.Value.Product.AlbumName
+                        </a>
+                    </td>
+                    <td>
+                        @string.Format($"{item.Value.Product.Price:c}")
+                    </td>
+
+                    <td>
+                        @using (Html.BeginForm("UpdateCart", "ShoppingCart", FormMethod.Post))
+                        {
+                            //Pass Album ID
+                            @Html.Hidden("albumId", item.Key)
+                            @Html.TextBox("qty", item.Value.Qty, new { @class = "form-control", @style = "max-width: 50px; display: inline;" })
+
+                            <input type="submit" value="Update Quantity" class="btn btn-dark" />
+                        }
+
+                        @{
+                            totalCountOfItems += item.Value.Qty;
+                        }
+                    </td>
+
+                    <td>
+                        @{decimal? lineTotal = item.Value.Product.Price * item.Value.Qty;
+                            cartTotal += lineTotal;
+                        }
+
+                        @string.Format($"{lineTotal:c}")
+                    </td>
+                    <td>
+                        @Html.ActionLink("Remove From Cart", "RemoveFromCart", new { id = item.Key }, new { @class = "btn btn-dark" })
+
+
+                    </td>
+                </tr>
+            } @*end Foreach*@
+
+        </table>
+        <p class="text-right">
+            @Html.ActionLink("Continue Shopping", "Index", "Album", null, new { @class = "btn btn-dark"})
+        </p>
+        <br />
+
+
+        <p class="alert alert-success text-center" style="font-size: 1.25em;">
+            You have @totalCountOfItems item@(totalCountOfItems == 1 ? "" : "s") in your cart. <br />
+            Your total before taxes and shipping is @string.Format($"{cartTotal:c}").
+        </p>
+    }
+</div>

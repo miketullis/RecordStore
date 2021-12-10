@@ -1,0 +1,62 @@
+﻿@model RecordStore.Models.RegisterViewModel
+@{
+    ViewBag.Title = "Register A New Account";
+}
+
+<h2>@ViewBag.Title.</h2>
+
+
+<div id="rrWrapper">
+
+    @using (Html.BeginForm("Register", "Account", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+    {
+        @Html.AntiForgeryToken()
+
+        @Html.ValidationSummary("", new { @class = "text-danger" })
+        <div class="form-group">
+            <div class="col-md-10">
+                @Html.TextBoxFor(m => m.Email, new { @class = "form-control", placeholder = "Email" })
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-10">
+                @Html.PasswordFor(m => m.Password, new { @class = "form-control", placeholder = "Enter Password" })
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-10">
+                @Html.PasswordFor(m => m.ConfirmPassword, new { @class = "form-control", placeholder = "Confirm Password" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-10">
+                @Html.TextBoxFor(m => m.FirstName, new { @class = "form-control", placeholder = "First Name" })
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-10">
+                @Html.TextBoxFor(m => m.LastName, new { @class = "form-control", placeholder = "Last Name" })
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-10">
+                @Html.TextBoxFor(m => m.Interests, new { @class = "form-control", placeholder = "Tell us some of your interests." })
+            </div>
+        </div>
+
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" class="btn btn-dark" value="Register" />
+                @Html.ActionLink("Cancel", "Index", "Home", null, new { @class = "btn btn-dark" })
+
+            </div>
+        </div>
+    }
+
+    </div>
+
+    @section Scripts {
+        @Scripts.Render("~/bundles/jqueryval")
+    }

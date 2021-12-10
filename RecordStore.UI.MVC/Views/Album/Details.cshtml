@@ -1,0 +1,142 @@
+﻿@model RecordStore.Data.EF.Album
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<div id="rrWrapper">
+
+    <div col-md-6>
+           <img src="~/Content/assets/images/albumImages/@Model.AlbumImage" alt="@Model.AlbumName Cover" title="@Model.AlbumName Cover" id="albumArt" />
+    </div>
+
+
+    <div col-md-6>
+        <dl class="dl-horizontal">
+            <dd>
+                <h3>@Html.DisplayFor(model => model.AlbumName)</h3>
+            </dd>
+
+            @*<dt>
+                    @Html.DisplayNameFor(model => model.ArtistName)
+                </dt>
+
+                <dd>
+                    <h3>@Html.DisplayFor(model => model.ArtistName)</h3>
+                </dd>*@
+
+            <dt>
+                @Html.DisplayNameFor(model => model.ReleaseYear)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.ReleaseYear)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Description)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Description)
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.CompilationAlbum)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.CompilationAlbum)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.CatalogNum)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.CatalogNum)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Price)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Price)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.IsInPrint)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.IsInPrint)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.UnitsInStock)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.UnitsInStock)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.AlbumStatus.AlbumStatusName)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.AlbumStatus.AlbumStatusName)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Format.FormatType)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Num) @Html.DisplayFor(model => model.Format.FormatType)@(Model.Num == 1 ? "" : "s"), @Html.DisplayFor(model => model.Tracks)
+                @(Model.Tracks == 1 ? "Track" : Model.Tracks > 1 ? "Tracks" : "none" ) @*ternary operator to display track info*@
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Label.LabelName)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Label.LabelName)
+            </dd>
+
+        </dl>
+    </div>
+
+    @* added this <p> for "Add To Cart" fuctionality *@
+<p>
+@using (Html.BeginForm("AddToCart", "Album", new { albumID = Model.AlbumID }, FormMethod.Post))
+{
+
+@Html.HiddenFor(a => a.AlbumID)
+<span class="label">Quantity: </span>
+@Html.TextBox("Qty", 1, new { @class = "form-control", @style = "max-width: 50px; display: inline;" } )
+       
+    //if (Model.UnitsInStock >= qty) //only add to cart if requested quantity is in stock
+    //{
+        <input type="submit" value="Add To Cart" class="btn btn-dark" name="qty" />
+    //}
+    //else
+    //{
+    //    ViewBag.ErrorMessage = "Insufficient quantity in stock.  Please select a lower quanity, or choose a different title.";
+    //}
+}
+</p>
+
+    @Html.ActionLink("Back to Albums", "Index", "", new { @class = "btn btn-dark" })
+
+
+    @if (User.IsInRole("Admin"))
+    {
+        <p>
+            <span>Admin Functions: &nbsp;</span>
+            @Html.ActionLink("Edit", "Edit", new { id = Model.AlbumID }) |
+            @Html.ActionLink("Delete", "Delete", new { id = Model.AlbumID })
+        </p>
+    }
+</div>

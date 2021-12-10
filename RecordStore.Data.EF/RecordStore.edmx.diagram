@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="6f4907d867054cf488e838f876ced894" Name="Diagram1">
+        <EntityTypeShape EntityType="RecordStoreModel.Album" Width="1.5" PointX="2.75" PointY="0.625" />
+        <EntityTypeShape EntityType="RecordStoreModel.AlbumArtist" Width="1.5" PointX="5" PointY="3.125" />
+        <EntityTypeShape EntityType="RecordStoreModel.AlbumGenre" Width="1.5" PointX="5" PointY="0.625" />
+        <EntityTypeShape EntityType="RecordStoreModel.AlbumStatus" Width="1.5" PointX="0.5" PointY="0.5" />
+        <EntityTypeShape EntityType="RecordStoreModel.Artist" Width="1.5" PointX="5" PointY="5.875" />
+        <EntityTypeShape EntityType="RecordStoreModel.Department" Width="1.5" PointX="8.875" PointY="5.25" />
+        <EntityTypeShape EntityType="RecordStoreModel.Employee" Width="1.5" PointX="6.875" PointY="2.75" />
+        <EntityTypeShape EntityType="RecordStoreModel.Format" Width="1.5" PointX="0.5" PointY="4.875" />
+        <EntityTypeShape EntityType="RecordStoreModel.Genre" Width="1.5" PointX="6.875" PointY="0.625" />
+        <EntityTypeShape EntityType="RecordStoreModel.Label" Width="1.5" PointX="0.5" PointY="2.625" />
+        <EntityTypeShape EntityType="RecordStoreModel.UserDetails" Width="1.5" PointX="11.125" PointY="1.5" />
+        <AssociationConnector Association="RecordStoreModel.FK_Album_AlbumStatus" />
+        <AssociationConnector Association="RecordStoreModel.FK_Album_Format" />
+        <AssociationConnector Association="RecordStoreModel.FK_Album_Label" />
+        <AssociationConnector Association="RecordStoreModel.FK_AlbumArtist_Album" />
+        <AssociationConnector Association="RecordStoreModel.FK_AlbumGenre_Album" />
+        <AssociationConnector Association="RecordStoreModel.FK_AlbumArtist_Artist" />
+        <AssociationConnector Association="RecordStoreModel.FK_AlbumGenre_Genre" />
+        <AssociationConnector Association="RecordStoreModel.FK_Employees_Department" />
+        <AssociationConnector Association="RecordStoreModel.FK_Employees_Employees" />
+        <EntityTypeShape EntityType="RecordStoreModel.AspNetUsers" Width="1.5" PointX="8.875" PointY="0.75" />
+        <AssociationConnector Association="RecordStoreModel.FK_UserDetails_AspNetUsers" />
+        </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
