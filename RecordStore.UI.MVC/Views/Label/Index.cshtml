@@ -17,17 +17,17 @@
 
     @using (Html.BeginForm("Index", "Label", FormMethod.Get))
     {
-        <p style="padding-bottom: 1em;">
-            <input type="text" name="searchString" style="max-width:250px;" />
-            <input type="submit" value="Search" />
+    <p style="padding-bottom: 1em; font-weight: bold;">
+        <input type="text" name="searchString" style="max-width:250px;" />
+        <input type="submit" value="Search" />
+        &nbsp;&nbsp;
+        @if (User.IsInRole("Admin"))
+        {
 
-            @if (User.IsInRole("Admin"))
-            {
+            @Html.ActionLink("Add A New Label", "Create")
+        }
 
-                @Html.ActionLink("Add A New Label", "Create")
-            }
-
-        </p>
+    </p>
     }
 
     <table class="table">

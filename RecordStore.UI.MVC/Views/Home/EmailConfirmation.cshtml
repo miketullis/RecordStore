@@ -1,14 +1,11 @@
 ﻿@model RecordStore.UI.MVC.Models.ContactViewModel
 
-@* Above is a @model declaration. This makes the View strongly-typed.
-    This means that this View can only use one model for data. *@
+<div>
 
-@{
-    ViewBag.Title = "Email Confirmation";
-}
-
-<h2>@ViewBag.Title</h2>
-
-<h4>Thank you! We have received the following message:</h4>
-<p>@Model.Message</p>
-<h4>We will respond to @Model.Email as soon as possible.</h4>
+    @if (Model != null)
+    {
+        <h4>Thank you, @Model.Name! We have received your message.</h4>
+        <p>Message:<br />@Model.Message</p>
+        <h4>We will respond to @Model.Email as soon as possible.</h4>
+    }
+</div>

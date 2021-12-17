@@ -323,7 +323,7 @@ namespace RecordStore.UI.MVC.Controllers
 
             var albumStatus = db.AlbumStatus;
 
-            var albumView = from a in albums
+            var albumView = (from a in albums
                             join ag in albumGenre
                             on a.AlbumID equals ag.AlbumID
                             join g in genre
@@ -360,7 +360,7 @@ namespace RecordStore.UI.MVC.Controllers
                                 GenreName = g.GenreName,
                                 ArtistName = ar.ArtistName
 
-                            };
+                            }).Distinct();
 
             return View(albumView.ToList());
         }

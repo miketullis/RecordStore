@@ -13,6 +13,7 @@ using RecordStore.UI.MVC.Models;//Added to access to the Models
 
 namespace RecordStore.UI.MVC.Controllers
 {
+    [Authorize]
     public class ArtistController : Controller
     {
         private RecordStoreEntities db = new RecordStoreEntities();

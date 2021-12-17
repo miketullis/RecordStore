@@ -83,12 +83,12 @@
                         </li>
                         @if (User.IsInRole("Admin"))
                         {
-                        <li class="nav-item">
-                            <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Admin</a>
-                            <div class="dropdown-menu account-dropdown">
-                                @Html.Partial("_AminPartial")
-                            </div>
-                        </li>
+                            <li class="nav-item">
+                                <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Admin</a>
+                                <div class="dropdown-menu account-dropdown">
+                                    @Html.Partial("_AminPartial")
+                                </div>
+                            </li>
                         }
 
                     </ul>
@@ -111,27 +111,22 @@
                         <div class="inner-content">
                             <p>
                                 Copyright &copy; @DateTime.Now.Year &nbsp;&nbsp;|&nbsp;&nbsp;Reckless Records&nbsp;&nbsp;|&nbsp;&nbsp;All Rights Reserved
-
-                                <!-- - Design: <a rel="nofollow noopener" href="https://templatemo.com" target="_blank">TemplateMo</a> -->
                             </p>
+
+                                @if (User.IsInRole("Admin"))
+                                {
+                                    <p>
+                                        @Html.ActionLink("Albums", "Index", "Album") |
+                                        @Html.ActionLink("Artists", "Index", "Artist") |
+                                        @Html.ActionLink("Formats", "Index", "Format") |
+                                        @Html.ActionLink("Genres", "Index", "Genre") |
+                                        @Html.ActionLink("Labels", "Index", "Label") |
+                                        <br />
+                                        @Html.ActionLink("Departments", "Index", "Department") |
+                                        @Html.ActionLink("Employees", "Index", "Employee")
+                                    </p>
+                                }
                         </div>
-                        @if (User.IsInRole("Admin"))
-                        {
-                            <div id="aminNav">
-                                <p>
-                                    @Html.ActionLink("Albums", "Index", "Album") |
-                                    @Html.ActionLink("Artists", "Index", "Artist") |
-                                    @Html.ActionLink("Formats", "Index", "Format") |
-                                    @Html.ActionLink("Genres", "Index", "Genre") |
-                                    @Html.ActionLink("Labels", "Index", "Label") |
-                                    <br />
-                                    @Html.ActionLink("Departments", "Index", "Department") |
-                                    @Html.ActionLink("Employees", "Index", "Employee")
-                                </p>
-                            </div>
-
-                        }
-
                     </div>
                 </div>
             </div>
@@ -166,6 +161,8 @@
 
         <!-- Datatables.net -->
         <script src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>
+
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.js"></script>
 
         @RenderSection("Scripts", required: false)
     </div> <!-- end of container -->

@@ -1,16 +1,13 @@
 ﻿@model RecordStore.Data.EF.Label
 
 @{
-    ViewBag.Title = "Details";
+    ViewBag.Title = "Label Details: " + Model.LabelName;
 }
 
 <div id="rrWrapper">
-
     <h2>@ViewBag.Title</h2>
-
+    <br />
     <div>
-        <h4>Label</h4>
-        <hr />
         <dl class="dl-horizontal">
             <dt>
                 @Html.DisplayNameFor(model => model.LabelName)
@@ -39,7 +36,7 @@
         </dl>
     </div>
     <p>
-        @Html.ActionLink("Edit", "Edit", new { id = Model.LabelID }) |
-        @Html.ActionLink("Back to List", "Index")
+        @Html.ActionLink("Edit Label", "Edit", new { id = Model.LabelID }, new { @class="btn btn-dark"}) &nbsp;
+        @Html.ActionLink("Return to Labels", "Index", "Label", null, new { @class = "btn btn-dark" })
     </p>
     </div>

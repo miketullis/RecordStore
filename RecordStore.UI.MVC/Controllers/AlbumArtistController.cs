@@ -10,6 +10,7 @@ using RecordStore.Data.EF;
 
 namespace RecordStore.UI.MVC.Controllers
 {
+    [Authorize]
     public class AlbumArtistController : Controller
     {
         private RecordStoreEntities db = new RecordStoreEntities();

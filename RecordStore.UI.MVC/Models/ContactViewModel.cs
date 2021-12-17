@@ -15,11 +15,11 @@ namespace RecordStore.UI.MVC.Models
         [DataType(DataType.EmailAddress)] //pattern match to valid email format
         public string Email { get; set; }
 
-        //[DisplayFormat(NullDisplayText = "* no subject supplied *")] //supply message if not subject is supplied
+        [DisplayFormat(NullDisplayText = "~ no subject ~")] //supply message if no subject is supplied
         public string Subject { get; set; }
 
         [Required(ErrorMessage = "* Message is required *")]
-        [DataType(DataType.MultilineText)]
+        [UIHint("MultilineText")]
         public string Message { get; set; }
 
     }

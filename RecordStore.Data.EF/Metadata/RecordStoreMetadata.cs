@@ -26,9 +26,6 @@ namespace RecordStore.Data.EF//.Metadata
         [DisplayFormat(NullDisplayText = "[-N/A-]")]
         public string Description { get; set; }
 
-        [Required(ErrorMessage = "* Label ID is required *")]
-        public int LabelID { get; set; }
-
         [Display(Name = "Compilation Album")]
         public bool CompilationAlbum { get; set; }
 
@@ -44,9 +41,7 @@ namespace RecordStore.Data.EF//.Metadata
         [Display(Name = "In Print")]
         public bool IsInPrint { get; set; }
 
-        [Required(ErrorMessage = "* Format ID is required *")]
-        public int FormatID { get; set; }
-
+        
         [Display(Name = "Units In Stock")]
         [Range(0, double.MaxValue, ErrorMessage = "* Value must be a valid number, 0 or larger *")]
         [DisplayFormat(NullDisplayText = "[-N/A-]")]
@@ -63,6 +58,21 @@ namespace RecordStore.Data.EF//.Metadata
 
         [Range(0, double.MaxValue, ErrorMessage = "* Value must be a valid number, 0 or larger *")]
         public Nullable<int> Tracks { get; set; }
+
+
+
+        [Required(ErrorMessage = "* Label ID is required *")]
+        [Display(Name = "Label")]
+        public int LabelID { get; set; }
+
+        [Required(ErrorMessage = "* Format is required *")]
+        [Display(Name = "Format")]
+        public int FormatID { get; set; }
+
+        [Required(ErrorMessage = "* Status is required *")]
+        [Display(Name = "Status")]
+        public int AlbumStatusID { get; set; }
+
     }
 
     [MetadataType(typeof(AlbumMetadata))]

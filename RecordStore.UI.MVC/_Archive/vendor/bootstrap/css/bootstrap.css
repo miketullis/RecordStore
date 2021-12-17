@@ -297,11 +297,13 @@ input[type="month"] {
 textarea {
   overflow: auto;
   resize: vertical;
+
 }
 
 fieldset {
   min-width: 0;
   padding: 0;
+  padding-bottom: 2em;
   margin: 0;
   border: 0;
 }
@@ -1809,6 +1811,7 @@ pre code {
 }
 
 .form-control {
+  margin-bottom: 2em;
   display: block;
   width: 100%;
   height: calc(2.25rem + 2px);

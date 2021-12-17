@@ -15,13 +15,13 @@
     @*Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount*@
 
     @Html.PagedListPager(Model, page => Url.Action("Index", new { page }))
- 
+
     @using (Html.BeginForm("Index", "Artist", FormMethod.Get))
     {
-        <p style="padding-bottom: 1em;">
+        <p style="padding-bottom: 1em; font-weight: bold;">
             <input type="text" name="searchString" style="max-width:250px;" />
             <input type="submit" value="Search" />
-
+            &nbsp;&nbsp;
             @if (User.IsInRole("Admin"))
             {
 

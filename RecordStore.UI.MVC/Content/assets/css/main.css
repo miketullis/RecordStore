@@ -594,13 +594,15 @@ header .navbar {
 footer {
     text-align: center;
     background-color: #232323;
-    margin-top: 5em;
+    margin-top: 50px;
 }
 
     footer .inner-content {
         /*border-top: 1px solid #eee;*/
-        margin-top: 40px;
-        padding: 60px 0px;
+        /*margin-top: 40px;*/
+        padding: 50px 0px;
+        min-height: 172px;
+   
     }
 
         footer .inner-content p {

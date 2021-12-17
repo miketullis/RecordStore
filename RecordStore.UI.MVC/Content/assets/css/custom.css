@@ -3,7 +3,7 @@
     padding-top: 150px; /*height of header*/
     padding-left: 20%;
     padding-right: 20%;
-    min-height: calc(100vh - 264px);
+    min-height: calc(100vh - 222px); /*height of footer*/
 }
 
 #rrContainer {
@@ -65,4 +65,27 @@
 
 #albumArt {
     box-shadow: 0 5px 8px 3px #808080;
+}
+
+#contactConfirm {
+    display: none;
+}
+
+
+.conForm{
+
+padding-bottom: 1.5em;
+}
+
+div#adminNav {
+    padding-bottom: 8em;
+
+}
+div#adminNav a {
+    color: white;
+ font-size-adjust: 1.2;
+}
+
+label {
+    font-weight: bold;
 }
