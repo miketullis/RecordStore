@@ -551,9 +551,7 @@
     <Content Include="Views\Artist\Details.cshtml" />
     <Content Include="Views\Artist\Edit.cshtml" />
     <Content Include="Views\Artist\Index.cshtml" />
-    <Content Include="Views\Album\AlbumViewModel.cshtml" />
-    <Content Include="Views\Album\AlbumViewDetails.cshtml" />
-    <Content Include="Views\Album\AlbumViewIndex.cshtml" />
+    <Content Include="Views\Album\ShowAlbums.cshtml" />
     <Content Include="Views\Home\ContactAjax.cshtml" />
   </ItemGroup>
   <ItemGroup>

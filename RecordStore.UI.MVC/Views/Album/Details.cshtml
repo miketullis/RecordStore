@@ -16,14 +16,18 @@
             <dd>
                 <h3>@Html.DisplayFor(model => model.AlbumName)</h3>
             </dd>
+           <dt>
+                    Artist
+           </dt>
 
-            @*<dt>
-                    @Html.DisplayNameFor(model => model.ArtistName)
-                </dt>
-
-                <dd>
-                    <h3>@Html.DisplayFor(model => model.ArtistName)</h3>
-                </dd>*@
+           <dd>
+               @foreach (var artist in model.AlbumArtist)
+               {
+                   <span>
+                       @artist.Artist.ArtistName
+                   </span>
+               }
+           </dd>
 
             <dt>
                 @Html.DisplayNameFor(model => model.ReleaseYear)

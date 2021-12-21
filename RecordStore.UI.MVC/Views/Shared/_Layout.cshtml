@@ -113,19 +113,19 @@
                                 Copyright &copy; @DateTime.Now.Year &nbsp;&nbsp;|&nbsp;&nbsp;Reckless Records&nbsp;&nbsp;|&nbsp;&nbsp;All Rights Reserved
                             </p>
 
-                                @if (User.IsInRole("Admin"))
-                                {
-                                    <p>
-                                        @Html.ActionLink("Albums", "Index", "Album") |
-                                        @Html.ActionLink("Artists", "Index", "Artist") |
-                                        @Html.ActionLink("Formats", "Index", "Format") |
-                                        @Html.ActionLink("Genres", "Index", "Genre") |
-                                        @Html.ActionLink("Labels", "Index", "Label") |
-                                        <br />
-                                        @Html.ActionLink("Departments", "Index", "Department") |
-                                        @Html.ActionLink("Employees", "Index", "Employee")
-                                    </p>
-                                }
+                            @if (User.IsInRole("Admin"))
+                            {
+                                <p>
+                                    @Html.ActionLink("Albums", "Index", "Album") |
+                                    @Html.ActionLink("Artists", "Index", "Artist") |
+                                    @Html.ActionLink("Formats", "Index", "Format") |
+                                    @Html.ActionLink("Genres", "Index", "Genre") |
+                                    @Html.ActionLink("Labels", "Index", "Label") |
+                                    <br />
+                                    @Html.ActionLink("Departments", "Index", "Department") |
+                                    @Html.ActionLink("Employees", "Index", "Employee")
+                                </p>
+                            }
                         </div>
                     </div>
                 </div>
@@ -143,11 +143,7 @@
         <script src="~/Content/assets/js/slick.js"></script>
         <script src="~/Content/assets/js/isotope.js"></script>
         <script src="~/Content/assets/js/accordions.js"></script>
-
-        <!-- jQueryUI reference -->
-        <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-
-
+    
         <script language="text/Javascript">
             cleared[0] = cleared[1] = cleared[2] = 0; //set a cleared flag for each field
             function clearField(t) {                   //declaring the array outside of the
@@ -159,10 +155,14 @@
             }
         </script>
 
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.js"></script>
+        
+        <!-- jQueryUI Reference -->
+        <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
         <!-- Datatables.net -->
         <script src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>
 
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.js"></script>
 
         @RenderSection("Scripts", required: false)
     </div> <!-- end of container -->

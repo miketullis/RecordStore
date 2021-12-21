@@ -1,0 +1,133 @@
+﻿@model IEnumerable<RecordStore.Data.EF.Album>
+
+@{
+    ViewBag.Title = "ShowAlbums";
+}
+
+<h2>ShowAlbums</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.AlbumName)
+        </th>
+        <th>
+            Artist
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ReleaseYear)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Description)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CompilationAlbum)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CatalogNum)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Price)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.IsInPrint)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.UnitsInStock)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.AlbumImage)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Num)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Tracks)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.AlbumStatus.AlbumStatusName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Format.FormatType)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Label.LabelName)
+        </th>
+        <th>Genre(s)</th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.AlbumName)
+        </td>
+        <td>
+            @foreach (var artist in item.AlbumArtist)
+            {
+                <span>
+                    @artist.Artist.ArtistName
+                </span>
+            }
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ReleaseYear)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Description)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.CompilationAlbum)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.CatalogNum)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Price)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.IsInPrint)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.UnitsInStock)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.AlbumImage)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Num)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Tracks)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.AlbumStatus.AlbumStatusName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Format.FormatType)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Label.LabelName)
+        </td>
+        @* Set up a foreach like this for each of those linking tables *@
+        <td>
+            @foreach (var genre in item.AlbumGenre)
+            {
+                <span>
+                    @genre.Genre.GenreName
+                </span>
+            }
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id = item.AlbumID }) |
+            @Html.ActionLink("Details", "Details", new { id = item.AlbumID }) |
+            @Html.ActionLink("Delete", "Delete", new { id = item.AlbumID })
+        </td>
+    </tr>
+    }
+
+</table>

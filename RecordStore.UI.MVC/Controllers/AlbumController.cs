@@ -23,15 +23,9 @@ namespace RecordStore.UI.MVC.Controllers
 
         public ActionResult Index()
         {
-
-            AlbumViewModel avm = new AlbumViewModel();
-
-            var albums = db.Album.OrderBy(a => a.AlbumName).ToList();
-
-            return View(albums.ToList());
-
+            var albums = db.Album.ToList();
+            return View(albums);
         }
-
 
 
         // GET: Albums/Details/5
@@ -41,21 +35,24 @@ namespace RecordStore.UI.MVC.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Album album = db.Album.Find(id);
-            if (album == null)
+            var albums = db.Album.ToList().Find(id);
+            if (albums == null)
             {
                 return HttpNotFound();
             }
-            return View(album);
+            return View(albums);
         }
+
 
         // GET: Albums/Create
         public ActionResult Create()
         {
+            var albums = db.Album.ToList();
             ViewBag.AlbumStatusID = new SelectList(db.AlbumStatus, "AlbumStatusID", "AlbumStatusName");
             ViewBag.FormatID = new SelectList(db.Format, "FormatID", "FormatType");
             ViewBag.LabelID = new SelectList(db.Label, "LabelID", "LabelName");
-            //ViewBag.ArtistID = new SelectList(db.Artists, "ArtistID", "ArtistName");
+            ViewBag.ArtistID = new SelectList(db.Artist, "ArtistID", "ArtistName");
+            ViewBag.GenreID = new SelectList(db.Genre, "GenreID", "GenreName");
             return View();
         }
 
@@ -64,11 +61,10 @@ namespace RecordStore.UI.MVC.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "AlbumID,AlbumName,ReleaseYear,ArtistID,Description,LabelID,CompilationAlbum,CatalogNum,Price,IsInPrint,FormatID,UnitsInStock,AlbumStatusID,AlbumImage,Num")] Album album, HttpPostedFileBase albumCover)
+        public ActionResult Create([Bind(Include = "AlbumID,AlbumName,ReleaseYear,ArtistID,GenreID,Description,LabelID,CompilationAlbum,CatalogNum,Price,IsInPrint,FormatID,UnitsInStock,AlbumStatusID,AlbumImage,Num")] Album album, HttpPostedFileBase albumCover)
         {
             if (ModelState.IsValid)
             {
-
                 #region Upload AlbumImage File     
                 string file = "noImage.jpg";
 
@@ -113,19 +109,10 @@ namespace RecordStore.UI.MVC.Controllers
             ViewBag.AlbumStatusID = new SelectList(db.AlbumStatus, "AlbumStatusID", "AlbumStatusName", album.AlbumStatusID);
             ViewBag.FormatID = new SelectList(db.Format, "FormatID", "FormatType", album.FormatID);
             ViewBag.LabelID = new SelectList(db.Label, "LabelID", "LabelName", album.LabelID);
+            ViewBag.ArtistID = new SelectList(db.Artist, "ArtistID", "ArtistName", album.ArtistID);
+            ViewBag.GenreID = new SelectList(db.Genre, "GenreID", "GenreName", album.GenreID);
             return View(album);
         }
-
-
-
-
-
-
-
-
-
-
-
 
 
         // GET: Albums/Edit/5
@@ -136,7 +123,7 @@ namespace RecordStore.UI.MVC.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Album album = db.Album.Find(id);
+            var album = db.Album.ToList().Find(id);
             if (album == null)
             {
                 return HttpNotFound();
@@ -144,17 +131,15 @@ namespace RecordStore.UI.MVC.Controllers
             ViewBag.AlbumStatusID = new SelectList(db.AlbumStatus, "AlbumStatusID", "AlbumStatusName", album.AlbumStatusID);
             ViewBag.FormatID = new SelectList(db.Format, "FormatID", "FormatType", album.FormatID);
             ViewBag.LabelID = new SelectList(db.Label, "LabelID", "LabelName", album.LabelID);
-            //return View(album);
-
+            ViewBag.ArtistID = new SelectList(db.Artist, "ArtistID", "ArtistName", album.ArtistID);
+            ViewBag.GenreID = new SelectList(db.Genre, "GenreID", "GenreName", album.GenreID);
+ 
             return View(album);
         }
-
-
 
         // POST: Albums/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
-
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "AlbumID,AlbumName,ReleaseYear,ArtistID,Description,LabelID,CompilationAlbum,CatalogNum,Price,IsInPrint,FormatID,UnitsInStock,AlbumStatusID,AlbumImage,Num")] Album album, HttpPostedFileBase albumCover)
@@ -204,9 +189,6 @@ namespace RecordStore.UI.MVC.Controllers
         }
 
 
-
-
-
         // GET: Albums/Delete/5
         [Authorize(Roles = "Admin")]
         public ActionResult Delete(int? id)
@@ -215,12 +197,12 @@ namespace RecordStore.UI.MVC.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Album album = db.Album.Find(id);
-            if (album == null)
+            var albums = db.Album.ToList().Find(id);
+            if (albums == null)
             {
                 return HttpNotFound();
             }
-            return View(album);
+            return View(albums);
         }
 
         // POST: Albums/Delete/5
@@ -229,11 +211,11 @@ namespace RecordStore.UI.MVC.Controllers
         public ActionResult DeleteConfirmed(int id)
         {
             //delete album image if album is deleted
-            Album album = db.Album.Find(id);
+            var albums = db.Album.ToList().Find(id);
             string path = Server.MapPath("~/Content/assets/images/albumImages/");
-            ImageUtility.Delete(path, album.AlbumImage);
+            ImageUtility.Delete(path, albums.AlbumImage);
 
-            db.Album.Remove(album);
+            db.Album.Remove(albums);
             db.SaveChanges();
             return RedirectToAction("Index");
         }
@@ -291,7 +273,6 @@ namespace RecordStore.UI.MVC.Controllers
                 //Update session cart using local version.
                 Session["cart"] = shoppingCart;
                 ViewBag.Message = null;
-
             }
 
             //If product was added to cart, send user to shopping cart view.
@@ -302,67 +283,11 @@ namespace RecordStore.UI.MVC.Controllers
 
 
 
-        public ActionResult AlbumViewModel()
+
+        public ActionResult ShowAlbums()
         {
-            //var albums = db.Album.Include(a => a.Format).Include(a => a.Label).Include(a => a.AlbumStatus).Include(a => a.AlbumGenre).Include(a => a.AlbumArtist); 
-            //variable including adjacent tables with Album table
-
-            var albums = db.Album;
-
-            var genre = db.Genre;
-
-            var label = db.Label;
-
-            var format = db.Format;
-
-            var artist = db.Artist;
-
-            var albumArtist = db.AlbumArtist;
-
-            var albumGenre = db.AlbumGenre;
-
-            var albumStatus = db.AlbumStatus;
-
-            var albumView = (from a in albums
-                            join ag in albumGenre
-                            on a.AlbumID equals ag.AlbumID
-                            join g in genre
-                            on ag.GenreID equals g.GenreID
-                            join aa in albumArtist
-                            on a.AlbumID equals aa.AlbumID
-                            join ar in artist
-                            on aa.ArtistID equals ar.ArtistID
-                            join al in albumStatus
-                            on a.AlbumStatusID equals al.AlbumStatusID
-                            join l in label
-                            on a.LabelID equals l.LabelID
-                            join f in format
-                            on a.FormatID equals f.FormatID
-                            select new AlbumViewModel()
-                            {
-                                AlbumID = a.AlbumID,
-                                AlbumName = a.AlbumName,
-                                ReleaseYear = a.ReleaseYear,
-                                Description = a.Description,
-                                LabelID = a.LabelID,
-                                LabelName = l.LabelName,
-                                CompilationAlbum = a.CompilationAlbum,
-                                Price = a.Price,
-                                IsInPrint = a.IsInPrint,
-                                FormatID = a.FormatID,
-                                FormatType = f.FormatType,
-                                UnitsInStock = a.UnitsInStock,
-                                AlbumStatusID = a.AlbumStatusID,
-                                AlbumStatusName = al.AlbumStatusName,
-                                AlbumImage = a.AlbumImage,
-                                Num = a.Num,
-                                Tracks = a.Tracks,
-                                GenreName = g.GenreName,
-                                ArtistName = ar.ArtistName
-
-                            }).Distinct();
-
-            return View(albumView.ToList());
+            var albums = db.Album.ToList();
+            return View(albums);
         }
 
     }

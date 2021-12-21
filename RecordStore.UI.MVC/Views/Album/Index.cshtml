@@ -1,34 +1,16 @@
 ﻿@model IEnumerable<RecordStore.Data.EF.Album>
-@*@model PagedList.IPagedList<RecordStore.Data.EF.Album>
-@using PagedList.Mvc*@
 
 @{
-    ViewBag.Title = "Products";
+    ViewBag.Title = "Albums";
 }
 
 <div id="rrWrapper">
 
-@*-----Initially coded with paged list, but opted to use a DataTable layout inseat for added functionality ----- *@
-    @*Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
-        @Html.PagedListPager(Model, page => Url.Action("Index", new { page }))
-        @using (Html.BeginForm("Index", "Album", FormMethod.Get))
-        {
-            <p style="padding-bottom: 1em;">
-                <input type="text" name="searchString" style="max-width:250px;" />
-                <input type="submit" value="Search" />
-
-                @if (User.IsInRole("Admin"))
-                {
-                    @Html.ActionLink("Add A New Album", "Create")
-                }
-            </p>
-        }*@
 
     @if (User.IsInRole("Admin"))
     {
         @Html.ActionLink("Add A New Album", "Create")
     }
-
 
 
     @* we can only show the table if there are results, otherwise show text asking the use to try again *@
@@ -45,49 +27,46 @@
                         @Html.DisplayNameFor(model => model.FirstOrDefault().AlbumName)
                     </th>
                     <th>
+                        Artist
+                    </th>
+                    <th>
                         @Html.DisplayNameFor(model => model.FirstOrDefault().ReleaseYear)
                     </th>
                     @*<th>
-                            @Html.DisplayNameFor(model => model.Description)
+                           @Html.DisplayNameFor(model => model.CompilationAlbum)
+                        </th>
+                        <th>
+                           @Html.DisplayNameFor(model => model.IsInPrint)
+                        </th>
+                        <th>
+                           @Html.DisplayNameFor(model => model.UnitsInStock)
+                        </th>
+                        <th>
+                           @Html.DisplayNameFor(model => model.Num)
+                        </th>
+                        <th>
+                           @Html.DisplayNameFor(model => model.AlbumStatus.AlbumStatusName)
                         </th>*@
-                    @*<th>
-                            @Html.DisplayNameFor(model => model.CompilationAlbum)
-                        </th>*@
-
                     <th>
-                        @Html.DisplayNameFor(model => model.FirstOrDefault().Price)
+                        @Html.DisplayNameFor(model => model.FirstOrDefault().Label.LabelName)
                     </th>
                     @*<th>
-                            @Html.DisplayNameFor(model => model.IsInPrint)
-                        </th>
-                        <th>
-                            @Html.DisplayNameFor(model => model.UnitsInStock)
-                        </th>
-                        <th>
-                            @Html.DisplayNameFor(model => model.Num)
-                        </th>
-                        <th>
-                            @Html.DisplayNameFor(model => model.AlbumStatus.AlbumStatusName)
+                            @Html.DisplayNameFor(model => model.FirstOrDefault().CatalogNum)
                         </th>*@
+                    <th>
+                        Genre(s)
+                    </th>
                     <th>
                         @Html.DisplayNameFor(model => model.FirstOrDefault().Format.FormatType)
                     </th>
                     <th>
-                        @Html.DisplayNameFor(model => model.FirstOrDefault().Label.LabelName)
+                        @Html.DisplayNameFor(model => model.FirstOrDefault().Price)
                     </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.FirstOrDefault().CatalogNum)
-                    </th>
-
-                    @*<th>
-                            @Html.DisplayNameFor(model => model.FirstOrDefault().GenreName)
-                        </th>*@
 
                     @if (User.IsInRole("Admin"))
                     {
                         <th></th>
                     }
-
                 </tr>
             </thead>
 
@@ -108,43 +87,58 @@
                             </a>
                         </td>
                         <td>
+                            @foreach (var artist in item.AlbumArtist)
+                            {
+                                //only list primary artist in index listing
+                                if (artist.PrimaryArtist == true)
+                                {
+                                    <span>
+                                        @artist.Artist.ArtistName
+                                    </span>
+                                }
+                            }
+                        </td>
+                        <td>
                             @Html.DisplayFor(modelItem => item.ReleaseYear)
                         </td>
-
                         @*<td>
-                                @Html.DisplayFor(modelItem => item.Description)
+                                    @Html.DisplayFor(modelItem => item.Description)
+                            </td>
+                            <td>
+                                 @Html.DisplayFor(modelItem => item.CompilationAlbum)
+                            </td>
+                            <td>
+                                 @Html.DisplayFor(modelItem => item.IsInPrint)
+                            </td>
+                            <td>
+                                  @Html.DisplayFor(modelItem => item.UnitsInStock)
+                            </td>
+                            <td>
+                                 @Html.DisplayFor(modelItem => item.Num)
+                            </td>
+                            <td>
+                                 @Html.DisplayFor(modelItem => item.AlbumStatus.AlbumStatusName)
                             </td>*@
-                        @*<td>
-                                @Html.DisplayFor(modelItem => item.CompilationAlbum)
-                            </td>*@
-
                         <td>
-                            @Html.DisplayFor(modelItem => item.Price)
+                            @Html.DisplayFor(modelItem => item.Label.LabelName)
                         </td>
                         @*<td>
-                                @Html.DisplayFor(modelItem => item.IsInPrint)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.UnitsInStock)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.Num)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.AlbumStatus.AlbumStatusName)
+                                     @Html.DisplayFor(modelItem => item.CatalogNum)
                             </td>*@
+                        <td>
+                            @foreach (var genre in item.AlbumGenre)
+                            {
+                                <ul>
+                                    <li>@genre.Genre.GenreName</li>
+                                </ul>
+                            }
+                        </td>
                         <td>
                             @Html.DisplayFor(modelItem => item.Format.FormatType)
                         </td>
                         <td>
-                            @Html.DisplayFor(modelItem => item.Label.LabelName)
+                            @Html.DisplayFor(modelItem => item.Price)
                         </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.CatalogNum)
-                        </td>
-                        @*<td>
-                                @Html.DisplayFor(modelItem => item.GenreName)
-                            </td>*@
 
                         @if (User.IsInRole("Admin"))
                         {
@@ -158,7 +152,6 @@
                 }
             </tbody>
         </table>
-
     }
     else
     {

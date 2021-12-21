@@ -13,7 +13,7 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 p {
-	margin-bottom: 0px;
+	/*margin-bottom: 0px;*/
 	font-size: 14px;
 	font-weight: 300;
 	color: #4a4a4a;
@@ -23,8 +23,8 @@ a {
 	text-decoration: none!important;
 }
 ul {
-	padding: 0;
-	margin: 0;
+	padding: 3px;
+	margin: 3px;
 	list-style: none;
 }
 
@@ -149,8 +149,6 @@ a.filled-button:hover {
 
 #preloader .jumper > div {
   background-color: #fff;
-  width: 10px;
-  height: 10px;
   border-radius: 100%;
   -webkit-animation-fill-mode: both;
   animation-fill-mode: both;
@@ -293,19 +291,19 @@ header .navbar {
 	background-image: none;
 }
 .navbar .navbar-toggler {
-	border-color: #fff;
-	background-color: #fff;	
+	/*border-color: #fff;*/
+	/*background-color: #fff;*/	
 	height: 36px;
 	outline: none;
 	border-radius: 0px;
 	position: absolute;
 	right: 30px;
-	top: 20px;
+	top: 26px;
 }
 .navbar .navbar-toggler-icon:after {
 	content: '\f0c9';
 	color: #f33f3f;
-	font-size: 18px;
+	font-size: 30px;
 	line-height: 26px;
 	font-family: 'FontAwesome';
 }

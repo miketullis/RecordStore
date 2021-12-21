@@ -18,7 +18,7 @@ namespace RecordStore.Data.EF//.Metadata
         public string AlbumName { get; set; }
 
         [Required(ErrorMessage = "* Year Released is required *")]
-        [Display(Name = "Released")]
+        [Display(Name = "Year")]
         [DisplayFormat(DataFormatString = "{0:yyyy}", ApplyFormatInEditMode = true)]
         public Nullable<System.DateTime> ReleaseYear { get; set; }
         
