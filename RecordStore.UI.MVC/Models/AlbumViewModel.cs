@@ -41,6 +41,9 @@ namespace RecordStore.UI.MVC.Models
         //Format Properties
         public string FormatType { get; set; }
 
+        //AlbumArtist Properties
+        public bool PrimaryArtist { get; set; }
+
         //Constructor
         public AlbumViewModel() { }
 

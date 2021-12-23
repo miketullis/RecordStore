@@ -35,12 +35,12 @@ namespace RecordStore.UI.MVC.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            var albums = db.Album.ToList().Find(id);
-            if (albums == null)
+            var album = db.Album.Find(id);
+            if (album == null)
             {
                 return HttpNotFound();
             }
-            return View(albums);
+            return View(album);
         }
 
 
@@ -51,8 +51,13 @@ namespace RecordStore.UI.MVC.Controllers
             ViewBag.AlbumStatusID = new SelectList(db.AlbumStatus, "AlbumStatusID", "AlbumStatusName");
             ViewBag.FormatID = new SelectList(db.Format, "FormatID", "FormatType");
             ViewBag.LabelID = new SelectList(db.Label, "LabelID", "LabelName");
-            ViewBag.ArtistID = new SelectList(db.Artist, "ArtistID", "ArtistName");
-            ViewBag.GenreID = new SelectList(db.Genre, "GenreID", "GenreName");
+            ViewBag.PrimaryArtist = new SelectList(db.AlbumArtist, "PrimaryArtist");
+
+
+            //Since going through linking tables to get this info, pass a list of artists then loop through them 
+            ViewBag.Artist = db.Artist.ToList();
+            ViewBag.Genre = db.Genre.ToList();
+
             return View();
         }
 
@@ -61,7 +66,7 @@ namespace RecordStore.UI.MVC.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "AlbumID,AlbumName,ReleaseYear,ArtistID,GenreID,Description,LabelID,CompilationAlbum,CatalogNum,Price,IsInPrint,FormatID,UnitsInStock,AlbumStatusID,AlbumImage,Num")] Album album, HttpPostedFileBase albumCover)
+        public ActionResult Create([Bind(Include = "AlbumID,AlbumName,ReleaseYear,ArtistID,GenreID,Description,LabelID,CompilationAlbum,CatalogNum,Price,IsInPrint,FormatID,UnitsInStock,AlbumStatusID,AlbumImage,Num,PrimaryArtist")] Album album, HttpPostedFileBase albumCover, int[] artists, int[] genres)//ADDED: int array to hold artist IDs from checkboxes
         {
             if (ModelState.IsValid)
             {
@@ -76,7 +81,7 @@ namespace RecordStore.UI.MVC.Controllers
                     string ext = file.Substring(file.LastIndexOf('.'));
                     //declare list of valid file extension
                     string[] validExts = { ".jpeg", ".jpg", ".png", ".gif" };
-                    //is extension valis and filesizre under 4mb
+                    //is extension valid and filesize under 4mb
                     if (validExts.Contains(ext.ToLower()) && albumCover.ContentLength <= 4194304)
                     {
                         file = Guid.NewGuid() + ext; //Create a unique new filename for the file (using a GUID)
@@ -98,21 +103,61 @@ namespace RecordStore.UI.MVC.Controllers
                         //Updated image file to name of images saved to DB
                         album.AlbumImage = file;
                     }
+
                 }
                 #endregion
-
                 db.Album.Add(album);
                 db.SaveChanges();
+
+                //create AlbumArtist record for each checkbox that was checked
+                if (artists != null)
+                {
+                    foreach (var artistId in artists)
+                    {
+                        var ar = db.Artist.Find(artistId);
+                        AlbumArtist aa = new AlbumArtist();
+                        aa.AlbumID = album.AlbumID;
+                        aa.ArtistID = ar.ArtistID;
+                        db.AlbumArtist.Add(aa);
+                    }
+                    db.SaveChanges();
+                }
+
+                //create AlbumGenre record for each checkbox that was checked
+                if (genres != null)
+                {
+                    foreach (var genreId in genres)
+                    {
+                        var g = db.Genre.Find(genreId);
+                        AlbumGenre ag = new AlbumGenre();
+                        ag.AlbumID = album.AlbumID;
+                        ag.GenreID = g.GenreID;
+                        db.AlbumGenre.Add(ag);
+                    }
+                    db.SaveChanges();
+                }
+
                 return RedirectToAction("Index");
             }
 
             ViewBag.AlbumStatusID = new SelectList(db.AlbumStatus, "AlbumStatusID", "AlbumStatusName", album.AlbumStatusID);
             ViewBag.FormatID = new SelectList(db.Format, "FormatID", "FormatType", album.FormatID);
             ViewBag.LabelID = new SelectList(db.Label, "LabelID", "LabelName", album.LabelID);
-            ViewBag.ArtistID = new SelectList(db.Artist, "ArtistID", "ArtistName", album.ArtistID);
-            ViewBag.GenreID = new SelectList(db.Genre, "GenreID", "GenreName", album.GenreID);
+            ViewBag.PrimaryArtist = new SelectList(db.AlbumArtist, "PrimaryArtist");
+
+            //Since going through linking tables to get this info, pass a list of artists then loop through them 
+            ViewBag.Artist = db.Artist.ToList();
+            ViewBag.Genre = db.Genre.ToList();
+
             return View(album);
         }
+
+
+
+
+
+
+
 
 
         // GET: Albums/Edit/5
@@ -123,16 +168,13 @@ namespace RecordStore.UI.MVC.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            var album = db.Album.ToList().Find(id);
+            var album = db.Album.Find(id);
             if (album == null)
             {
                 return HttpNotFound();
             }
             ViewBag.AlbumStatusID = new SelectList(db.AlbumStatus, "AlbumStatusID", "AlbumStatusName", album.AlbumStatusID);
             ViewBag.FormatID = new SelectList(db.Format, "FormatID", "FormatType", album.FormatID);
-            ViewBag.LabelID = new SelectList(db.Label, "LabelID", "LabelName", album.LabelID);
-            ViewBag.ArtistID = new SelectList(db.Artist, "ArtistID", "ArtistName", album.ArtistID);
-            ViewBag.GenreID = new SelectList(db.Genre, "GenreID", "GenreName", album.GenreID);
  
             return View(album);
         }
@@ -197,7 +239,7 @@ namespace RecordStore.UI.MVC.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            var albums = db.Album.ToList().Find(id);
+            var albums = db.Album.Find(id);
             if (albums == null)
             {
                 return HttpNotFound();
@@ -211,7 +253,7 @@ namespace RecordStore.UI.MVC.Controllers
         public ActionResult DeleteConfirmed(int id)
         {
             //delete album image if album is deleted
-            var albums = db.Album.ToList().Find(id);
+            var albums = db.Album.Find(id);
             string path = Server.MapPath("~/Content/assets/images/albumImages/");
             ImageUtility.Delete(path, albums.AlbumImage);
 

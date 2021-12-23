@@ -89,3 +89,45 @@ div#adminNav a {
 label {
     font-weight: bold;
 }
+
+div.row{
+   padding-left: 15px;
+}
+
+
+/*dropdown with checkboxes*/
+
+.selectBox {
+    position: relative;
+    border: 1px #dadada solid;
+    border-radius: 0.3rem;
+    background-color: transparent;
+    border: solid transparent;
+    border-width: 1px 0;
+}
+
+    .selectBox select {
+        width: 100%;
+     }
+
+.overSelect {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+}
+
+#checkArtists, #checkGenres {
+    display: none;
+
+}
+
+    #checkArtists label, #checkGenres label {
+        display: block;
+        
+    }
+
+        #checkArtists label:hover, #checkGernes label:hover {
+            background-color: #1e90ff;
+        }

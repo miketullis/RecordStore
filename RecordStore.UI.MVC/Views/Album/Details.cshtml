@@ -6,131 +6,157 @@
 
 <div id="rrWrapper">
 
-    <div col-md-6>
-           <img src="~/Content/assets/images/albumImages/@Model.AlbumImage" alt="@Model.AlbumName Cover" title="@Model.AlbumName Cover" id="albumArt" />
-    </div>
 
 
-    <div col-md-6>
-        <dl class="dl-horizontal">
-            <dd>
-                <h3>@Html.DisplayFor(model => model.AlbumName)</h3>
-            </dd>
-           <dt>
+    <div class="row">
+        <div col-md-6>
+            <img src="~/Content/assets/images/albumImages/@Model.AlbumImage" alt="@Model.AlbumName Cover" title="@Model.AlbumName Cover" id="albumArt" />
+        </div>
+
+        <div col-md-5>
+            <dl class="dl-horizontal">
+                <dd>
+                    <h3>@Html.DisplayFor(model => model.AlbumName)</h3>
+                </dd>
+                <dt>
                     Artist
-           </dt>
+                </dt>
 
-           <dd>
-               @foreach (var artist in model.AlbumArtist)
-               {
-                   <span>
-                       @artist.Artist.ArtistName
-                   </span>
-               }
-           </dd>
+                <dd>
+                    @* In a Details View, we have only passed a single Album object from the controller to this view.  When referencing the Album, we call
+                    it with Model (* note, capital M)*@
+                    @*@foreach (var artist in model.AlbumArtist)*@
+                    @foreach (var artist in Model.AlbumArtist)
+                    {
+                        if (artist.PrimaryArtist != null)
+                        {
+                            if ((bool)artist.PrimaryArtist)
+                            {
+                                <div>
+                                    @artist.Artist.ArtistName
+                                </div>
+                            }
+                            else
+                            {
+                                <div>
+                                    Feat: @artist.Artist.ArtistName
+                                </div>
+                            }
+                        }
+                        else
+                        {
+                            <div>
+                                @artist.Artist.ArtistName
+                            </div>
+                        }
 
-            <dt>
-                @Html.DisplayNameFor(model => model.ReleaseYear)
-            </dt>
+                    }
+                </dd>
 
-            <dd>
-                @Html.DisplayFor(model => model.ReleaseYear)
-            </dd>
 
-            <dt>
-                @Html.DisplayNameFor(model => model.Description)
-            </dt>
 
-            <dd>
-                @Html.DisplayFor(model => model.Description)
-            </dd>
-            <dt>
-                @Html.DisplayNameFor(model => model.CompilationAlbum)
-            </dt>
 
-            <dd>
-                @Html.DisplayFor(model => model.CompilationAlbum)
-            </dd>
+                <dt>
+                    @Html.DisplayNameFor(model => model.ReleaseYear)
+                </dt>
 
-            <dt>
-                @Html.DisplayNameFor(model => model.CatalogNum)
-            </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.ReleaseYear)
+                </dd>
 
-            <dd>
-                @Html.DisplayFor(model => model.CatalogNum)
-            </dd>
+                <dt>
+                    @Html.DisplayNameFor(model => model.Description)
+                </dt>
 
-            <dt>
-                @Html.DisplayNameFor(model => model.Price)
-            </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.Description)
+                </dd>
+                <dt>
+                    @Html.DisplayNameFor(model => model.CompilationAlbum)
+                </dt>
 
-            <dd>
-                @Html.DisplayFor(model => model.Price)
-            </dd>
+                <dd>
+                    @Html.DisplayFor(model => model.CompilationAlbum)
+                </dd>
 
-            <dt>
-                @Html.DisplayNameFor(model => model.IsInPrint)
-            </dt>
+                <dt>
+                    @Html.DisplayNameFor(model => model.CatalogNum)
+                </dt>
 
-            <dd>
-                @Html.DisplayFor(model => model.IsInPrint)
-            </dd>
+                <dd>
+                    @Html.DisplayFor(model => model.CatalogNum)
+                </dd>
 
-            <dt>
-                @Html.DisplayNameFor(model => model.UnitsInStock)
-            </dt>
+                <dt>
+                    @Html.DisplayNameFor(model => model.Price)
+                </dt>
 
-            <dd>
-                @Html.DisplayFor(model => model.UnitsInStock)
-            </dd>
+                <dd>
+                    @Html.DisplayFor(model => model.Price)
+                </dd>
 
-            <dt>
-                @Html.DisplayNameFor(model => model.AlbumStatus.AlbumStatusName)
-            </dt>
+                <dt>
+                    @Html.DisplayNameFor(model => model.IsInPrint)
+                </dt>
 
-            <dd>
-                @Html.DisplayFor(model => model.AlbumStatus.AlbumStatusName)
-            </dd>
+                <dd>
+                    @Html.DisplayFor(model => model.IsInPrint)
+                </dd>
 
-            <dt>
-                @Html.DisplayNameFor(model => model.Format.FormatType)
-            </dt>
+                <dt>
+                    @Html.DisplayNameFor(model => model.UnitsInStock)
+                </dt>
 
-            <dd>
-                @Html.DisplayFor(model => model.Num) @Html.DisplayFor(model => model.Format.FormatType)@(Model.Num == 1 ? "" : "s"), @Html.DisplayFor(model => model.Tracks)
-                @(Model.Tracks == 1 ? "Track" : Model.Tracks > 1 ? "Tracks" : "none" ) @*ternary operator to display track info*@
-            </dd>
+                <dd>
+                    @Html.DisplayFor(model => model.UnitsInStock)
+                </dd>
 
-            <dt>
-                @Html.DisplayNameFor(model => model.Label.LabelName)
-            </dt>
+                <dt>
+                    @Html.DisplayNameFor(model => model.AlbumStatus.AlbumStatusName)
+                </dt>
 
-            <dd>
-                @Html.DisplayFor(model => model.Label.LabelName)
-            </dd>
+                <dd>
+                    @Html.DisplayFor(model => model.AlbumStatus.AlbumStatusName)
+                </dd>
 
-        </dl>
+                <dt>
+                    @Html.DisplayNameFor(model => model.Format.FormatType)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.Num) @Html.DisplayFor(model => model.Format.FormatType)@(Model.Num == 1 ? "" : "s"), @Html.DisplayFor(model => model.Tracks)
+                    @(Model.Tracks == 1 ? "Track" : Model.Tracks > 1 ? "Tracks" : "none" ) @*ternary operator to display track info*@
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.Label.LabelName)
+                </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.Label.LabelName)
+                </dd>
+            </dl>
+        </div>
     </div>
 
     @* added this <p> for "Add To Cart" fuctionality *@
-<p>
-@using (Html.BeginForm("AddToCart", "Album", new { albumID = Model.AlbumID }, FormMethod.Post))
-{
+    <p>
+        @using (Html.BeginForm("AddToCart", "Album", new { albumID = Model.AlbumID }, FormMethod.Post))
+        {
 
-@Html.HiddenFor(a => a.AlbumID)
-<span class="label">Quantity: </span>
-@Html.TextBox("Qty", 1, new { @class = "form-control", @style = "max-width: 50px; display: inline;" } )
-       
-    //if (Model.UnitsInStock >= qty) //only add to cart if requested quantity is in stock
-    //{
-        <input type="submit" value="Add To Cart" class="btn btn-dark" name="qty" />
-    //}
-    //else
-    //{
-    //    ViewBag.ErrorMessage = "Insufficient quantity in stock.  Please select a lower quanity, or choose a different title.";
-    //}
-}
-</p>
+            @Html.HiddenFor(a => a.AlbumID)
+            <span class="label">Quantity: </span>
+            @Html.TextBox("Qty", 1, new { @class = "form-control", @style = "max-width: 50px; display: inline;" })
+
+            //if (Model.UnitsInStock >= qty) //only add to cart if requested quantity is in stock
+            //{
+            <input type="submit" value="Add To Cart" class="btn btn-dark" name="qty" />
+            //}
+            //else
+            //{
+            //    ViewBag.ErrorMessage = "Insufficient quantity in stock.  Please select a lower quanity, or choose a different title.";
+            //}
+        }
+    </p>
 
     @Html.ActionLink("Back to Albums", "Index", "", new { @class = "btn btn-dark" })
 
