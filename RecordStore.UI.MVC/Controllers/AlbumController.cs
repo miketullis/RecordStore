@@ -24,8 +24,17 @@ namespace RecordStore.UI.MVC.Controllers
         public ActionResult Index()
         {
             var albums = db.Album.ToList();
+
             return View(albums);
         }
+
+        public ActionResult Home()
+        {
+            var albums = db.Album.ToList();
+
+            return View(albums);
+        }
+
 
 
         // GET: Albums/Details/5
@@ -47,10 +56,13 @@ namespace RecordStore.UI.MVC.Controllers
         // GET: Albums/Create
         public ActionResult Create()
         {
+           
             var albums = db.Album.ToList();
             ViewBag.AlbumStatusID = new SelectList(db.AlbumStatus, "AlbumStatusID", "AlbumStatusName");
             ViewBag.FormatID = new SelectList(db.Format, "FormatID", "FormatType");
             ViewBag.LabelID = new SelectList(db.Label, "LabelID", "LabelName");
+
+            var albumArtist = db.AlbumArtist.ToList();
             ViewBag.PrimaryArtist = new SelectList(db.AlbumArtist, "PrimaryArtist");
 
 
@@ -62,15 +74,17 @@ namespace RecordStore.UI.MVC.Controllers
         }
 
         // POST: Albums/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "AlbumID,AlbumName,ReleaseYear,ArtistID,GenreID,Description,LabelID,CompilationAlbum,CatalogNum,Price,IsInPrint,FormatID,UnitsInStock,AlbumStatusID,AlbumImage,Num,PrimaryArtist")] Album album, HttpPostedFileBase albumCover, int[] artists, int[] genres)//ADDED: int array to hold artist IDs from checkboxes
+        public ActionResult Create([Bind(Include = "AlbumID,AlbumName,ReleaseYear,ArtistID,GenreID,Description,LabelID,CompilationAlbum,CatalogNum,Price,IsInPrint,FormatID,UnitsInStock,AlbumStatusID,AlbumImage,Num")] Album album, HttpPostedFileBase albumCover, int[] artists, int[] genres/*, bool PrimaryArtist*/)//ADDED: int array to hold artist IDs from checkboxes
         {
             if (ModelState.IsValid)
             {
-                #region Upload AlbumImage File     
+
+
+
+                #region Upload AlbumImage File
+                
                 string file = "noImage.jpg";
 
                 if (albumCover != null)

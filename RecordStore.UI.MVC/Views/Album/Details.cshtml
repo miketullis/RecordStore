@@ -9,22 +9,19 @@
 
 
     <div class="row">
-        <div col-md-6>
+        <div col-md-5>
             <img src="~/Content/assets/images/albumImages/@Model.AlbumImage" alt="@Model.AlbumName Cover" title="@Model.AlbumName Cover" id="albumArt" />
         </div>
 
-        <div col-md-5>
+        <div col-md-5 style="padding-left: 5em;">
             <dl class="dl-horizontal">
                 <dd>
                     <h3>@Html.DisplayFor(model => model.AlbumName)</h3>
                 </dd>
-                <dt>
-                    Artist
-                </dt>
-
+                <hr />
                 <dd>
                     @* In a Details View, we have only passed a single Album object from the controller to this view.  When referencing the Album, we call
-                    it with Model (* note, capital M)*@
+            it with Model (* note, capital M)*@
                     @*@foreach (var artist in model.AlbumArtist)*@
                     @foreach (var artist in Model.AlbumArtist)
                     {
@@ -33,6 +30,7 @@
                             if ((bool)artist.PrimaryArtist)
                             {
                                 <div>
+                                    <span style="font-weight: bold;">Artist:&nbsp;&nbsp;</span>
                                     @artist.Artist.ArtistName
                                 </div>
                             }
@@ -53,87 +51,71 @@
                     }
                 </dd>
 
-
-
-
-                <dt>
-                    @Html.DisplayNameFor(model => model.ReleaseYear)
-                </dt>
-
                 <dd>
+                    <span style="font-weight: bold;">Year:&nbsp;&nbsp;</span>
                     @Html.DisplayFor(model => model.ReleaseYear)
                 </dd>
-
-                <dt>
-                    @Html.DisplayNameFor(model => model.Description)
-                </dt>
-
                 <dd>
-                    @Html.DisplayFor(model => model.Description)
-                </dd>
-                <dt>
-                    @Html.DisplayNameFor(model => model.CompilationAlbum)
-                </dt>
-
-                <dd>
-                    @Html.DisplayFor(model => model.CompilationAlbum)
-                </dd>
-
-                <dt>
-                    @Html.DisplayNameFor(model => model.CatalogNum)
-                </dt>
-
-                <dd>
-                    @Html.DisplayFor(model => model.CatalogNum)
-                </dd>
-
-                <dt>
-                    @Html.DisplayNameFor(model => model.Price)
-                </dt>
-
-                <dd>
-                    @Html.DisplayFor(model => model.Price)
-                </dd>
-
-                <dt>
-                    @Html.DisplayNameFor(model => model.IsInPrint)
-                </dt>
-
-                <dd>
-                    @Html.DisplayFor(model => model.IsInPrint)
-                </dd>
-
-                <dt>
-                    @Html.DisplayNameFor(model => model.UnitsInStock)
-                </dt>
-
-                <dd>
-                    @Html.DisplayFor(model => model.UnitsInStock)
-                </dd>
-
-                <dt>
-                    @Html.DisplayNameFor(model => model.AlbumStatus.AlbumStatusName)
-                </dt>
-
-                <dd>
-                    @Html.DisplayFor(model => model.AlbumStatus.AlbumStatusName)
-                </dd>
-
-                <dt>
-                    @Html.DisplayNameFor(model => model.Format.FormatType)
-                </dt>
-
-                <dd>
+                    <span style="font-weight: bold;">Format:&nbsp;&nbsp;</span>
                     @Html.DisplayFor(model => model.Num) @Html.DisplayFor(model => model.Format.FormatType)@(Model.Num == 1 ? "" : "s"), @Html.DisplayFor(model => model.Tracks)
                     @(Model.Tracks == 1 ? "Track" : Model.Tracks > 1 ? "Tracks" : "none" ) @*ternary operator to display track info*@
                 </dd>
-
-                <dt>
-                    @Html.DisplayNameFor(model => model.Label.LabelName)
-                </dt>
                 <dd>
+                    <span style="font-weight: bold;">Label:&nbsp;&nbsp;</span>
                     @Html.DisplayFor(model => model.Label.LabelName)
                 </dd>
+                <dd>
+                    <span style="font-weight: bold;">Catalog No.:&nbsp;&nbsp;</span>
+                    @Html.DisplayFor(model => model.CatalogNum)
+                </dd>
+                <hr />
+                <dd>
+                    <span style="font-weight: bold;">Status:&nbsp;&nbsp;</span>
+                    @Html.DisplayFor(model => model.AlbumStatus.AlbumStatusName)
+                </dd>
+                <dd>
+                    <span style="font-weight: bold;">Units In Stock:&nbsp;&nbsp;</span>
+                    @Html.DisplayFor(model => model.UnitsInStock)
+                </dd>
+                <dd>
+                    <span style="font-weight: bold;">Compilation:&nbsp;&nbsp;</span>
+                    @Html.DisplayFor(model => model.CompilationAlbum)
+                </dd>
+                <dd>
+                    <span style="font-weight: bold;">Still In Print:&nbsp;&nbsp;</span>
+                    @Html.DisplayFor(model => model.IsInPrint)
+                </dd>
+
+                <hr />
+                <dt>
+                    @Html.DisplayNameFor(model => model.Description):
+                </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.Description)
+                </dd>
+
+                <hr />
+                <dt>
+                    @Html.DisplayNameFor(model => model.Price):
+                </dt>
+
+                <dd>
+                    <h3> @Html.DisplayFor(model => model.Price)</h3>
+                </dd>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
             </dl>
         </div>
     </div>
@@ -156,6 +138,7 @@
             //    ViewBag.ErrorMessage = "Insufficient quantity in stock.  Please select a lower quanity, or choose a different title.";
             //}
         }
+
     </p>
 
     @Html.ActionLink("Back to Albums", "Index", "", new { @class = "btn btn-dark" })

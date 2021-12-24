@@ -17,5 +17,14 @@ namespace RecordStore
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
         }
+
+
+        //protected void Application_Error()
+        //{
+        //  Response.Redirect("~/Errors/Unresolved");
+
+        //}
+
+
     }
 }

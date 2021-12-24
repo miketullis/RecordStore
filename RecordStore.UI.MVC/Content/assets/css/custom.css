@@ -83,7 +83,6 @@ div#adminNav {
 }
 div#adminNav a {
     color: white;
- font-size-adjust: 1.2;
 }
 
 label {
@@ -92,6 +91,10 @@ label {
 
 div.row{
    padding-left: 15px;
+}
+
+.textSwell {
+    font-size: 1rem;
 }
 
 

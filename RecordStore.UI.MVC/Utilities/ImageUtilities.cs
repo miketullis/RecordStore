@@ -69,8 +69,8 @@ namespace RecordStore.UI.MVC.Utilities
 
         public static void Delete(string path, string fileName)
         {
-            //If the targeted file is the default image (noimage.jpg), skip this action.
-            if (fileName.ToLower() == "noimage.jpg")
+            //If the targeted file is the default image (noImage.jpg), skip this action.
+            if (fileName.ToLower() == "noImage.jpg")
             {
                 return;
             }

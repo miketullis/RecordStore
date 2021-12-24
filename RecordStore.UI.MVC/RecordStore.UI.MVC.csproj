@@ -187,6 +187,7 @@
     <Compile Include="Controllers\ArtistController.cs" />
     <Compile Include="Controllers\DepartmentController.cs" />
     <Compile Include="Controllers\EmployeeController.cs" />
+    <Compile Include="Controllers\ErrorsController.cs" />
     <Compile Include="Controllers\FormatController.cs" />
     <Compile Include="Controllers\GenreController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -220,6 +221,7 @@
     <Content Include="Content\assets\fonts\flexslider-icon.svg" />
     <Content Include="Content\assets\fonts\fontawesome-webfont.svg" />
     <Content Include="Content\assets\fonts\slick.svg" />
+    <Content Include="Content\assets\images\404.png" />
     <Content Include="Content\assets\images\about-heading.jpg" />
     <Content Include="Content\assets\images\albumImages\3ddDangerousGames.jpg" />
     <Content Include="Content\assets\images\albumImages\AcDcBreakingBalls.jpg" />
@@ -305,6 +307,7 @@
     <Content Include="Content\assets\images\albumImages\t_StonesStLouis2021.jpg" />
     <Content Include="Content\assets\images\client-01.png" />
     <Content Include="Content\assets\images\contact-heading.jpg" />
+    <Content Include="Content\assets\images\Error.png" />
     <Content Include="Content\assets\images\feature-image.jpg" />
     <Content Include="Content\assets\images\more-info.jpg" />
     <Content Include="Content\assets\images\products-heading.jpg" />
@@ -501,7 +504,7 @@
     <Content Include="Views\Album\Delete.cshtml" />
     <Content Include="Views\Album\Details.cshtml" />
     <Content Include="Views\Album\Edit.cshtml" />
-    <Content Include="Views\Album\Index.cshtml" />
+    <Content Include="Views\Album\Home.cshtml" />
     <Content Include="Views\AlbumArtist\Create.cshtml" />
     <Content Include="Views\AlbumArtist\Delete.cshtml" />
     <Content Include="Views\AlbumArtist\Details.cshtml" />
@@ -542,7 +545,6 @@
     <Content Include="Views\Label\Edit.cshtml" />
     <Content Include="Views\Label\Index.cshtml" />
     <Content Include="Views\Home\EmailConfirmation.cshtml" />
-    <Content Include="Views\Home\Products.cshtml" />
     <Content Include="Views\Shared\_Layout - Copy.cshtml" />
     <Content Include="Views\ShoppingCart\Index.cshtml" />
     <Content Include="Views\Shared\_AminPartial.cshtml" />
@@ -553,6 +555,9 @@
     <Content Include="Views\Artist\Index.cshtml" />
     <Content Include="Views\Album\ShowAlbums.cshtml" />
     <Content Include="Views\Home\ContactAjax.cshtml" />
+    <Content Include="Views\Errors\Unresolved.cshtml" />
+    <Content Include="Views\Home\Products.cshtml" />
+    <Content Include="Views\Album\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Views\AlbumViewModel\" />
