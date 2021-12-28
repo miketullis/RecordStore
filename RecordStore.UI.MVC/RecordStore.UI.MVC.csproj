@@ -558,6 +558,7 @@
     <Content Include="Views\Errors\Unresolved.cshtml" />
     <Content Include="Views\Home\Products.cshtml" />
     <Content Include="Views\Album\Index.cshtml" />
+    <Content Include="Views\Artist\ArtistCreate.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Views\AlbumViewModel\" />

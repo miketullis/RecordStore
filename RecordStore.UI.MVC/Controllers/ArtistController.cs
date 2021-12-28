@@ -75,6 +75,27 @@ namespace RecordStore.UI.MVC.Controllers
             return View(artist);
         }
 
+
+        //******** AJAX CREATE *********//
+        // -- Creates a new artist record and returns the artist's data as JSON
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public JsonResult AjaxCreate(Artist artist)
+        {
+            db.Artist.Add(artist);
+            db.SaveChanges();
+            return Json(artist);
+
+            //Create a PartialView (ArtistCreate.cshtml)
+            // - Template: Create for Artist
+            // - Data Context Class: RecordStoreEntities
+            // - Check "Create as Partial View" checkbox
+        }
+
+
+
+
+
         // GET: Artists/Edit/5
         public ActionResult Edit(int? id)
         {
