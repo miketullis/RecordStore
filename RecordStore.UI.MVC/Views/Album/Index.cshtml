@@ -32,12 +32,12 @@
 
 <div id="rrWrapper">
 
-
     @if (User.IsInRole("Admin"))
     {
-        @Html.ActionLink("Add A New Album", "Create")
+        @Html.ActionLink("Add A New Album", "Create","Album", null, new { @class = "btn btn-dark"})
+        <br />
+        <br />
     }
-
 
 
     @* we can only show the table if there are results, otherwise show text asking the use to try again *@
@@ -59,27 +59,9 @@
                     <th>
                         @Html.DisplayNameFor(model => model.FirstOrDefault().ReleaseYear)
                     </th>
-                    @*<th>
-                           @Html.DisplayNameFor(model => model.CompilationAlbum)
-                        </th>
-                        <th>
-                           @Html.DisplayNameFor(model => model.IsInPrint)
-                        </th>
-                        <th>
-                           @Html.DisplayNameFor(model => model.UnitsInStock)
-                        </th>
-                        <th>
-                           @Html.DisplayNameFor(model => model.Num)
-                        </th>
-                        <th>
-                           @Html.DisplayNameFor(model => model.AlbumStatus.AlbumStatusName)
-                        </th>*@
                     <th>
                         @Html.DisplayNameFor(model => model.FirstOrDefault().Label.LabelName)
                     </th>
-                    @*<th>
-                            @Html.DisplayNameFor(model => model.FirstOrDefault().CatalogNum)
-                        </th>*@
                     <th>
                         Genre(s)
                     </th>
@@ -100,13 +82,9 @@
             <tbody>
                 @foreach (var item in Model)
                 {
-
-
-
                     <tr>
                         <td>
                             @*@Html.DisplayFor(modelItem => item.AlbumImage)*@
-
                             <a href="@Url.Action("Details", new { id = item.AlbumID })">
                                 <img src="~/Content/assets/images/albumImages/t_@item.AlbumImage" alt="@item.AlbumName cover" title="@item.AlbumName cover" id="albumArt" />
                             </a>
@@ -131,30 +109,10 @@
                         <td>
                             @Html.DisplayFor(modelItem => item.ReleaseYear)
                         </td>
-                        @*<td>
-                                    @Html.DisplayFor(modelItem => item.Description)
-                            </td>
-                            <td>
-                                 @Html.DisplayFor(modelItem => item.CompilationAlbum)
-                            </td>
-                            <td>
-                                 @Html.DisplayFor(modelItem => item.IsInPrint)
-                            </td>
-                            <td>
-                                  @Html.DisplayFor(modelItem => item.UnitsInStock)
-                            </td>
-                            <td>
-                                 @Html.DisplayFor(modelItem => item.Num)
-                            </td>
-                            <td>
-                                 @Html.DisplayFor(modelItem => item.AlbumStatus.AlbumStatusName)
-                            </td>*@
+
                         <td>
                             @Html.DisplayFor(modelItem => item.Label.LabelName)
                         </td>
-                        @*<td>
-                                     @Html.DisplayFor(modelItem => item.CatalogNum)
-                            </td>*@
                         <td>
                             @foreach (var genre in item.AlbumGenre)
                             {

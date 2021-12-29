@@ -18,10 +18,9 @@ namespace RecordStore.UI.MVC.Controllers
     {
         private RecordStoreEntities db = new RecordStoreEntities();
 
-        // GET: Artists
+        // GET: Artist
         public ActionResult Index(string searchString, int page = 1)
         {
-
             int pageSize = 5;
 
             var artists = db.Artist.OrderBy(a => a.ArtistName).ToList();
@@ -34,10 +33,9 @@ namespace RecordStore.UI.MVC.Controllers
             }
 
             return View(artists.ToPagedList(page, pageSize));
-
         }
 
-        // GET: Artists/Details/5
+        // GET: Artist/Details/5
         public ActionResult Details(int? id)
         {
             if (id == null)
@@ -52,13 +50,14 @@ namespace RecordStore.UI.MVC.Controllers
             return View(artist);
         }
 
-        // GET: Artists/Create
+        // GET: Artist/Create
         public ActionResult Create()
         {
             return View();
         }
 
-        // POST: Artists/Create
+
+        // POST: Artist/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
@@ -76,27 +75,7 @@ namespace RecordStore.UI.MVC.Controllers
         }
 
 
-        //******** AJAX CREATE *********//
-        // -- Creates a new artist record and returns the artist's data as JSON
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public JsonResult AjaxCreate(Artist artist)
-        {
-            db.Artist.Add(artist);
-            db.SaveChanges();
-            return Json(artist);
-
-            //Create a PartialView (ArtistCreate.cshtml)
-            // - Template: Create for Artist
-            // - Data Context Class: RecordStoreEntities
-            // - Check "Create as Partial View" checkbox
-        }
-
-
-
-
-
-        // GET: Artists/Edit/5
+        // GET: Artist/Edit/5
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -111,7 +90,8 @@ namespace RecordStore.UI.MVC.Controllers
             return View(artist);
         }
 
-        // POST: Artists/Edit/5
+
+        // POST: Artist/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
@@ -127,7 +107,7 @@ namespace RecordStore.UI.MVC.Controllers
             return View(artist);
         }
 
-        // GET: Artists/Delete/5
+        // GET: Artist/Delete/5
         public ActionResult Delete(int? id)
         {
             if (id == null)
@@ -142,7 +122,7 @@ namespace RecordStore.UI.MVC.Controllers
             return View(artist);
         }
 
-        // POST: Artists/Delete/5
+        // POST: Artist/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
@@ -161,5 +141,29 @@ namespace RecordStore.UI.MVC.Controllers
             }
             base.Dispose(disposing);
         }
+
+
+
+
+        //******** AJAX CREATE *********//
+        // -- Creates a new artist record and returns the artist's data as JSON
+        // GET: Artist/Create
+        public ActionResult ArtistCreate()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public JsonResult ArtistCreate(Artist artist)
+        {
+            db.Artist.Add(artist);
+            db.SaveChanges();
+            return Json(artist);
+
+        }
+
+
+
     }
 }

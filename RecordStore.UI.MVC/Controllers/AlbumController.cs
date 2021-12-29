@@ -20,21 +20,17 @@ namespace RecordStore.UI.MVC.Controllers
     {
         private RecordStoreEntities db = new RecordStoreEntities();
 
-
         public ActionResult Index()
         {
             var albums = db.Album.ToList();
-
             return View(albums);
         }
 
         public ActionResult Home()
         {
             var albums = db.Album.ToList();
-
             return View(albums);
         }
-
 
 
         // GET: Albums/Details/5
@@ -56,7 +52,6 @@ namespace RecordStore.UI.MVC.Controllers
         // GET: Albums/Create
         public ActionResult Create()
         {
-           
             var albums = db.Album.ToList();
             ViewBag.AlbumStatusID = new SelectList(db.AlbumStatus, "AlbumStatusID", "AlbumStatusName");
             ViewBag.FormatID = new SelectList(db.Format, "FormatID", "FormatType");
@@ -64,7 +59,6 @@ namespace RecordStore.UI.MVC.Controllers
 
             var albumArtist = db.AlbumArtist.ToList();
             ViewBag.PrimaryArtist = new SelectList(db.AlbumArtist, "PrimaryArtist");
-
 
             //Since going through linking tables to get this info, pass a list of artists then loop through them 
             ViewBag.Artist = db.Artist.ToList();
@@ -76,15 +70,14 @@ namespace RecordStore.UI.MVC.Controllers
         // POST: Albums/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "AlbumID,AlbumName,ReleaseYear,ArtistID,GenreID,Description,LabelID,CompilationAlbum,CatalogNum,Price,IsInPrint,FormatID,UnitsInStock,AlbumStatusID,AlbumImage,Num")] Album album, HttpPostedFileBase albumCover, int[] artists, int[] genres/*, bool PrimaryArtist*/)//ADDED: int array to hold artist IDs from checkboxes
+        //ADDED: end of method signature
+        //int for radio button Primary Artist
+        public ActionResult Create([Bind(Include = "AlbumID,AlbumName,ReleaseYear,ArtistID,GenreID,Description,LabelID,CompilationAlbum,CatalogNum,Price,IsInPrint,FormatID,UnitsInStock,AlbumStatusID,AlbumImage,Num")] Album album, HttpPostedFileBase albumCover, int[] artists, int[] genres, int primaryArtistId)
         {
             if (ModelState.IsValid)
             {
-
-
-
                 #region Upload AlbumImage File
-                
+
                 string file = "noImage.jpg";
 
                 if (albumCover != null)
@@ -114,11 +107,12 @@ namespace RecordStore.UI.MVC.Controllers
                             ImageUtility.Delete(path, album.AlbumImage); //Delete existing image
                         }
 
-                        //Updated image file to name of images saved to DB
-                        album.AlbumImage = file;
                     }
+                }//end if(albumCover != null)
 
-                }
+                //Set image property of album whether image was uploaded or not
+                album.AlbumImage = file;
+
                 #endregion
                 db.Album.Add(album);
                 db.SaveChanges();
@@ -132,6 +126,15 @@ namespace RecordStore.UI.MVC.Controllers
                         AlbumArtist aa = new AlbumArtist();
                         aa.AlbumID = album.AlbumID;
                         aa.ArtistID = ar.ArtistID;
+                        // primaryArtist check and set true/false
+                        if (artistId == primaryArtistId)
+                        {
+                            aa.PrimaryArtist = true;
+                        }
+                        else
+                        {
+                            aa.PrimaryArtist = false;
+                        }
                         db.AlbumArtist.Add(aa);
                     }
                     db.SaveChanges();
@@ -168,6 +171,15 @@ namespace RecordStore.UI.MVC.Controllers
 
 
 
+
+
+
+        //TODO Rework EDIT Functionality once Create functionality is completed
+        #region Edit Functionality  
+
+
+
+
         // GET: Albums/Edit/5
         [Authorize(Roles = "Admin")]
         public ActionResult Edit(int? id)
@@ -183,7 +195,7 @@ namespace RecordStore.UI.MVC.Controllers
             }
             ViewBag.AlbumStatusID = new SelectList(db.AlbumStatus, "AlbumStatusID", "AlbumStatusName", album.AlbumStatusID);
             ViewBag.FormatID = new SelectList(db.Format, "FormatID", "FormatType", album.FormatID);
- 
+
             return View(album);
         }
 
@@ -221,11 +233,12 @@ namespace RecordStore.UI.MVC.Controllers
                         ImageUtility.ResizeImage(savePath, file, convertedImage, maxImageSize, maxThumbSize); //Pass data to ResizeImage() utility
                         #endregion
                     }
-
-                    //Updated image file to name of images saved to DB
-                    album.AlbumImage = file;
                 }
                 #endregion
+
+                //Updated image file to name of images saved to DB
+                album.AlbumImage = file;
+
 
                 db.Album.Add(album);
                 db.SaveChanges();
@@ -237,6 +250,13 @@ namespace RecordStore.UI.MVC.Controllers
             ViewBag.LabelID = new SelectList(db.Label, "LabelID", "LabelName", album.LabelID);
             return View(album);
         }
+
+
+
+        #endregion
+
+
+
 
 
         // GET: Albums/Delete/5
@@ -260,12 +280,23 @@ namespace RecordStore.UI.MVC.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            //delete album image if album is deleted
-            var albums = db.Album.Find(id);
-            string path = Server.MapPath("~/Content/assets/images/albumImages/");
-            ImageUtility.Delete(path, albums.AlbumImage);
+            var album = db.Album.Find(id);
 
-            db.Album.Remove(albums);
+            //delete album image if album is deleted, but not if it is the default image file
+            if (album.AlbumImage != null && album.AlbumImage != "noImage.jpg")
+            {
+                string path = Server.MapPath("~/Content/assets/images/albumImages/");
+                ImageUtility.Delete(path, album.AlbumImage);
+            }
+
+            db.Album.Remove(album);
+           
+            //delete record in AlbumArtist table if album is deleted
+            AlbumArtist aa = new AlbumArtist();
+            album.AlbumID = aa.AlbumID;
+            db.AlbumArtist.Remove(aa);
+            //The above line throws this error: The property 'AlbumID' is part of the object's key information and cannot be modified.
+    
             db.SaveChanges();
             return RedirectToAction("Index");
         }
@@ -329,16 +360,6 @@ namespace RecordStore.UI.MVC.Controllers
             return RedirectToAction("Index", "ShoppingCart");
         }
         #endregion
-
-
-
-
-
-        public ActionResult ShowAlbums()
-        {
-            var albums = db.Album.ToList();
-            return View(albums);
-        }
 
     }
 }

@@ -1,12 +1,12 @@
 ﻿@model RecordStore.Data.EF.Artist
 
 
+
 @using (Html.BeginForm("", "", FormMethod.Post, new { id = "ArtistCreateForm" }))
 {
     @Html.AntiForgeryToken()
 
     <div class="form-horizontal">
-
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         <div class="form-group">
             <div class="col-md-4">
@@ -20,7 +20,6 @@
                     @Html.ValidationMessageFor(model => model.IsStillActive, "", new { @class = "text-danger" })
                 </div>
             </div>
-
             <div class="col-md-1">
                 <input type="submit" value="Create New Artist" class="btn btn-dark" />
             </div>

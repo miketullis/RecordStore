@@ -12,7 +12,6 @@
 }
 
 
-
 .navbar-nav .dropdown-menu {
     /*position: static;*/
     float: none;
@@ -71,17 +70,15 @@
     display: none;
 }
 
-
 .conForm{
-
 padding-bottom: 1.5em;
 }
 
-div#adminNav {
+#adminNav {
     padding-bottom: 8em;
-
 }
-div#adminNav a {
+
+#adminNav a {
     color: white;
 }
 
@@ -99,7 +96,6 @@ div.row{
 
 
 /*dropdown with checkboxes*/
-
 .selectBox {
     position: relative;
     border: 1px #dadada solid;
@@ -123,12 +119,10 @@ div.row{
 
 #checkArtists, #checkGenres {
     display: none;
-
 }
 
     #checkArtists label, #checkGenres label {
         display: block;
-        
     }
 
         #checkArtists label:hover, #checkGernes label:hover {
