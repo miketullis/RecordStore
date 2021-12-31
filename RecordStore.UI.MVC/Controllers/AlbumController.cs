@@ -289,14 +289,12 @@ namespace RecordStore.UI.MVC.Controllers
                 ImageUtility.Delete(path, album.AlbumImage);
             }
 
+            //delete AlbumArtist records if album is deleted
+            var albumArtists = db.AlbumArtist. Where(x => x.AlbumID == id);
+            db.AlbumArtist.RemoveRange(albumArtists);
+            db.SaveChanges();
+
             db.Album.Remove(album);
-           
-            //delete record in AlbumArtist table if album is deleted
-            AlbumArtist aa = new AlbumArtist();
-            album.AlbumID = aa.AlbumID;
-            db.AlbumArtist.Remove(aa);
-            //The above line throws this error: The property 'AlbumID' is part of the object's key information and cannot be modified.
-    
             db.SaveChanges();
             return RedirectToAction("Index");
         }
@@ -309,6 +307,31 @@ namespace RecordStore.UI.MVC.Controllers
             }
             base.Dispose(disposing);
         }
+
+
+
+        //******** AJAX CREATE *********//
+        // -- Creates a new artist record and returns the artist's data as JSON
+        // GET: Artist/Create
+        public PartialViewResult ArtistCreate()
+        {
+            return PartialView();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public JsonResult ArtistCreate(Artist artist)
+        {
+            db.Artist.Add(artist);
+            db.SaveChanges();
+            return Json(artist);
+
+        }
+
+
+
+
+
 
 
         #region AddToCart Functionality

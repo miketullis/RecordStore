@@ -145,23 +145,7 @@ namespace RecordStore.UI.MVC.Controllers
 
 
 
-        //******** AJAX CREATE *********//
-        // -- Creates a new artist record and returns the artist's data as JSON
-        // GET: Artist/Create
-        public ActionResult ArtistCreate()
-        {
-            return View();
-        }
 
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public JsonResult ArtistCreate(Artist artist)
-        {
-            db.Artist.Add(artist);
-            db.SaveChanges();
-            return Json(artist);
-
-        }
 
 
 

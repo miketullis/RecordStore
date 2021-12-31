@@ -41,7 +41,7 @@ namespace RecordStore.UI.MVC.Controllers
         public ActionResult Create()
         {
             ViewBag.DepartmentID = new SelectList(db.Department, "DepartmentID", "DepartmentName");
-            ViewBag.DirectReportID = new SelectList(db.Employee, "EmployeeID", "FirstName");
+            ViewBag.DirectReportID = new SelectList(db.Employee, "EmployeeID", "NamePlusPosition"); //changed to "NamePlusPosition" from "FirstName"
             return View();
         }
 
@@ -60,7 +60,7 @@ namespace RecordStore.UI.MVC.Controllers
             }
 
             ViewBag.DepartmentID = new SelectList(db.Department, "DepartmentID", "DepartmentName", employee.DepartmentID);
-            ViewBag.DirectReportID = new SelectList(db.Employee, "EmployeeID", "FirstName", employee.DirectReportID);
+            ViewBag.DirectReportID = new SelectList(db.Employee, "EmployeeID", "NamePlusPosition", employee.DirectReportID); //changed to "NamePlusPosition" from "FirstName"
             return View(employee);
         }
 
@@ -77,7 +77,7 @@ namespace RecordStore.UI.MVC.Controllers
                 return HttpNotFound();
             }
             ViewBag.DepartmentID = new SelectList(db.Department, "DepartmentID", "DepartmentName", employee.DepartmentID);
-            ViewBag.DirectReportID = new SelectList(db.Employee, "EmployeeID", "FirstName", employee.DirectReportID);
+            ViewBag.DirectReportID = new SelectList(db.Employee, "EmployeeID", "NamePlusPosition", employee.DirectReportID);
             return View(employee);
         }
 
@@ -95,7 +95,7 @@ namespace RecordStore.UI.MVC.Controllers
                 return RedirectToAction("Index");
             }
             ViewBag.DepartmentID = new SelectList(db.Department, "DepartmentID", "DepartmentName", employee.DepartmentID);
-            ViewBag.DirectReportID = new SelectList(db.Employee, "EmployeeID", "FirstName", employee.DirectReportID);
+            ViewBag.DirectReportID = new SelectList(db.Employee, "EmployeeID", "NamePlusPosition", employee.DirectReportID);
             return View(employee);
         }
 

@@ -26,15 +26,11 @@
 
             <div class="form-group col-md-10">
                 <label class="control-label">Artist</label>
-
+                @*Link to trigger ArtistCreate dialog box *@
                 <a style="float:right;" href="" class="ArtistCreate">Need A New Artist?</a>
-                @*Link to trigger ArtistCreate dialog box
-                    TODO - figure out why not opening partial view,
-                    may need to use JSON to display newly created artist without reload  *@
-
                 <div class="selectBox" onclick="showArtists()">
                     <select>
-                        <option>Album Artist(s)</option>
+                        <option>@*Album Artist(s)*@</option>
                     </select>
                     <div class="overSelect"></div>
                 </div>
@@ -43,7 +39,7 @@
                     @foreach (RecordStore.Data.EF.Artist artist in ViewBag.Artist)
                     {
                         <label>
-                            <div class="row">
+                            <div class="row ">
                                 @*div not supposed to be nested in label, but works to display in 2 columns*@
                                 <div class="col-md-6">
                                     <input type="checkbox" name="artists" value="@artist.ArtistID" />
@@ -59,12 +55,12 @@
                 </div>
             </div>
 
-
-
-            <div class="form-group">
-                @Html.LabelFor(model => model.LabelID, "Label", htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @Html.DropDownList("LabelID", null, htmlAttributes: new { @class = "form-control" })
+            <div class="form-group col-md-10">
+                @Html.LabelFor(model => model.LabelID, "Label", htmlAttributes: new { @class = "control-label" })
+                @*Link to trigger LabelCreate dialog box *@
+                <a style="float:right;" href="" class="ArtistCreate">Need A New Label?</a>
+                <div >
+                    @Html.DropDownList("LabelID", null, "", htmlAttributes: new { @class = "form-control" })
                     @Html.ValidationMessageFor(model => model.LabelID, "", new { @class = "text-danger" })
                 </div>
             </div>
@@ -85,12 +81,12 @@
             <div class="form-group">
                 <div class="row">
                     <div class="col-md-3">
-                        @Html.LabelFor(model => model.ReleaseYear, "Release Year", htmlAttributes: new { @class = "control-label",  })
+                        @Html.LabelFor(model => model.ReleaseYear, "Release Year", htmlAttributes: new { @class = "control-label", })
                         @Html.EditorFor(model => model.ReleaseYear, new { htmlAttributes = new { @class = "form-control", placeholder = "mm-dd-yyyy" } })
-                        @Html.ValidationMessageFor(model => model.ReleaseYear, "{0:yyyy}", new { @class = "text-danger" })
+                        @Html.ValidationMessageFor(model => model.ReleaseYear, "", new { @class = "text-danger" })
                     </div>
                     <div class="col-md-3">
-                        @Html.LabelFor(model => model.Num, "No. of CDs/LPs/Etc...", htmlAttributes: new { @class = "control-label" })
+                        @Html.LabelFor(model => model.Num, "No. of CDs/LPs/Etc.", htmlAttributes: new { @class = "control-label" })
                         @Html.EditorFor(model => model.Num, new { htmlAttributes = new { @class = "form-control" } })
                         @Html.ValidationMessageFor(model => model.Num, "", new { @class = "text-danger" })
                     </div>
@@ -108,7 +104,7 @@
                         <label class="control-label">Genre</label>
                         <div class="selectBox" onclick="showGenres()">
                             <select>
-                                <option>Genre(s)</option>
+                                <option>@*Genre(s)*@</option>
                             </select>
                             <div class="overSelect"></div>
                         </div>
@@ -124,12 +120,12 @@
                     </div>
                     <div class="col-md-3">
                         @Html.LabelFor(model => model.FormatID, "Format", htmlAttributes: new { @class = "control-label" })
-                        @Html.DropDownList("FormatID", null, htmlAttributes: new { @class = "form-control" })
+                        @Html.DropDownList("FormatID", null, "", htmlAttributes: new { @class = "form-control" })
                         @Html.ValidationMessageFor(model => model.FormatID, "", new { @class = "text-danger" })
                     </div>
                     <div class="col-md-3">
                         @Html.LabelFor(model => model.AlbumStatusID, "Status", htmlAttributes: new { @class = "control-label" })
-                        @Html.DropDownList("AlbumStatusID", null, htmlAttributes: new { @class = "form-control" })
+                        @Html.DropDownList("AlbumStatusID", null, "", htmlAttributes: new { @class = "form-control" })
                         @Html.ValidationMessageFor(model => model.AlbumStatusID, "", new { @class = "text-danger" })
                     </div>
                 </div>
@@ -221,20 +217,17 @@
  
 
 
-
-
-
         //*********** AJAX ARTIST CREATE DIALOG/POP-UP BOX ************//
         $('a.ArtistCreate').click(function (e) {
             e.preventDefault(); 
             $("#ArtistCreate")
                 .dialog({
-                    width: 400,
-                    height: 200,
+                    width: 450,
+                    height: 250,
                     open: function () {
-                        $(this).load("/Artist/ArtistCreate");
+                        $(this).load("/Album/ArtistCreate");
                     },
-                    title: "Add New Artist",
+                    title: "Create New Artist",
                     modal: true,
                     resizable: false
                 }); //End dialog box for the div
@@ -247,7 +240,7 @@
             e.preventDefault(); //Prevent the default page reload on submit
 
             $.ajax({
-                url: "/Artist/ArtistCreate",
+                url: "/Album/ArtistCreate",
                 type: "POST",
                 data: formData,
                 dataType: "json",

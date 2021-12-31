@@ -550,12 +550,11 @@
     <Content Include="Views\Artist\Details.cshtml" />
     <Content Include="Views\Artist\Edit.cshtml" />
     <Content Include="Views\Artist\Index.cshtml" />
-    <Content Include="Views\Album\ShowAlbums.cshtml" />
     <Content Include="Views\Home\ContactAjax.cshtml" />
     <Content Include="Views\Errors\Unresolved.cshtml" />
     <Content Include="Views\Home\Products.cshtml" />
     <Content Include="Views\Album\Index.cshtml" />
-    <Content Include="Views\Artist\ArtistCreate.cshtml" />
+    <Content Include="Views\Album\ArtistCreate.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Views\AlbumViewModel\" />

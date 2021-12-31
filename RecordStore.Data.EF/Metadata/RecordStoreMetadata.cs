@@ -225,9 +225,9 @@ namespace RecordStore.Data.EF//.Metadata
         [Display(Name = "First Name")]
         public string FirstName { get; set; }
 
-        [Required(ErrorMessage = "* First Name is required *")]
+        [Required(ErrorMessage = "* Lastst Name is required *")]
         [StringLength(25, ErrorMessage = "* Cannot exceed 25 characters")]
-        [Display(Name = "First Name")]
+        [Display(Name = "Last Name")]
         public string LastName { get; set; }
 
         [StringLength(10, ErrorMessage = "* Cannot exceed 10 characters")]
@@ -262,16 +262,37 @@ namespace RecordStore.Data.EF//.Metadata
         [DisplayFormat(DataFormatString = "{0:###-###-####}", NullDisplayText = "[-N/A-]")]
         public string Phone { get; set; }
 
+        [DisplayFormat(DataFormatString = "{0:yyyy/MM/dd}", ApplyFormatInEditMode = true)]
         public Nullable<System.DateTime> Birthday { get; set; }
 
+        [DisplayFormat(DataFormatString = "{0:yyyy/MM/dd}", ApplyFormatInEditMode = true)]
         public Nullable<System.DateTime> HireDate { get; set; }
 
         //public int DirectReportID { get; set; }
+
+
+
     }
 
     [MetadataType(typeof(EmployeeMetadata))]
     public partial class Employee
     {
+       
+        public string NamePlusPosition
+        {
+            get { return  LastName + ", " + FirstName + " - (" + Position + ")" ; }
+        }
+
+        public string FullName
+        {
+            get { return  LastName + ", " + FirstName; }
+        }
+
+        public string FullAddress
+        {
+            get { return Address + ", " + City + ", " + State + ", " + ZipCode; }
+        }
+
 
 
     }
@@ -288,9 +309,6 @@ namespace RecordStore.Data.EF//.Metadata
         [StringLength(15, ErrorMessage = "* Cannot exceed 15 characters *")]
         [Display(Name = "Dept. Name")]
         public string DepartmentName { get; set; }
-
-        [Required(ErrorMessage = "* Employee  is required *")]
-        public int EmployeeID { get; set; }
 
         [StringLength(100, ErrorMessage = "* Cannot exceed 100 characters *")]
         [Display(Name = "Dept. Description")]
