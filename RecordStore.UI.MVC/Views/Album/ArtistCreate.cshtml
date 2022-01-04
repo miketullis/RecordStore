@@ -29,3 +29,45 @@
 }
 
 
+@*//*********** AJAX ARTIST CREATE DIALOG/POP-UP BOX ************//*@
+<script src="https://cdn.jsdelivr.net/jquery.ajax.unobtrusive/3.2.4/jquery.unobtrusive-ajax.min.js"></script>
+
+<script>
+    $("#ArtistCreateForm").submit(function (e) {
+        var formData = $(this).serializeArray();
+        console.log(formData);
+        e.preventDefault();//Prevent the default page reload on submit
+
+        $.ajax({
+            url: "/Album/ArtistCreate",
+            type: "POST",
+            data: formData,
+            dataType: "json",
+            error: function (e) {
+                $("#MessageContent").html("<div class='alert alert-danger'>There was a problem.</div>");
+            },
+            success: function (foo) {
+                //If you want to see this 'Artist created successfully' message, make sure you've got the #MessageContent element in the Create view
+                $("#MessageContent").html("<div class='alert alert-success'>Artist created successfully.</div>");
+                $("#ArtistCreateForm")[0].reset();
+  
+                $(function () {
+                    var label =
+                        '<div class="row"><div class="col-md-6"><input type="checkbox" name="artists" value = "' +
+                        foo.ArtistID + '" /><span style="font-weight:bold;">&nbsp;&nbsp;' +
+                        foo.ArtistName + '</span ></div><div class="col-md-4"><input type="radio" name="primaryArtistID" value="' +
+                        foo.ArtistID + '" /><span style="font-size:12px; font-weight:400;">&nbsp;Primary Artist</span></div></div>';
+                    $("#checkArtists").append(label);
+                }); //End of build & append label functionality
+
+                //close dialog on successful submit (not working)
+                $("#ArtistCreate").dialog("close");
+
+            } //End success
+        }); //End Ajax form submission properties
+    }); //End form submit event handler
+</script>
+
+
+
+

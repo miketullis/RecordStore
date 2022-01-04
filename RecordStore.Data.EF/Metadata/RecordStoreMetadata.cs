@@ -17,10 +17,14 @@ namespace RecordStore.Data.EF//.Metadata
         [Display(Name = "Album")]
         public string AlbumName { get; set; }
 
+        //[Required(ErrorMessage = "* Year Released is required *")]
+        //[Display(Name = "Year")]
+        //[DisplayFormat(DataFormatString = "{0:yyyy}", ApplyFormatInEditMode = true)]
+        //public Nullable<System.DateTime> ReleaseYear { get; set; }
+
         [Required(ErrorMessage = "* Year Released is required *")]
         [Display(Name = "Year")]
-        [DisplayFormat(DataFormatString = "{0:yyyy}", ApplyFormatInEditMode = true)]
-        public Nullable<System.DateTime> ReleaseYear { get; set; }
+        public Nullable<int> ReleaseYear { get; set; }
         
         [UIHint("MultilineText")]
         [DisplayFormat(NullDisplayText = "[-N/A-]")]
@@ -40,8 +44,7 @@ namespace RecordStore.Data.EF//.Metadata
 
         [Display(Name = "In Print")]
         public bool IsInPrint { get; set; }
-
-        
+                
         [Display(Name = "Units In Stock")]
         [Range(0, double.MaxValue, ErrorMessage = "* Value must be a valid number, 0 or larger *")]
         [DisplayFormat(NullDisplayText = "[-N/A-]")]
@@ -58,9 +61,7 @@ namespace RecordStore.Data.EF//.Metadata
 
         [Range(0, double.MaxValue, ErrorMessage = "* Value must be a valid number, 0 or larger *")]
         public Nullable<int> Tracks { get; set; }
-
-
-
+        
         [Required(ErrorMessage = "* Label ID is required *")]
         [Display(Name = "Label")]
         public int LabelID { get; set; }
@@ -269,9 +270,6 @@ namespace RecordStore.Data.EF//.Metadata
         public Nullable<System.DateTime> HireDate { get; set; }
 
         //public int DirectReportID { get; set; }
-
-
-
     }
 
     [MetadataType(typeof(EmployeeMetadata))]
@@ -292,9 +290,6 @@ namespace RecordStore.Data.EF//.Metadata
         {
             get { return Address + ", " + City + ", " + State + ", " + ZipCode; }
         }
-
-
-
     }
     #endregion
 

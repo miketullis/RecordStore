@@ -1,14 +1,20 @@
 ﻿/*wrapper/container for footer placement*/
 #rrWrapper {
-    padding-top: 150px; /*height of header*/
+    padding-top: 60px; 
     padding-left: 20%;
     padding-right: 20%;
-    min-height: calc(100vh - 222px); /*height of footer*/
+    min-height: calc(100vh - 302px); /*height of footer & header*/
 }
 
 #rrContainer {
     position: relative;
+    padding-top: 80px; /*height of header*/
     min-height: 100vh;
+}
+
+#MessageDisplay {
+    padding-left: 20%;
+    padding-right: 20%;
 }
 
 
@@ -88,11 +94,28 @@ label {
 
 div.row{
    padding-left: 15px;
+   padding-right: 15px;
 }
 
 .textSwell {
     font-size: 1rem;
 }
+
+
+.banner {
+
+    padding-top: 0;
+}
+
+
+/*AJAX Popup Dialog Styling*/
+.ui-widget-header {
+    border: 1px solid #dddddd;
+    background-color: #23272B;
+    color: white;
+    font-weight: bold;
+}
+
 
 
 /*dropdown with checkboxes*/
@@ -126,6 +149,19 @@ div.row{
 
 #checkArtists, #checkGenres {
     display: none;
+    border: 1px solid black;
+    padding: 0;
+    margin: 0;
+    z-index: 99;
+    width: auto;
+    max-height: 200px;
+    overflow-x: hidden;
+    overflow-y: auto;
+}
+
+ul #checkArtists, ul #checkGenres {
+    display: none;
+   background-color: gray;
 }
 
     #checkArtists label, #checkGenres label {

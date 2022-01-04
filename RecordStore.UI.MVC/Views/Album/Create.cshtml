@@ -5,7 +5,7 @@
 }
 
 <div id="rrWrapper">
-    <h3>@ViewBag.title</h3>
+    <h3 class="text-center">@ViewBag.title</h3>
     <br />
     @using (Html.BeginForm("Create", "Album", FormMethod.Post, new { enctype = "multipart/form-data" }))
     {
@@ -14,34 +14,32 @@
         <div class="form-horizontal">
             @Html.ValidationSummary(true, "", new { @class = "text-danger" })
             <div class="form-group">
-                @Html.LabelFor(model => model.AlbumName, "Album Name", htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
+                @Html.LabelFor(model => model.AlbumName, "Album Name", htmlAttributes: new { @class = "control-label col-md-4" })
+                <div class="col-md-12">
                     @Html.EditorFor(model => model.AlbumName, new { htmlAttributes = new { @class = "form-control" } })
                     @Html.ValidationMessageFor(model => model.AlbumName, "", new { @class = "text-danger" })
                 </div>
             </div>
 
 
-
-
-            <div class="form-group col-md-10">
+              
+            
+            <div class="form-group col-md-12">
                 <label class="control-label">Artist</label>
                 @*Link to trigger ArtistCreate dialog box *@
                 <a style="float:right;" href="" class="ArtistCreate">Need A New Artist?</a>
                 <div class="selectBox" onclick="showArtists()">
-                    <select>
-                        <option>@*Album Artist(s)*@</option>
+                    <select style="color:#888B7D;">
+                        <option>Select Album Artist(s)</option>
                     </select>
                     <div class="overSelect"></div>
                 </div>
-
-                <div id="checkArtists">
+                <ul id="checkArtists">
                     @foreach (RecordStore.Data.EF.Artist artist in ViewBag.Artist)
                     {
-                        <label>
-                            <div class="row ">
-                                @*div not supposed to be nested in label, but works to display in 2 columns*@
-                                <div class="col-md-6">
+                        <li>
+                            <div class="row">
+                                <div class="col-md-4">
                                     <input type="checkbox" name="artists" value="@artist.ArtistID" />
                                     <span>&nbsp;@artist.ArtistName</span>
                                 </div>
@@ -50,47 +48,48 @@
                                     <span style="font-size:12px; font-weight:400;">&nbsp;Primary Artist</span>
                                 </div>
                             </div>
-                        </label>
+                        </li>
                     }
-                </div>
+                </ul>
             </div>
+            
 
-            <div class="form-group col-md-10">
+            <div class="form-group col-md-12">
                 @Html.LabelFor(model => model.LabelID, "Label", htmlAttributes: new { @class = "control-label" })
                 @*Link to trigger LabelCreate dialog box *@
-                <a style="float:right;" href="" class="ArtistCreate">Need A New Label?</a>
-                <div >
-                    @Html.DropDownList("LabelID", null, "", htmlAttributes: new { @class = "form-control" })
+                <a style="float:right;" href="" class="LabelCreate">Need A New Label?</a>
+                <div>
+                    @Html.DropDownList("LabelID", null, "", htmlAttributes: new { @class = "form-control"})
                     @Html.ValidationMessageFor(model => model.LabelID, "", new { @class = "text-danger" })
                 </div>
             </div>
             <div class="form-group">
                 @Html.LabelFor(model => model.CatalogNum, htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
+                <div class="col-md-12">
                     @Html.EditorFor(model => model.CatalogNum, new { htmlAttributes = new { @class = "form-control" } })
                     @Html.ValidationMessageFor(model => model.CatalogNum, "", new { @class = "text-danger" })
                 </div>
             </div>
             <div class="form-group">
                 @Html.LabelFor(model => model.Description, htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
+                <div class="col-md-12">
                     @Html.EditorFor(model => model.Description, new { htmlAttributes = new { @class = "form-control" } })
                     @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
                 </div>
             </div>
             <div class="form-group">
                 <div class="row">
-                    <div class="col-md-3">
+                    <div class="col-md-4">
                         @Html.LabelFor(model => model.ReleaseYear, "Release Year", htmlAttributes: new { @class = "control-label", })
                         @Html.EditorFor(model => model.ReleaseYear, new { htmlAttributes = new { @class = "form-control", placeholder = "mm-dd-yyyy" } })
                         @Html.ValidationMessageFor(model => model.ReleaseYear, "", new { @class = "text-danger" })
                     </div>
-                    <div class="col-md-3">
+                    <div class="col-md-4">
                         @Html.LabelFor(model => model.Num, "No. of CDs/LPs/Etc.", htmlAttributes: new { @class = "control-label" })
                         @Html.EditorFor(model => model.Num, new { htmlAttributes = new { @class = "form-control" } })
                         @Html.ValidationMessageFor(model => model.Num, "", new { @class = "text-danger" })
                     </div>
-                    <div class="col-md-3">
+                    <div class="col-md-4">
                         @Html.LabelFor(model => model.Tracks, "No. of Tracks", htmlAttributes: new { @class = "control-label" })
                         @Html.EditorFor(model => model.Tracks, new { htmlAttributes = new { @class = "form-control" } })
                         @Html.ValidationMessageFor(model => model.Tracks, "", new { @class = "text-danger" })
@@ -100,30 +99,30 @@
 
             <div class="form-group">
                 <div class="row">
-                    <div class="col-md-3">
+                    <div class="col-md-4">
                         <label class="control-label">Genre</label>
                         <div class="selectBox" onclick="showGenres()">
-                            <select>
-                                <option>@*Genre(s)*@</option>
+                            <select style="color:#888B7D;">
+                                <option>Select Genre(s)</option>
                             </select>
                             <div class="overSelect"></div>
                         </div>
-                        <div id="checkGenres">
+                        <ul id="checkGenres">
                             @foreach (RecordStore.Data.EF.Genre genre in ViewBag.Genre)
                             {
-                                <label>
+                                <li class="col-md-12">
                                     <input type="checkbox" name="genres" value="@genre.GenreID" />
                                     <span>&nbsp;@genre.GenreName</span>
-                                </label>
+                                </li>
                             }
-                        </div>
+                        </ul>
                     </div>
-                    <div class="col-md-3">
+                    <div class="col-md-4">
                         @Html.LabelFor(model => model.FormatID, "Format", htmlAttributes: new { @class = "control-label" })
                         @Html.DropDownList("FormatID", null, "", htmlAttributes: new { @class = "form-control" })
                         @Html.ValidationMessageFor(model => model.FormatID, "", new { @class = "text-danger" })
                     </div>
-                    <div class="col-md-3">
+                    <div class="col-md-4">
                         @Html.LabelFor(model => model.AlbumStatusID, "Status", htmlAttributes: new { @class = "control-label" })
                         @Html.DropDownList("AlbumStatusID", null, "", htmlAttributes: new { @class = "form-control" })
                         @Html.ValidationMessageFor(model => model.AlbumStatusID, "", new { @class = "text-danger" })
@@ -133,12 +132,12 @@
 
             <div class="form-group">
                 <div class="row">
-                    <div class="col-md-3">
+                    <div class="col-md-4">
                         @Html.LabelFor(model => model.UnitsInStock, htmlAttributes: new { @class = "control-label" })
                         @Html.EditorFor(model => model.UnitsInStock, new { htmlAttributes = new { @class = "form-control" } })
                         @Html.ValidationMessageFor(model => model.UnitsInStock, "", new { @class = "text-danger" })
                     </div>
-                    <div class="col-md-3">
+                    <div class="col-md-4">
                         @Html.LabelFor(model => model.Price, htmlAttributes: new { @class = "control-label" })
                         @Html.EditorFor(model => model.Price, new { htmlAttributes = new { @class = "form-control" } })
                         @Html.ValidationMessageFor(model => model.Price, "", new { @class = "text-danger" })
@@ -162,14 +161,14 @@
 
             <div class="form-group">
                 @Html.LabelFor(model => model.AlbumImage, "Album Cover", htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
+                <div class="col-md-12">
                     <input type="file" name="albumCover" />
                     @Html.ValidationMessageFor(model => model.AlbumImage, "", new { @class = "text-danger" })
                 </div>
             </div>
 
             <div class="form-group">
-                <div class="col-md-offset-2 col-md-10">
+                <div class="col-md-offset-2 col-md-12">
                     <input type="submit" value="Create New Ablum" class="btn btn-dark" />
                     @Html.ActionLink("Cancel", "Index", "Album", null, new { @class = "btn btn-dark" })
                 </div>
@@ -179,7 +178,12 @@
 
 
     @* Placeholder for the creating a new artist in a dialog box *@
-    <div id="ArtistCreate"></div>
+    <div id="ArtistCreate">
+    </div>
+
+    @* Placeholder for the creating a new Label in a dialog box *@
+    <div id="LabelCreate">
+    </div>
 
 
 
@@ -214,12 +218,12 @@
             }
         }
 
- 
+
 
 
         //*********** AJAX ARTIST CREATE DIALOG/POP-UP BOX ************//
         $('a.ArtistCreate').click(function (e) {
-            e.preventDefault(); 
+            e.preventDefault();
             $("#ArtistCreate")
                 .dialog({
                     width: 450,
@@ -232,37 +236,24 @@
                     resizable: false
                 }); //End dialog box for the div
         }); //End details button click event handler
+        
 
-
-        $("#ArtistCreateForm").submit(function (e) {
-            var formData = $(this).serializeArray();
-            console.log(formData);
-            e.preventDefault(); //Prevent the default page reload on submit
-
-            $.ajax({
-                url: "/Album/ArtistCreate",
-                type: "POST",
-                data: formData,
-                dataType: "json",
-                error: function (e) {
-                    $("#MessageContent").html("<div class='alert alert-danger'>There was a problem.</div>");
-                },
-                success: function (foo) {
-                    $("#MessageContent").html("<div class='alert alert-success'>Artist created successfully.</div>");
-                    $("#ArtistCreateForm")[0].reset();
-                    $(function () {
-                        var label =
-                            '<div class="row"><div class="col-md-6"><input type="checkbox" name="artists" value = "' +
-                            foo.artist.ArtistID + '" /><span>&nbsp;' +
-                            foo.ArtistName + '</span ></div><div class="col-md-4"><input type="radio" name="primaryArtistID" value="' +
-                            foo.artist.ArtistID + '" /><span style="font-size:12px; font-weight:400;">&nbsp;Primary Artist</span></div></div>';
-                        $("#checkArtist").append(label);
-                    }); //End of build & append label functionality
-                } //End success
-            }); //End Ajax form submission properties
-        }); //End form submit event handler
+        //*********** AJAX LABEL CREATE DIALOG/POP-UP BOX ************//
+        $('a.LabelCreate').click(function (e) {
+            e.preventDefault();
+            $("#LabelCreate")
+                .dialog({
+                    width: 450,
+                    height: 350,
+                    open: function () {
+                        $(this).load("/Album/LabelCreate");
+                    },
+                    title: "Create New Label",
+                    modal: true,
+                    resizable: false
+                }); //End dialog box for the div
+        }); //End details button click event handler
 
     </script>
-
 
 }

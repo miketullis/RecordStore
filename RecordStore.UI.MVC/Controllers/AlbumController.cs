@@ -32,7 +32,7 @@ namespace RecordStore.UI.MVC.Controllers
             return View(albums);
         }
 
-
+        #region Details
         // GET: Albums/Details/5
         public ActionResult Details(int? id)
         {
@@ -47,8 +47,9 @@ namespace RecordStore.UI.MVC.Controllers
             }
             return View(album);
         }
+        #endregion
 
-
+        #region Create
         // GET: Albums/Create
         public ActionResult Create()
         {
@@ -168,22 +169,15 @@ namespace RecordStore.UI.MVC.Controllers
 
             return View(album);
         }
+        #endregion
 
-
-
-
-
-
-        //TODO Rework EDIT Functionality once Create functionality is completed
-        #region Edit Functionality  
-
-
-
-
+        #region Edit
         // GET: Albums/Edit/5
         [Authorize(Roles = "Admin")]
         public ActionResult Edit(int? id)
         {
+            var albums = db.Album.ToList();
+
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -193,8 +187,18 @@ namespace RecordStore.UI.MVC.Controllers
             {
                 return HttpNotFound();
             }
-            ViewBag.AlbumStatusID = new SelectList(db.AlbumStatus, "AlbumStatusID", "AlbumStatusName", album.AlbumStatusID);
-            ViewBag.FormatID = new SelectList(db.Format, "FormatID", "FormatType", album.FormatID);
+
+            ViewBag.AlbumStatusID = new SelectList(db.AlbumStatus, "AlbumStatusID", "AlbumStatusName");
+            ViewBag.FormatID = new SelectList(db.Format, "FormatID", "FormatType");
+            ViewBag.LabelID = new SelectList(db.Label, "LabelID", "LabelName");
+
+            var albumArtist = db.AlbumArtist.ToList();
+            ViewBag.PrimaryArtist = new SelectList(db.AlbumArtist, "PrimaryArtist");
+
+            //Since going through linking tables to get this info, pass a list of artists then loop through them 
+            ViewBag.Artist = db.Artist.ToList();
+            ViewBag.Genre = db.Genre.ToList();
+
 
             return View(album);
         }
@@ -204,12 +208,12 @@ namespace RecordStore.UI.MVC.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "AlbumID,AlbumName,ReleaseYear,ArtistID,Description,LabelID,CompilationAlbum,CatalogNum,Price,IsInPrint,FormatID,UnitsInStock,AlbumStatusID,AlbumImage,Num")] Album album, HttpPostedFileBase albumCover)
+        public ActionResult Edit([Bind(Include = "AlbumID,AlbumName,ReleaseYear,ArtistID,Description,LabelID,CompilationAlbum,CatalogNum,Price,IsInPrint,FormatID,UnitsInStock,AlbumStatusID,AlbumImage,Num")] Album album, HttpPostedFileBase albumCover, int[] artists, int[] genres, int primaryArtistId)
         {
             if (ModelState.IsValid)
             {
+                #region Upload AlbumImage File
 
-                #region Upload AlbumImage File     
                 string file = "noImage.jpg";
 
                 if (albumCover != null)
@@ -218,9 +222,9 @@ namespace RecordStore.UI.MVC.Controllers
                     file = albumCover.FileName;
                     //grab file extension using Substring()
                     string ext = file.Substring(file.LastIndexOf('.'));
-                    //declare list of valid file extensions
+                    //declare list of valid file extension
                     string[] validExts = { ".jpeg", ".jpg", ".png", ".gif" };
-                    //is extension valis and filesize under 4mb
+                    //is extension valid and filesize under 4mb
                     if (validExts.Contains(ext.ToLower()) && albumCover.ContentLength <= 4194304)
                     {
                         file = Guid.NewGuid() + ext; //Create a unique new filename for the file (using a GUID)
@@ -232,15 +236,59 @@ namespace RecordStore.UI.MVC.Controllers
                         int maxThumbSize = 100; //max thumbnail size in pixels
                         ImageUtility.ResizeImage(savePath, file, convertedImage, maxImageSize, maxThumbSize); //Pass data to ResizeImage() utility
                         #endregion
+
+                        if (album.AlbumImage != null && album.AlbumImage != "noImage.jpg")
+                        {
+                            string path = Server.MapPath("~/Content/assets/images/albumImages/"); //Define image save path
+                            ImageUtility.Delete(path, album.AlbumImage); //Delete existing image
+                        }
                     }
-                }
+                }//end if(albumCover != null)
                 #endregion
 
                 //Updated image file to name of images saved to DB
                 album.AlbumImage = file;
 
 
-                db.Album.Add(album);
+                //create AlbumArtist record for each checkbox that was checked
+                if (artists != null)
+                {
+                    foreach (var artistId in artists)
+                    {
+                        var ar = db.Artist.Find(artistId);
+                        AlbumArtist aa = new AlbumArtist();
+                        aa.AlbumID = album.AlbumID;
+                        aa.ArtistID = ar.ArtistID;
+                        // primaryArtist check and set true/false
+                        if (artistId == primaryArtistId)
+                        {
+                            aa.PrimaryArtist = true;
+                        }
+                        else
+                        {
+                            aa.PrimaryArtist = false;
+                        }
+                        db.AlbumArtist.Add(aa);
+                    }
+                    db.SaveChanges();
+                }
+
+                //create AlbumGenre record for each checkbox that was checked
+                if (genres != null)
+                {
+                    foreach (var genreId in genres)
+                    {
+                        var g = db.Genre.Find(genreId);
+                        AlbumGenre ag = new AlbumGenre();
+                        ag.AlbumID = album.AlbumID;
+                        ag.GenreID = g.GenreID;
+                        db.AlbumGenre.Add(ag);
+                    }
+                    db.SaveChanges();
+                }
+
+
+                db.Entry(album).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
@@ -248,17 +296,17 @@ namespace RecordStore.UI.MVC.Controllers
             ViewBag.AlbumStatusID = new SelectList(db.AlbumStatus, "AlbumStatusID", "AlbumStatusName", album.AlbumStatusID);
             ViewBag.FormatID = new SelectList(db.Format, "FormatID", "FormatType", album.FormatID);
             ViewBag.LabelID = new SelectList(db.Label, "LabelID", "LabelName", album.LabelID);
+            ViewBag.PrimaryArtist = new SelectList(db.AlbumArtist, "PrimaryArtist");
+
+            //Since going through linking tables to get this info, pass a list of artists then loop through them 
+            ViewBag.Artist = db.Artist.ToList();
+            ViewBag.Genre = db.Genre.ToList();
+
             return View(album);
         }
-
-
-
         #endregion
 
-
-
-
-
+        #region Delete
         // GET: Albums/Delete/5
         [Authorize(Roles = "Admin")]
         public ActionResult Delete(int? id)
@@ -289,9 +337,11 @@ namespace RecordStore.UI.MVC.Controllers
                 ImageUtility.Delete(path, album.AlbumImage);
             }
 
-            //delete AlbumArtist records if album is deleted
+            //delete AlbumArtist & AlbumGerne records if album is deleted
             var albumArtists = db.AlbumArtist. Where(x => x.AlbumID == id);
             db.AlbumArtist.RemoveRange(albumArtists);
+            var albumGenres = db.AlbumGenre.Where(x => x.AlbumID == id);
+            db.AlbumGenre.RemoveRange(albumGenres);
             db.SaveChanges();
 
             db.Album.Remove(album);
@@ -307,11 +357,12 @@ namespace RecordStore.UI.MVC.Controllers
             }
             base.Dispose(disposing);
         }
+        #endregion
 
 
-
+        #region AJAX Create Artist & Label
         //******** AJAX CREATE *********//
-        // -- Creates a new artist record and returns the artist's data as JSON
+        // Create a new record and return data as JSON
         // GET: Artist/Create
         public PartialViewResult ArtistCreate()
         {
@@ -325,9 +376,24 @@ namespace RecordStore.UI.MVC.Controllers
             db.Artist.Add(artist);
             db.SaveChanges();
             return Json(artist);
-
         }
 
+        // GET: Label/Create
+        public PartialViewResult LabelCreate()
+        {
+            return PartialView();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public JsonResult LabelCreate(Label label)
+        {
+            db.Label.Add(label);
+            db.SaveChanges();
+            return Json(label);
+        }
+
+        #endregion
 
 
 

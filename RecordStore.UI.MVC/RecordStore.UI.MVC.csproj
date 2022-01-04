@@ -555,6 +555,7 @@
     <Content Include="Views\Home\Products.cshtml" />
     <Content Include="Views\Album\Index.cshtml" />
     <Content Include="Views\Album\ArtistCreate.cshtml" />
+    <Content Include="Views\Album\LabelCreate.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Views\AlbumViewModel\" />

@@ -1,0 +1,76 @@
+﻿@model RecordStore.Data.EF.Label
+
+
+@using (Html.BeginForm("", "", FormMethod.Post, new { id = "LabelCreateForm" }))
+{
+    @Html.AntiForgeryToken()
+    <div class="form-horizontal">
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="form-group">
+            @Html.LabelFor(model => model.LabelName, htmlAttributes: new { @class = "control-label col-md-4" })
+            <div class="col-md-12">
+                @Html.EditorFor(model => model.LabelName, new { htmlAttributes = new { @class = "form-control", placeholder = "Label Name" } })
+                @Html.ValidationMessageFor(model => model.LabelName, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.Country, htmlAttributes: new { @class = "control-label col-md-4" })
+            <div class="col-md-12">
+                @Html.EditorFor(model => model.Country, new { htmlAttributes = new { @class = "form-control", placeholder = "Country" } })
+                @Html.ValidationMessageFor(model => model.Country, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="row" style="padding-bottom: 9px;">
+            @Html.LabelFor(model => model.IsStillDistributing, "Currently in Distribution", htmlAttributes: new { @class = "control-label col-md-7" })
+                <div class="checkbox col-md-2">
+                    @Html.EditorFor(model => model.IsStillDistributing)
+                    @Html.ValidationMessageFor(model => model.IsStillDistributing, "", new { @class = "text-danger" })
+                </div>
+        </div>
+        <div class="col-md-2">
+            <input type="submit" value="Create New Label" class="btn btn-dark" />
+        </div>
+    </div>
+}
+
+
+@*//*********** AJAX ARTIST CREATE DIALOG/POP-UP BOX ************//*@
+<script src="https://cdn.jsdelivr.net/jquery.ajax.unobtrusive/3.2.4/jquery.unobtrusive-ajax.min.js"></script>
+
+<script>
+    $("#LabelCreateForm").submit(function (e) {
+        var formData = $(this).serializeArray();
+        console.log(formData);
+        e.preventDefault();//Prevent the default page reload on submit
+
+        $.ajax({
+            url: "/Album/LabelCreate",
+            type: "POST",
+            data: formData,
+            dataType: "json",
+            error: function (e) {
+                $("#MessageContent").html("<div class='alert alert-danger'>There was a problem.</div>");
+                $("#MessageContent").delay(4000).hide("slow");
+            },
+            success: function (foo) {
+                $("#MessageContent").html("<div class='alert alert-success'>Label created successfully.</div>");
+                $("#MessageContent").delay(4000).hide("slow");
+                $("#LabelCreateForm")[0].reset();
+
+                $(function () {
+                    var option =
+                        '<option value="' + foo.LabelID + '">' + foo.LabelName + '</option>';
+                    $("#LabelID").append(option);
+                }); //End of build & append label functionality
+
+                //close dialog on successful submit (not working)
+                $("#LabelCreate").dialog("close");
+
+            } //End success
+        }); //End Ajax form submission properties
+    }); //End form submit event handler
+</script>
+
+
+
+
