@@ -17,15 +17,12 @@ namespace RecordStore.Data.EF//.Metadata
         [Display(Name = "Album")]
         public string AlbumName { get; set; }
 
-        //[Required(ErrorMessage = "* Year Released is required *")]
-        //[Display(Name = "Year")]
-        //[DisplayFormat(DataFormatString = "{0:yyyy}", ApplyFormatInEditMode = true)]
-        //public Nullable<System.DateTime> ReleaseYear { get; set; }
-
-        [Required(ErrorMessage = "* Year Released is required *")]
+      
         [Display(Name = "Year")]
-        public Nullable<int> ReleaseYear { get; set; }
-        
+        //[DisplayFormat(DataFormatString = "{0:yyyy}", ApplyFormatInEditMode = true)]
+        [DisplayFormat(DataFormatString = "{0:yyyy}")]
+        public Nullable<System.DateTime> ReleaseYear { get; set; }
+       
         [UIHint("MultilineText")]
         [DisplayFormat(NullDisplayText = "[-N/A-]")]
         public string Description { get; set; }
@@ -73,6 +70,9 @@ namespace RecordStore.Data.EF//.Metadata
         [Required(ErrorMessage = "* Status is required *")]
         [Display(Name = "Status")]
         public int AlbumStatusID { get; set; }
+
+        [Range(1900, 9999, ErrorMessage = "* Value must be a valid year *")]
+        public Nullable<int> Year { get; set; }
 
     }
 

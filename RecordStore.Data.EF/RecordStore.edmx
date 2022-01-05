@@ -25,6 +25,7 @@
           <Property Name="Num" Type="int" />
           <Property Name="Tracks" Type="int" />
           <Property Name="IsFeatured" Type="bit" />
+          <Property Name="Year" Type="int" />
         </EntityType>
         <EntityType Name="AlbumArtist">
           <Key>
@@ -394,6 +395,7 @@
           <NavigationProperty Name="AlbumArtist" Relationship="RecordStoreModel.FK_AlbumArtist_Album" FromRole="Album" ToRole="AlbumArtist" />
           <NavigationProperty Name="AlbumGenre" Relationship="RecordStoreModel.FK_AlbumGenre_Album" FromRole="Album" ToRole="AlbumGenre" />
           <Property Name="IsFeatured" Type="Boolean" />
+          <Property Name="Year" Type="Int32" />
         </EntityType>
         <EntityType Name="AlbumArtist">
           <Key>
@@ -650,6 +652,7 @@
           <EntitySetMapping Name="Album">
             <EntityTypeMapping TypeName="RecordStoreModel.Album">
               <MappingFragment StoreEntitySet="Album">
+                <ScalarProperty Name="Year" ColumnName="Year" />
                 <ScalarProperty Name="IsFeatured" ColumnName="IsFeatured" />
                 <ScalarProperty Name="Tracks" ColumnName="Tracks" />
                 <ScalarProperty Name="Num" ColumnName="Num" />

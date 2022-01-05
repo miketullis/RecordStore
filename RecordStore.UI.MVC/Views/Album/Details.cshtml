@@ -20,9 +20,7 @@
                 </dd>
                 <hr />
                 <dd>
-                    @* In a Details View, we have only passed a single Album object from the controller to this view.  When referencing the Album, we call
-            it with Model (* note, capital M)*@
-                    @*@foreach (var artist in model.AlbumArtist)*@
+                    @* In a Details View, we have only passed a single Album object from the controller to this view.  When referencing the Album, we call  it with Model (* note, capital M)*@
                     @foreach (var artist in Model.AlbumArtist)
                     {
                         if (artist.PrimaryArtist != null)
@@ -54,6 +52,10 @@
                 <dd>
                     <span style="font-weight: bold;">Year:&nbsp;&nbsp;</span>
                     @Html.DisplayFor(model => model.ReleaseYear)
+                </dd>
+                <dd>
+                    <span style="font-weight: bold;">Year:&nbsp;&nbsp;</span>
+                    @Html.DisplayFor(model => model.Year)
                 </dd>
                 <dd>
                     <span style="font-weight: bold;">Format:&nbsp;&nbsp;</span>
@@ -102,19 +104,6 @@
                 <dd>
                     <h3> @Html.DisplayFor(model => model.Price)</h3>
                 </dd>
-
-
-
-
-
-
-
-
-
-
-
-
-
 
             </dl>
         </div>

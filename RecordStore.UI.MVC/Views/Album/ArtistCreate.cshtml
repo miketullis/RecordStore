@@ -49,15 +49,15 @@
             success: function (foo) {
                 //If you want to see this 'Artist created successfully' message, make sure you've got the #MessageContent element in the Create view
                 $("#MessageContent").html("<div class='alert alert-success'>Artist created successfully.</div>");
+                $("#MessageContent").delay(4000).hide("slow");
                 $("#ArtistCreateForm")[0].reset();
-  
-                $(function () {
-                    var label =
-                        '<div class="row"><div class="col-md-6"><input type="checkbox" name="artists" value = "' +
-                        foo.ArtistID + '" /><span style="font-weight:bold;">&nbsp;&nbsp;' +
-                        foo.ArtistName + '</span ></div><div class="col-md-4"><input type="radio" name="primaryArtistID" value="' +
-                        foo.ArtistID + '" /><span style="font-size:12px; font-weight:400;">&nbsp;Primary Artist</span></div></div>';
-                    $("#checkArtists").append(label);
+                 $(function () {
+                    var li =
+                        '<div class="row"><div class="col-md-4"><input type="checkbox" name="artists" value = "' +
+                        foo.ArtistID + '" /><span>&nbsp;&nbsp;' +
+                        foo.ArtistName + '</span></div><div class="col-md-4"><input type="radio" name="primaryArtistID" value="' +
+                        foo.ArtistID + '" /><span style="font-size:12px; font-weight:400;">&nbsp;&nbsp;Primary Artist</span></div></div>';
+                   $("#checkArtists").append(li);
                 }); //End of build & append label functionality
 
                 //close dialog on successful submit (not working)

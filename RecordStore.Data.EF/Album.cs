@@ -37,6 +37,7 @@ namespace RecordStore.Data.EF
         public Nullable<int> Num { get; set; }
         public Nullable<int> Tracks { get; set; }
         public Nullable<bool> IsFeatured { get; set; }
+        public Nullable<int> Year { get; set; }
     
         public virtual AlbumStatus AlbumStatus { get; set; }
         public virtual Format Format { get; set; }

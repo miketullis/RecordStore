@@ -71,9 +71,7 @@ namespace RecordStore.UI.MVC.Controllers
         // POST: Albums/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        //ADDED: end of method signature
-        //int for radio button Primary Artist
-        public ActionResult Create([Bind(Include = "AlbumID,AlbumName,ReleaseYear,ArtistID,GenreID,Description,LabelID,CompilationAlbum,CatalogNum,Price,IsInPrint,FormatID,UnitsInStock,AlbumStatusID,AlbumImage,Num")] Album album, HttpPostedFileBase albumCover, int[] artists, int[] genres, int primaryArtistId)
+        public ActionResult Create([Bind(Include = "AlbumID,AlbumName,ReleaseYear,ArtistID,GenreID,Description,LabelID,CompilationAlbum,CatalogNum,Price,IsInPrint,FormatID,UnitsInStock,AlbumStatusID,AlbumImage,Num,Year")] Album album, HttpPostedFileBase albumCover, int[] artists, int[] genres, int primaryArtistId)
         {
             if (ModelState.IsValid)
             {
@@ -169,7 +167,9 @@ namespace RecordStore.UI.MVC.Controllers
 
             return View(album);
         }
+
         #endregion
+
 
         #region Edit
         // GET: Albums/Edit/5
@@ -188,9 +188,9 @@ namespace RecordStore.UI.MVC.Controllers
                 return HttpNotFound();
             }
 
-            ViewBag.AlbumStatusID = new SelectList(db.AlbumStatus, "AlbumStatusID", "AlbumStatusName");
-            ViewBag.FormatID = new SelectList(db.Format, "FormatID", "FormatType");
-            ViewBag.LabelID = new SelectList(db.Label, "LabelID", "LabelName");
+            ViewBag.AlbumStatusID = new SelectList(db.AlbumStatus, "AlbumStatusID", "AlbumStatusName", album.AlbumStatusID);
+            ViewBag.FormatID = new SelectList(db.Format, "FormatID", "FormatType", album.FormatID);
+            ViewBag.LabelID = new SelectList(db.Label, "LabelID", "LabelName", album.LabelID);
 
             var albumArtist = db.AlbumArtist.ToList();
             ViewBag.PrimaryArtist = new SelectList(db.AlbumArtist, "PrimaryArtist");
@@ -198,7 +198,6 @@ namespace RecordStore.UI.MVC.Controllers
             //Since going through linking tables to get this info, pass a list of artists then loop through them 
             ViewBag.Artist = db.Artist.ToList();
             ViewBag.Genre = db.Genre.ToList();
-
 
             return View(album);
         }
@@ -208,7 +207,7 @@ namespace RecordStore.UI.MVC.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "AlbumID,AlbumName,ReleaseYear,ArtistID,Description,LabelID,CompilationAlbum,CatalogNum,Price,IsInPrint,FormatID,UnitsInStock,AlbumStatusID,AlbumImage,Num")] Album album, HttpPostedFileBase albumCover, int[] artists, int[] genres, int primaryArtistId)
+        public ActionResult Edit([Bind(Include = "AlbumID,AlbumName,ReleaseYear,ArtistID,Description,LabelID,CompilationAlbum,CatalogNum,Price,IsInPrint,FormatID,UnitsInStock,AlbumStatusID,AlbumImage,Num,Year")] Album album, HttpPostedFileBase albumCover, int[] artists, int[] genres, int primaryArtistId)
         {
             if (ModelState.IsValid)
             {
@@ -249,7 +248,6 @@ namespace RecordStore.UI.MVC.Controllers
                 //Updated image file to name of images saved to DB
                 album.AlbumImage = file;
 
-
                 //create AlbumArtist record for each checkbox that was checked
                 if (artists != null)
                 {
@@ -286,7 +284,6 @@ namespace RecordStore.UI.MVC.Controllers
                     }
                     db.SaveChanges();
                 }
-
 
                 db.Entry(album).State = EntityState.Modified;
                 db.SaveChanges();
@@ -401,7 +398,6 @@ namespace RecordStore.UI.MVC.Controllers
 
 
         #region AddToCart Functionality
-
         public ActionResult AddToCart(int qty, int albumID)
         {
             //create empty shell for the LOCAL shopping cart variable

@@ -10,9 +10,7 @@ namespace RecordStore.UI.MVC.Models
         //Album Properties
         public int AlbumID { get; set; }
         public string AlbumName { get; set; }
-        //public Nullable<DateTime> ReleaseYear { get; set; }
-        public Nullable<int> ReleaseYear { get; set; }
-
+        public Nullable<DateTime> ReleaseYear { get; set; }
         public string Description { get; set; }
         public Nullable<int> LabelID { get; set; }
         public bool CompilationAlbum { get; set; }
@@ -25,6 +23,7 @@ namespace RecordStore.UI.MVC.Models
         public string AlbumImage { get; set; }
         public Nullable<int> Num { get; set; }
         public Nullable<int> Tracks { get; set; }
+        public Nullable<int> Year { get; set; }
 
         //Genre Properties
         public int GenreID { get; set; }
