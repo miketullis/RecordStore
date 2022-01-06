@@ -157,7 +157,7 @@
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.AlbumImage, "Album Cover", htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.AlbumImage, "Album Cover", htmlAttributes: new { @class = "control-label" })
             <div class="col-md-12">
                 <input type="file" name="albumCover" />
                 @Html.ValidationMessageFor(model => model.AlbumImage, "", new { @class = "text-danger" })

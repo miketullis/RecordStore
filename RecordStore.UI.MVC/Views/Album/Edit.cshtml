@@ -25,7 +25,7 @@
                 </div>
 
 
-                <div class="col-md-8">
+                <div class="col-md-8" style="padding:unset;">
                     <div class="form-group col-md-12">
                         @Html.LabelFor(model => model.AlbumName, "Name", htmlAttributes: new { @class = "control-label" })
                         @Html.EditorFor(model => model.AlbumName, new { htmlAttributes = new { @class = "form-control" } })
@@ -47,17 +47,25 @@
                         }
 
                         @* Create comma separated list Of non-primary Artists.  Add "feat." before list *@
-                        @foreach (var artist in Model.AlbumArtist)
-                        {@*<p>feat. </p>*@
-                        if ((bool)artist.PrimaryArtist == false)
+                        @if (Model.AlbumArtist.Count > 1)
                         {
-                            @*<div>
-                                    @artist.Artist.ArtistName,
-                                </div>*@
-
-                            @String.Join(", ", @artist.Artist.ArtistName)
+                            <span>Feat: </span>
                         }
-                    }
+                        @foreach (var artist in Model.AlbumArtist)
+                        {
+                            if ((bool)artist.PrimaryArtist == false)
+                            {
+                                if (Model.AlbumArtist.ToList().IndexOf(artist) == Model.AlbumArtist.Count - 2)
+                                {
+                                    <span>@artist.Artist.ArtistName</span>
+                                }
+                                else
+                                {
+                                    <span>@artist.Artist.ArtistName, </span>
+                                }
+                            }
+                        }
+
                     </div>
                     <div class="form-group col-md-12">
                         <label class="control-label">Artist</label>
@@ -74,12 +82,31 @@
                                 <li>
                                     <div class="row">
                                         <div class="col-md-4">
-                                            <input type="checkbox" name="artists" value="@artist.ArtistID" />
-                                            <span>&nbsp;@artist.ArtistName</span>
+                                            @{ RecordStore.Data.EF.RecordStoreEntities db = new RecordStore.Data.EF.RecordStoreEntities();}
+                                            @if (artist.AlbumArtist.Contains(Model.AlbumArtist.Where
+                                                (x => x.AlbumID == Model.AlbumID && x.ArtistID == artist.ArtistID).SingleOrDefault()))
+                                            {
+                                                <input type="checkbox" name="artists" value="@artist.ArtistID" checked="checked" />
+                                                <span>&nbsp;@artist.ArtistName</span>
+                                            }
+                                            else
+                                            {
+                                                <input type="checkbox" name="artists" value="@artist.ArtistID" />
+                                                <span>&nbsp;@artist.ArtistName</span>
+                                            }
                                         </div>
                                         <div class="col-md-4">
-                                            <input type="radio" name="primaryArtistID" value="@artist.ArtistID" />
-                                            <span style="font-size:12px; font-weight:400;">&nbsp;Primary Artist</span>
+                                            @if (artist.AlbumArtist.Contains(Model.AlbumArtist.Where
+                                                (x => x.AlbumID == Model.AlbumID && x.ArtistID == artist.ArtistID).SingleOrDefault()))
+                                            {
+                                                <input type="radio" name="primaryArtistID" value="@artist.ArtistID" checked="checked" />
+                                                <span style="font-size:12px; font-weight:400;">&nbsp;Primary Artist</span>
+                                            }
+                                            else
+                                            {
+                                                <input type="radio" name="primaryArtistID" value="@artist.ArtistID" />
+                                                <span style="font-size:12px; font-weight:400;">&nbsp;Primary Artist</span>
+                                            }
                                         </div>
                                     </div>
                                 </li>
@@ -95,12 +122,10 @@
                             @Html.ValidationMessageFor(model => model.LabelID, "", new { @class = "text-danger" })
                         </div>
                     </div>
-                    <div class="form-group">
+                    <div class="form-group col-md-12">
                         @Html.LabelFor(model => model.CatalogNum, htmlAttributes: new { @class = "control-label" })
-                        <div class="col-md-12">
-                            @Html.EditorFor(model => model.CatalogNum, new { htmlAttributes = new { @class = "form-control" } })
-                            @Html.ValidationMessageFor(model => model.CatalogNum, "", new { @class = "text-danger" })
-                        </div>
+                        @Html.EditorFor(model => model.CatalogNum, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.CatalogNum, "", new { @class = "text-danger" })
                     </div>
                     <div class="form-group col-md-12">
                         @Html.LabelFor(model => model.Description, htmlAttributes: new { @class = "control-label" })
@@ -109,7 +134,6 @@
                     </div>
                 </div>
             </div>
-
 
             <div class="form-group">
                 <div class="row">
@@ -145,8 +169,18 @@
                             @foreach (RecordStore.Data.EF.Genre genre in ViewBag.Genre)
                             {
                                 <li class="col-md-12">
-                                    <input type="checkbox" name="genres" value="@genre.GenreID" />
-                                    <span>&nbsp;@genre.GenreName</span>
+                                    @{ RecordStore.Data.EF.RecordStoreEntities db = new RecordStore.Data.EF.RecordStoreEntities();}
+                                    @if (genre.AlbumGenre.Contains(Model.AlbumGenre.Where
+                                        (x => x.AlbumID == Model.AlbumID && x.GenreID == genre.GenreID).SingleOrDefault()))
+                                    {
+                                        <input type="checkbox" name="genres" value="@genre.GenreID" checked="checked" />
+                                        <span>&nbsp;@genre.GenreName</span>
+                                    }
+                                    else
+                                    {
+                                        <input type="checkbox" name="genres" value="@genre.GenreID" />
+                                        <span>&nbsp;@genre.GenreName</span>
+                                    }
                                 </li>
                             }
                         </ul>
@@ -202,6 +236,14 @@
             </div>
         </div>
     }
+
+    @* Placeholder for the creating a new artist in a dialog box *@
+    <div id="ArtistCreate">
+    </div>
+
+    @* Placeholder for the creating a new Label in a dialog box *@
+    <div id="LabelCreate">
+    </div>
 
 </div>
 

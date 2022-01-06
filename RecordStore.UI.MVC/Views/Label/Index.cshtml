@@ -1,6 +1,4 @@
-﻿@*@model IEnumerable<RecordStore.Data.EF.Label>*@
-@model PagedList.IPagedList<RecordStore.Data.EF.Label>
-@using PagedList.Mvc
+﻿@model IEnumerable<RecordStore.Data.EF.Label>
 
 @{
     ViewBag.Title = "Record Labels";
@@ -11,60 +9,131 @@
 
     <h2 class="text-center"> @ViewBag.Title</h2>
 
-    @*Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount*@
+    @if (Model.Count() > 0)
+    {<table class="table" id="myTable">
+            <thead>
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.FirstOrDefault().LabelName)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.FirstOrDefault().Country)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.FirstOrDefault().IsStillDistributing)
+                    </th>
+                    <th><a href="" class="LabelCreate">Add New Label?</a></th>
+                </tr>
+            </thead>
 
-    @Html.PagedListPager(Model, page => Url.Action("Index", new { page }))
-
-    @using (Html.BeginForm("Index", "Label", FormMethod.Get))
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.LabelName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Country)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.IsStillDistributing)
+                        </td>
+                        <td>
+                            @Html.ActionLink("Edit", "Edit", new { id = item.LabelID }) |
+                            @Html.ActionLink("Details", "Details", new { id = item.LabelID }) |
+                            @Html.ActionLink("Delete", "Delete", new { id = item.LabelID })
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+    else
     {
-    <p style="padding-bottom: 1em; font-weight: bold;">
-        <input type="text" name="searchString" style="max-width:250px;" />
-        <input type="submit" value="Search" />
-        &nbsp;&nbsp;
-        @if (User.IsInRole("Admin"))
-        {
-
-            @Html.ActionLink("Add A New Label", "Create")
-        }
-
-    </p>
+        <p> Your search result did not return any results. Please try again or hit "Search" again to refresh.</p>
     }
 
-    <table class="table">
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.FirstOrDefault().LabelName)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.FirstOrDefault().Country)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.FirstOrDefault().IsStillDistributing)
-            </th>
-            <th></th>
-        </tr>
 
-        @foreach (var item in Model)
-        {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.LabelName)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Country)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.IsStillDistributing)
-                </td>
-                <td>
-                    @Html.ActionLink("Edit", "Edit", new { id = item.LabelID }) |
-                    @Html.ActionLink("Details", "Details", new { id = item.LabelID }) |
-                    @Html.ActionLink("Delete", "Delete", new { id = item.LabelID })
-                </td>
-            </tr>
-        }
+    @* Placeholder for the creating a new Label in a dialog box *@
+    <div id="LabelCreate">
+    </div>
 
-    </table>
+
+
 </div>
 
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+
+    <script src="https://cdn.jsdelivr.net/jquery.ajax.unobtrusive/3.2.4/jquery.unobtrusive-ajax.min.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            $('#myTable').DataTable();
+        });
+    </script>
+ 
+    <script>
+
+        //*********** AJAX LABEL CREATE DIALOG/POP-UP BOX ************//
+        $('a.LabelCreate').click(function (e) {
+            e.preventDefault();
+            $("#LabelCreate")
+                .dialog({
+                    width: 450,
+                    height: 350,
+                    open: function () {
+                        $(this).load("/Label/LabelCreate");
+                    },
+                    title: "Create New Label",
+                    modal: true,
+                    resizable: false
+                }); //End dialog box for the div
+        }); //End details button click event handler
+
+    </script>
+
+    @*//*********** AJAX ARTIST CREATE DIALOG/POP-UP BOX ************//*@
+
+
+    <script>
+        $("#LabelCreateForm").submit(function (e) {
+            var formData = $(this).serializeArray();
+            console.log(formData);
+            e.preventDefault();//Prevent the default page reload on submit
+
+            $.ajax({
+                url: "/Label/LabelCreate",
+                type: "POST",
+                data: formData,
+                dataType: "json",
+                error: function (e) {
+                    $("#MessageContent").html("<div class='alert alert-danger'>There was a problem.</div>");
+                    $("#MessageContent").delay(4000).hide("slow");
+                },
+                success: function (foo) {
+                    $("#MessageContent").html("<div class='alert alert-success'>Label created successfully.</div>");
+                    $("#MessageContent").delay(4000).hide("slow");
+                    $("#LabelCreateForm")[0].reset();
+
+                    $(function () {
+                        var row =
+                            '<tr><td>' + foo.LabelName +
+                            '</td><td>' + foo.Country +
+                            '</td><td>' + foo.IsStillDistributing +
+                            '</td><td>Refresh to view</td></tr > ';
+                        $("#myTable").append(row);
+                    }); //End of build & append label functionality
+
+                    //close dialog on successful submit (not working)
+                    $("#LabelCreate").dialog("close");
+
+                } //End success
+            }); //End Ajax form submission properties
+        }); //End form submit event handler
+    </script>
+
+}
 

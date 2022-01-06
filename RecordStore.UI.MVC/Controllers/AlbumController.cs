@@ -56,14 +56,15 @@ namespace RecordStore.UI.MVC.Controllers
             var albums = db.Album.ToList();
             ViewBag.AlbumStatusID = new SelectList(db.AlbumStatus, "AlbumStatusID", "AlbumStatusName");
             ViewBag.FormatID = new SelectList(db.Format, "FormatID", "FormatType");
-            ViewBag.LabelID = new SelectList(db.Label, "LabelID", "LabelName");
+            ViewBag.LabelID = new SelectList(db.Label.OrderBy(x => x.LabelName), "LabelID", "LabelName");
 
             var albumArtist = db.AlbumArtist.ToList();
             ViewBag.PrimaryArtist = new SelectList(db.AlbumArtist, "PrimaryArtist");
 
             //Since going through linking tables to get this info, pass a list of artists then loop through them 
-            ViewBag.Artist = db.Artist.ToList();
-            ViewBag.Genre = db.Genre.ToList();
+            ViewBag.Artist = db.Artist.OrderBy(x => x.ArtistName).ToList();
+            ViewBag.Genre = db.Genre.OrderBy(x => x.GenreName).ToList();
+
 
             return View();
         }
@@ -190,14 +191,14 @@ namespace RecordStore.UI.MVC.Controllers
 
             ViewBag.AlbumStatusID = new SelectList(db.AlbumStatus, "AlbumStatusID", "AlbumStatusName", album.AlbumStatusID);
             ViewBag.FormatID = new SelectList(db.Format, "FormatID", "FormatType", album.FormatID);
-            ViewBag.LabelID = new SelectList(db.Label, "LabelID", "LabelName", album.LabelID);
+            ViewBag.LabelID = new SelectList(db.Label.OrderBy(x => x.LabelName), "LabelID", "LabelName", album.LabelID);
 
             var albumArtist = db.AlbumArtist.ToList();
             ViewBag.PrimaryArtist = new SelectList(db.AlbumArtist, "PrimaryArtist");
 
             //Since going through linking tables to get this info, pass a list of artists then loop through them 
-            ViewBag.Artist = db.Artist.ToList();
-            ViewBag.Genre = db.Genre.ToList();
+            ViewBag.Artist = db.Artist.OrderBy(x => x.ArtistName).ToList();
+            ViewBag.Genre = db.Genre.OrderBy(x => x.GenreName).ToList();
 
             return View(album);
         }

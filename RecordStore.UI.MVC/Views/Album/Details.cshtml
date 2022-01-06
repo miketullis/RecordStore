@@ -13,10 +13,10 @@
             <img src="~/Content/assets/images/albumImages/@Model.AlbumImage" alt="@Model.AlbumName Cover" title="@Model.AlbumName Cover" id="albumArt" />
         </div>
 
-        <div col-md-5 style="padding-left: 5em;">
+        <div col-md-7 style="padding-left: 5em;">
             <dl class="dl-horizontal">
                 <dd>
-                    <h3>@Html.DisplayFor(model => model.AlbumName)</h3>
+                    <h2>@Html.DisplayFor(model => model.AlbumName)</h2>
                 </dd>
                 <hr />
                 <dd>
@@ -28,25 +28,36 @@
                             if ((bool)artist.PrimaryArtist)
                             {
                                 <div>
-                                    <span style="font-weight: bold;">Artist:&nbsp;&nbsp;</span>
+                                    <span style="font-weight: bold;">
+                                        Artist@(Model.AlbumArtist.Count == 1 ? ":" : "s:" )
+                                    </span>
                                     @artist.Artist.ArtistName
                                 </div>
                             }
-                            else
+                        }
+                    }
+
+                    @* Create comma separated list Of non-primary Artists.  Add "feat." before list *@
+                    <div style="word-wrap: normal;">
+                        @if (Model.AlbumArtist.Count > 1)
+                        {
+                            <span>Featuring: </span>
+                        }
+                        @foreach (var artist in Model.AlbumArtist)
+                        {
+                            if ((bool)artist.PrimaryArtist == false)
                             {
-                                <div>
-                                    Feat: @artist.Artist.ArtistName
-                                </div>
+                                if (Model.AlbumArtist.ToList().IndexOf(artist) == Model.AlbumArtist.Count - 2)
+                                {
+                                    @artist.Artist.ArtistName
+                                }
+                                else
+                                {
+                                    @artist.Artist.ArtistName<span>, </span>
+                                }
                             }
                         }
-                        else
-                        {
-                            <div>
-                                @artist.Artist.ArtistName
-                            </div>
-                        }
-
-                    }
+                    </div>
                 </dd>
 
                 <dd>
@@ -60,7 +71,7 @@
                 <dd>
                     <span style="font-weight: bold;">Format:&nbsp;&nbsp;</span>
                     @Html.DisplayFor(model => model.Num) @Html.DisplayFor(model => model.Format.FormatType)@(Model.Num == 1 ? "" : "s"), @Html.DisplayFor(model => model.Tracks)
-                    @(Model.Tracks == 1 ? "Track" : Model.Tracks > 1 ? "Tracks" : "none" ) @*ternary operator to display track info*@
+                    @(Model.Tracks == 1 ? "Track" : Model.Tracks > 1 ? "Tracks" : "tracks unknown" ) @*ternary operator to display track info*@
                 </dd>
                 <dd>
                     <span style="font-weight: bold;">Label:&nbsp;&nbsp;</span>

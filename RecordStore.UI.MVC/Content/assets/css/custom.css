@@ -1,8 +1,8 @@
 ﻿/*wrapper/container for footer placement*/
 #rrWrapper {
     padding-top: 60px; 
-    padding-left: 20%;
-    padding-right: 20%;
+    padding-left: 10%;
+    padding-right: 10%;
     min-height: calc(100vh - 302px); /*height of footer & header*/
 }
 
@@ -70,6 +70,8 @@
 
 #albumArt {
     box-shadow: 0 5px 8px 3px #808080;
+    max-width: 100%;
+    margin-bottom: 2em;
 }
 
 #contactConfirm {
@@ -171,3 +173,13 @@ ul #checkArtists, ul #checkGenres {
         #checkArtists label:hover, #checkGernes label:hover {
             background-color: #1e90ff;
         }
+
+
+@media screen and (min-width: 1080px){
+#rrWrapper {
+    padding-left: 20%;
+    padding-right: 20%;
+}
+
+
+ }

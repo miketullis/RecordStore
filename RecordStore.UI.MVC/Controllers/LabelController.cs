@@ -144,5 +144,35 @@ namespace RecordStore.UI.MVC.Controllers
         }
 
 
+
+
+        #region AJAX Create, Edit, & Delete, Label
+        //******** AJAX *********//
+        // GET: Label/Create
+        public PartialViewResult LabelCreate()
+        {
+            return PartialView();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public JsonResult LabelCreate(Label label)
+        {
+            db.Label.Add(label);
+            db.SaveChanges();
+            return Json(label);
+        }
+
+        #endregion
+
+
+
+
+
+
+
+
+
+
     }
 }
