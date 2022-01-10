@@ -22,19 +22,13 @@
         </div>
         <div class="row" style="padding-bottom: 9px;">
             @Html.LabelFor(model => model.IsStillDistributing, "Currently in Distribution", htmlAttributes: new { @class = "control-label col-md-7" })
-                <div class="checkbox col-md-2">
-                    @Html.EditorFor(model => model.IsStillDistributing)
-                    @Html.ValidationMessageFor(model => model.IsStillDistributing, "", new { @class = "text-danger" })
-                </div>
+            <div class="checkbox col-md-2">
+                @Html.EditorFor(model => model.IsStillDistributing)
+                @Html.ValidationMessageFor(model => model.IsStillDistributing, "", new { @class = "text-danger" })
+            </div>
         </div>
-        <div class="col-md-2">
+        <div class="col-md-12">
             <input type="submit" value="Create New Label" class="btn btn-dark" />
         </div>
     </div>
 }
-
-
-
-
-
-

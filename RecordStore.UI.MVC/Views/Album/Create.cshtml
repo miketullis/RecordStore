@@ -173,17 +173,9 @@
     </div>
     }
 
-
-    @* Placeholder for the creating a new artist in a dialog box *@
-    <div id="ArtistCreate">
-    </div>
-
-    @* Placeholder for the creating a new Label in a dialog box *@
-    <div id="LabelCreate">
-    </div>
-
-
-
+    @* Placeholders for the creating a new Artist & Label in a dialog box *@
+    <div id="ArtistCreate"></div>
+    <div id="LabelCreate"></div>
 </div>
 
 
@@ -214,9 +206,6 @@
                 expanded = false;
             }
         }
-
-
-
 
         //*********** AJAX ARTIST CREATE DIALOG/POP-UP BOX ************//
         $('a.ArtistCreate').click(function (e) {
@@ -250,7 +239,5 @@
                     resizable: false
                 }); //End dialog box for the div
         }); //End details button click event handler
-
     </script>
-
 }

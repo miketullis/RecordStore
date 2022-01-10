@@ -9,8 +9,6 @@ using System.Web.Mvc;
 using RecordStore.Data.EF;
 using System.Drawing; //Added for access to the Image class
 using RecordStore.UI.MVC.Utilities; //Added for access to Image Utilities
-using PagedList;
-using PagedList.Mvc;
 using RecordStore.UI.MVC.Models;//Added to access to the Models
 
 
@@ -269,6 +267,7 @@ namespace RecordStore.UI.MVC.Controllers
                         }
                         db.AlbumArtist.Add(aa);
                     }
+                    db.Entry(artists).State = EntityState.Modified;
                     db.SaveChanges();
                 }
 
@@ -283,6 +282,7 @@ namespace RecordStore.UI.MVC.Controllers
                         ag.GenreID = g.GenreID;
                         db.AlbumGenre.Add(ag);
                     }
+                    db.Entry(genres).State = EntityState.Modified;
                     db.SaveChanges();
                 }
 
@@ -390,10 +390,34 @@ namespace RecordStore.UI.MVC.Controllers
             db.SaveChanges();
             return Json(label);
         }
-
         #endregion
 
 
+        #region AJAX Delete
+        [AcceptVerbs(HttpVerbs.Post)]
+        public JsonResult AjaxDelete(int id)
+        {
+            var album = db.Album.Find(id);
+            //delete album image if album is deleted, but not if it is the default image file
+            if (album.AlbumImage != null && album.AlbumImage != "noImage.jpg")
+            {
+                string path = Server.MapPath("~/Content/assets/images/albumImages/");
+                ImageUtility.Delete(path, album.AlbumImage);
+            }
+
+            //delete AlbumArtist & AlbumGenre records if album is deleted
+            var albumArtists = db.AlbumArtist.Where(x => x.AlbumID == id);
+            db.AlbumArtist.RemoveRange(albumArtists);
+            var albumGenres = db.AlbumGenre.Where(x => x.AlbumID == id);
+            db.AlbumGenre.RemoveRange(albumGenres);
+            db.SaveChanges();
+            db.Album.Remove(album);
+            db.SaveChanges();
+
+            string confirmMessage = string.Format($"Album {album.AlbumName} had been deleted." );
+            return Json(new { id = id, message = confirmMessage });
+        }
+        #endregion
 
 
 

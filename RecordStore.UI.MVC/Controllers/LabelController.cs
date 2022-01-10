@@ -7,10 +7,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using RecordStore.Data.EF;
-using PagedList;
-using PagedList.Mvc;
 using RecordStore.UI.MVC.Models;//Added to access to the Models
-
 
 
 namespace RecordStore.UI.MVC.Controllers
@@ -21,39 +18,13 @@ namespace RecordStore.UI.MVC.Controllers
         private RecordStoreEntities db = new RecordStoreEntities();
 
         // GET: Labels
-
-        public ActionResult Index(string searchString, int page = 1)
+        public ActionResult Index()
         {
-            int pageSize = 10;
-
             var labels = db.Label.OrderBy(a => a.LabelName).ToList();
-
-            if (!String.IsNullOrEmpty(searchString))
-            {
-                labels = (from a in labels
-                          where a.LabelName.ToLower().Contains(searchString.ToLower()) ||
-                          a.Country.ToLower().Contains(searchString.ToLower()) 
-                          select a).ToList();
-            }
-            return View(labels.ToPagedList(page, pageSize));
+            return View(labels);
         }
 
-
-        // GET: Labels/Details/5
-        public ActionResult Details(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Label label = db.Label.Find(id);
-            if (label == null)
-            {
-                return HttpNotFound();
-            }
-            return View(label);
-        }
-
+        #region Create
         // GET: Labels/Create
         public ActionResult Create()
         {
@@ -76,7 +47,9 @@ namespace RecordStore.UI.MVC.Controllers
 
             return View(label);
         }
+        #endregion
 
+        #region Edit
         // GET: Labels/Edit/5
         public ActionResult Edit(int? id)
         {
@@ -107,7 +80,9 @@ namespace RecordStore.UI.MVC.Controllers
             }
             return View(label);
         }
+        #endregion
 
+        #region Delete
         // GET: Labels/Delete/5
         public ActionResult Delete(int? id)
         {
@@ -133,6 +108,46 @@ namespace RecordStore.UI.MVC.Controllers
             db.SaveChanges();
             return RedirectToAction("Index");
         }
+        #endregion
+
+
+        #region AJAX Create, Edit, & Delete, Label
+        //******** AJAX *********//
+        //GET: Label/Create
+        public PartialViewResult AjaxLabelCreate()
+        {
+            return PartialView();
+        }
+
+        //POST: Label/Create
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public JsonResult AjaxLabelCreate(Label label)
+        {
+            db.Label.Add(label);
+            db.SaveChanges();
+            return Json(label);
+        }
+
+        //GET: Label/Delete
+        public PartialViewResult AjaxLabelDelete()
+        {
+            return PartialView();
+        }
+
+        //POST: Label/Delete
+        [AcceptVerbs(HttpVerbs.Post)]
+        public JsonResult AjaxLabelDelete(int id)
+        {
+            Label label = db.Label.Find(id);
+            db.Label.Remove(label);
+            db.SaveChanges();
+
+            string confirmMessage = string.Format($"Deleted {label.LabelName} from the database.");
+            return Json(new { id = id, message = confirmMessage });
+        }
+        #endregion
+
 
         protected override void Dispose(bool disposing)
         {
@@ -142,37 +157,6 @@ namespace RecordStore.UI.MVC.Controllers
             }
             base.Dispose(disposing);
         }
-
-
-
-
-        #region AJAX Create, Edit, & Delete, Label
-        //******** AJAX *********//
-        // GET: Label/Create
-        public PartialViewResult LabelCreate()
-        {
-            return PartialView();
-        }
-
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public JsonResult LabelCreate(Label label)
-        {
-            db.Label.Add(label);
-            db.SaveChanges();
-            return Json(label);
-        }
-
-        #endregion
-
-
-
-
-
-
-
-
-
 
     }
 }

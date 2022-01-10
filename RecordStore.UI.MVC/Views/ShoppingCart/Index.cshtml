@@ -43,6 +43,7 @@
                         <a href="@Url.Action("Details", "Album", new { id = item.Value.Product.AlbumID })" style="font-weight:bold; color: black;">
                             @item.Value.Product.AlbumName
                         </a>
+               
                     </td>
                     <td>
                         @string.Format($"{item.Value.Product.Price:c}")
@@ -53,9 +54,15 @@
                         {
                             //Pass Album ID
                             @Html.Hidden("albumId", item.Key)
-                            @Html.TextBox("qty", item.Value.Qty, new { @class = "form-control", @style = "max-width: 50px; display: inline;" })
+                            @Html.TextBox("qty", item.Value.Qty, new { @class = "form-control", @style = "max-width: 50px; display: inline;", onkeyup = "checkQty()" })
 
-                            <input type="submit" value="Update Quantity" class="btn btn-dark" />
+                            <div id="btnSubmit">
+                                <input type="submit" value="Update Quantity" class="btn btn-dark text-center" />
+                            </div>
+
+                            //On page load, store the units in stock as a JS variable for use in the function
+                            <script>let uis = @item.Value.Product.UnitsInStock</script>
+
                         }
 
                         @{
@@ -80,7 +87,7 @@
 
         </table>
         <p class="text-right">
-            @Html.ActionLink("Continue Shopping", "Index", "Album", null, new { @class = "btn btn-dark"})
+            @Html.ActionLink("Continue Shopping", "Index", "Album", null, new { @class = "btn btn-dark" })
         </p>
         <br />
 
@@ -91,3 +98,26 @@
         </p>
     }
 </div>
+
+
+
+@section scripts{
+    <script>
+        //Use some JS for this since it's dependent upon the user typing in the quantity for the cart.  The function fires onkeyup -  after someone types something into the textbox for quantity, this function executes
+        function checkQty() {
+            //textbox value
+            let qty = document.getElementById("qty").value;
+            console.log(uis);
+            console.log(qty);
+
+            //div surrounding button - use this to modify innerHTML depending on stock QTY
+            let btnDiv = document.getElementById("btnSubmit");
+            if (uis >= qty) {
+                btnDiv.innerHTML = '<input type="submit" value="Update Quantity" class="btn btn-dark" />';
+            }
+            else {
+                btnDiv.innerHTML = '<span class="text-danger text-center">Insufficient quantity in stock.<br/> Please select a lower quantity.</span>';
+            }
+        }
+    </script>
+}

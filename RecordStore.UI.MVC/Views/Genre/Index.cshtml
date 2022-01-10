@@ -1,34 +1,56 @@
 ﻿@model IEnumerable<RecordStore.Data.EF.Genre>
 
 @{
-    ViewBag.Title = "Genres";
+    ViewBag.Title = "Music Genres";
 }
 
 <div id="rrWrapper">
-    <h2>@ViewBag.Title</h2>
+    <h2 class="text-center"> @ViewBag.Title</h2>
     <br />
-    <h6>
-        @Html.ActionLink("Create a New Genre", "Create")
-    </h6>
-    <table class="table">
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.GenreName)
-            </th>
-            <th></th>
-        </tr>
+    @if (Model.Count() > 0)
+    {<table class="table" id="myTable">
+            <thead>
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.GenreName)
+                    </th>
+                    <th>
+                        @Html.ActionLink("Add New Genre", "Create")
+                        @*<a href="" class="GenreCreate">Add New Genre</a>*@
+                    </th>
+                </tr>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.GenreName)
+                        </td>
+                        <td>
+                            @*<a href="" class="GenreEdit">Edit</a>*@
+                            @Html.ActionLink("Edit", "Edit", new { id = item.GenreID }) |
+                            @Html.ActionLink("Delete", "Delete", new { id = item.GenreID })
+                            @*<a href="" class="GenreDelete">Delete</a>*@
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
 
-        @foreach (var item in Model)
-        {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.GenreName)
-                </td>
-                <td>
-                    @Html.ActionLink("Edit", "Edit", new { id = item.GenreID }) |
-                    @Html.ActionLink("Delete", "Delete", new { id = item.GenreID })
-                </td>
-            </tr>
-        }
-    </table>
+    @* Placeholders for the creating, deleting, & editing Labels in a dialog box *@
+    <div id="GenreCreate"></div>
+    <div id="GenreDelete"></div>
+    <div id="GenreEdit"></div>
+
 </div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+
+    <script>
+        $(document).ready(function () {
+            $('#myTable').DataTable();
+        });
+    </script>
+}

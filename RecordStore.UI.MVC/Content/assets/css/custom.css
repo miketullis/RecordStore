@@ -1,6 +1,6 @@
 ﻿/*wrapper/container for footer placement*/
 #rrWrapper {
-    padding-top: 60px; 
+    padding-top: 60px;
     padding-left: 10%;
     padding-right: 10%;
     min-height: calc(100vh - 302px); /*height of footer & header*/
@@ -70,7 +70,6 @@
 
 #albumArt {
     box-shadow: 0 5px 8px 3px #808080;
-    max-width: 100%;
     margin-bottom: 2em;
 }
 
@@ -78,25 +77,25 @@
     display: none;
 }
 
-.conForm{
-padding-bottom: 1.5em;
+.conForm {
+    padding-bottom: 1.5em;
 }
 
 #adminNav {
     padding-bottom: 8em;
 }
 
-#adminNav a {
-    color: white;
-}
+    #adminNav a {
+        color: white;
+    }
 
 label {
     font-weight: bold;
 }
 
-div.row{
-   padding-left: 15px;
-   padding-right: 15px;
+div.row {
+    padding-left: 15px;
+    padding-right: 15px;
 }
 
 .textSwell {
@@ -105,7 +104,6 @@ div.row{
 
 
 .banner {
-
     padding-top: 0;
 }
 
@@ -116,6 +114,10 @@ div.row{
     background-color: #23272B;
     color: white;
     font-weight: bold;
+}
+
+.ui-widget-content a.btn-dark {
+    color: white;
 }
 
 
@@ -139,7 +141,7 @@ div.row{
     .selectBox select {
         width: 100%;
         border: none;
-     }
+    }
 
 .overSelect {
     position: absolute;
@@ -163,23 +165,103 @@ div.row{
 
 ul #checkArtists, ul #checkGenres {
     display: none;
-   background-color: gray;
+    background-color: gray;
 }
 
-    #checkArtists label, #checkGenres label {
-        display: block;
+#checkArtists label, #checkGenres label {
+    display: block;
+}
+
+    #checkArtists label:hover, #checkGernes label:hover {
+        background-color: #1e90ff;
     }
 
-        #checkArtists label:hover, #checkGernes label:hover {
-            background-color: #1e90ff;
-        }
-
-
-@media screen and (min-width: 1080px){
-#rrWrapper {
-    padding-left: 20%;
-    padding-right: 20%;
+div.row {
+    padding-right: unset;
+    padding-left: unset;
 }
 
 
- }
+
+.pagination {
+    margin: unset;
+}
+.pagination-container {
+    display:inline-block;
+}
+
+
+
+/*Home Page Product Restyling*/
+.product-item .down-content h4 {
+    margin-bottom: 20px !important;
+}
+
+.product-item .down-content h2 {
+    font-size: 16px;
+    color: black;
+    font-weight: 300;
+}
+
+.product-item .down-content h6 {
+    position: absolute !important;
+    /*top: 30px !important;
+    right: 30px !important;*/
+    top: unset;
+    right: unset;
+    bottom: 36px;
+    font-size: 1.4em;
+}
+
+.product-item .down-content span {
+    position: absolute !important;
+    right: 30px !important;
+    bottom: 30px !important;
+}
+
+
+
+
+
+
+@media screen and (min-width: 1080px) {
+    #rrWrapper {
+        padding-left: 20%;
+        padding-right: 20%;
+    }
+}
+
+
+
+
+@media screen and (min-width: 1800px) {
+
+    div.container {
+        max-width: 2200px;
+    }
+}
+
+@media screen and (min-width: 1200px) {
+
+    div.container {
+        max-width: 1800px;
+    }
+}
+
+@media screen and (min-width: 992px) {
+    div.container {
+        max-width: 1800px;
+    }
+}
+
+@media (min-width: 768px) {
+    .container {
+        max-width: 720px;
+    }
+}
+
+@media (min-width: 576px) {
+    .container {
+        max-width: 540px;
+    }
+}

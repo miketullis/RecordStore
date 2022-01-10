@@ -32,8 +32,6 @@
 
 <div id="rrWrapper">
 
-    @* we can only show the table if there are results, otherwise show text asking the use to try again *@
-
     @if (Model.Count() > 0)
     {
         <table class="table" id="myTable">
@@ -63,11 +61,12 @@
                     <th>
                         @Html.DisplayNameFor(model => model.FirstOrDefault().Price)
                     </th>
-
-                    @if (User.IsInRole("Admin"))
-                    {
-                    <th> @Html.ActionLink("Add New Album", "Create", "Album", null)</th>
-                    }
+                    <th>
+                        @if (User.IsInRole("Admin"))
+                        {
+                            @Html.ActionLink("Add New Album", "Create", "Album", null)
+                        }
+                    </th>
                 </tr>
             </thead>
 
@@ -118,15 +117,34 @@
                         <td>
                             @Html.DisplayFor(modelItem => item.Price)
                         </td>
+                        <td>
+                            @using (Html.BeginForm("AddToCart", "Album", new { albumID = item.AlbumID }, FormMethod.Post))
+                            {
 
-                        @if (User.IsInRole("Admin"))
-                        {
-                            <td>
-                                @Html.ActionLink("Edit", "Edit", new { id = item.AlbumID }) |
-                                @Html.ActionLink("Details", "Details", new { id = item.AlbumID }) |
-                                @Html.ActionLink("Delete", "Delete", new { id = item.AlbumID })
-                            </td>
-                        }
+                                if (User.IsInRole("Admin"))
+                                {
+                                    @Html.ActionLink("Edit", "Edit", new { id = item.AlbumID })<span>|</span>
+                                    @Html.ActionLink("Details", "Details", new { id = item.AlbumID })<span>|</span>
+                                    @Html.ActionLink("Delete", "Delete", new { id = item.AlbumID })
+                                }
+                                else
+                                {
+                                    if (item.UnitsInStock == 0)
+                                    {
+                                        <div>
+                                            <input value="Unavailible" class="btn btn-danger" style="width: 120px;" />
+                                        </div>
+                                    }
+                                    else
+                                    {
+                                        @Html.TextBox("qty", 1, new { @class = "form-control", @style = "max-width: 50px; display: none;", onkeyup = "checkQty()" })
+                                        <div id="btnSubmit">
+                                            <input type="submit" value="Add To Cart" class="btn btn-dark" />
+                                        </div>
+                                    }
+                                }
+                            }
+                        </td>
                     </tr>
                 }
             </tbody>

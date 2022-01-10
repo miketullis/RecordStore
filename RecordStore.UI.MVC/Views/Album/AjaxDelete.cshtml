@@ -1,0 +1,63 @@
+﻿@model RecordStore.Data.EF.Album
+
+
+@using (Html.BeginForm("", "", FormMethod.Post, new { id = "AlbumDeleteForm" }))
+{
+    @Html.AntiForgeryToken()
+<div class="form-horizontal">
+    <h4 style="color: red;">Are you sure you want to delete @Model.AlbumName?</h4>
+    <br />
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Delete Album" class="btn btn-dark" />
+            @Html.ActionLink("Cancel", "Index", "Album", null, new { @class = "btn btn-dark" })
+        </div>
+    }
+
+</div>
+}
+
+
+@*//*********** AJAX ARTIST CREATE DIALOG/POP-UP BOX ************//*@
+<script src="https://cdn.jsdelivr.net/jquery.ajax.unobtrusive/3.2.4/jquery.unobtrusive-ajax.min.js"></script>
+
+<script>
+    $("#LabelCreateForm").submit(function (e) {
+        var formData = $(this).serializeArray();
+        console.log(formData);
+        e.preventDefault();//Prevent the default page reload on submit
+
+        $.ajax({
+            url: "/Album/LabelCreate",
+            type: "POST",
+            data: formData,
+            dataType: "json",
+            error: function (e) {
+                $("#MessageContent").html("<div class='alert alert-danger'>There was a problem.</div>");
+                $("#MessageContent").delay(4000).hide("slow");
+            },
+            success: function (foo) {
+                $("#MessageContent").html("<div class='alert alert-success'>Label created successfully.</div>");
+                $("#MessageContent").delay(4000).hide("slow");
+                $("#LabelCreateForm")[0].reset();
+
+                $(function () {
+                    var option =
+                        '<option value="' + foo.LabelID + '">' + foo.LabelName + '</option>';
+                    $("#LabelID").append(option);
+                }); //End of build & append label functionality
+
+                //close dialog on successful submit (not working)
+                $("#LabelCreate").dialog("close");
+
+            } //End success
+        }); //End Ajax form submission properties
+    }); //End form submit event handler
+</script>
+
+
+
+

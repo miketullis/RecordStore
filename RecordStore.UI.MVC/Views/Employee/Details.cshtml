@@ -8,16 +8,16 @@
 
     <h2 class="text-center">@ViewBag.Title</h2>
 
-    <div>
-        <dl class="dl-horizontal">
+    <div class="row mt-5">
+        <dl class="dl-horizontal col-md-6">
+            <h4>Company Info:</h4>
+            <hr />
             <dt>
-                Name
+                Department
             </dt>
-
             <dd>
-                @Html.DisplayFor(model => model.FullName)
+                @Html.DisplayFor(model => model.Department.DepartmentName)
             </dd>
-
             <dt>
                 @Html.DisplayNameFor(model => model.Position)
             </dt>
@@ -43,17 +43,44 @@
             </dd>
 
             <dt>
+                Hire Date
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.HireDate)
+            </dd>
+
+
+            @if (Model.DirectReportID != null)
+            {
+                <dt>
+                    Reports To
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.Employee2.NamePlusPosition)
+                </dd>
+            }
+       
+
+
+
+        </dl>
+        <dl class="dl-horizontal col-md-6">
+            <h4>Personal Info:</h4>
+            <hr />
+            <dt>
                 @Html.DisplayNameFor(model => model.Address)
             </dt>
-
             <dd>
-                @Html.DisplayFor(model => model.FullAddress)
+                @Html.DisplayFor(model => model.Address)<br />
+                @Html.DisplayFor(model => model.City),&nbsp;
+                @Html.DisplayFor(model => model.State)&nbsp;
+                @Html.DisplayFor(model => model.ZipCode)
             </dd>
 
             <dt>
                 @Html.DisplayNameFor(model => model.Phone)
             </dt>
-
             <dd>
                 @Html.DisplayFor(model => model.Phone)
             </dd>
@@ -64,37 +91,13 @@
 
             <dd>
                 @Html.DisplayFor(model => model.Birthday)
+                @*@Html.DisplayFor(model => model.Birthday, "{0:MMMM dd yyyy}", new { htmlAttributes = new { @type = "date" } })*@
             </dd>
-
-            <dt>
-                Hire Date
-            </dt>
-
-            <dd>
-                @Html.DisplayFor(model => model.HireDate)
-            </dd>
-
-            <dt>
-                Department
-            </dt>
-
-            <dd>
-                @Html.DisplayFor(model => model.Department.DepartmentName)
-            </dd>
-
-            <dt>
-                Directly Reports To
-            </dt>
-
-            <dd>
-                @Html.DisplayFor(model => model.Employee2.FullName)
-            </dd>
-
         </dl>
     </div>
-    <p>
-        @Html.ActionLink("Edit Employee", "Edit", null, new { @class = "btn btn-dark" }) &nbsp;
+    <div>
+        @Html.ActionLink("Edit Employee", "Edit", new { id = Model.EmployeeID }, new { @class = "btn btn-dark" }) &nbsp;
+        @Html.ActionLink("Delete Employee", "Delete", new { id = Model.EmployeeID }, new { @class = "btn btn-dark" }) &nbsp;
         @Html.ActionLink("Return To Employees", "Index", null, new { @class = "btn btn-dark" })
-    </p>
+    </div>
 </div>
-

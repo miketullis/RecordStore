@@ -1,10 +1,12 @@
-﻿@{
+﻿@*@model IEnumerable<RecordStore.Data.EF.Album>*@
+@model PagedList.IPagedList<RecordStore.Data.EF.Album>
+@using PagedList.Mvc
+
+
+@{
     ViewBag.Title = "Home";
 }
 
-
-
-<!-- Page Content -->
 <!-- Banner Starts Here -->
 <div class="banner header-text">
     <div class="owl-banner owl-carousel">
@@ -32,123 +34,86 @@
 
 <div class="latest-products">
     <div class="container">
-        <div class="row">
-            <div class="col-md-12">
-                <div class="section-heading">
-                    <h2>Latest Products</h2>
-                    <a href="@Url.Action("Products", "Home")">view all products <i class="fa fa-angle-right"></i></a>
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class="product-item">
-                    <a href="#"><img src="~/Content/assets/images/product_01.jpg" alt=""></a>
-                    <div class="down-content">
-                        <a href="#"><h4>Tittle goes here</h4></a>
-                        <h6>$25.75</h6>
-                        <p>Lorem ipsume dolor sit amet, adipisicing elite. Itaque, corporis nulla aspernatur.</p>
-                        <ul class="stars">
-                            <li><i class="fa fa-star"></i></li>
-                            <li><i class="fa fa-star"></i></li>
-                            <li><i class="fa fa-star"></i></li>
-                            <li><i class="fa fa-star"></i></li>
-                            <li><i class="fa fa-star"></i></li>
-                        </ul>
-                        <span>Reviews (24)</span>
+
+        @if (Model.PageCount > 0)
+        {
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="section-heading">
+                        <h2>Latest Products</h2>
                     </div>
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class="product-item">
-                    <a href="#"><img src="~/Content/assets/images/product_02.jpg" alt=""></a>
-                    <div class="down-content">
-                        <a href="#"><h4>Tittle goes here</h4></a>
-                        <h6>$30.25</h6>
-                        <p>Lorem ipsume dolor sit amet, adipisicing elite. Itaque, corporis nulla aspernatur.</p>
-                        <ul class="stars">
-                            <li><i class="fa fa-star"></i></li>
-                            <li><i class="fa fa-star"></i></li>
-                            <li><i class="fa fa-star"></i></li>
-                            <li><i class="fa fa-star"></i></li>
-                            <li><i class="fa fa-star"></i></li>
-                        </ul>
-                        <span>Reviews (21)</span>
+
+                    <div class="mb-2">
+                        @Html.PagedListPager(Model, page => Url.Action("Index", new { page }))
+                        <span class="pl-3 ">
+                            Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+                        </span>
                     </div>
+                    <hr />
                 </div>
-            </div>
-            <div class="col-md-4">
-                <div class="product-item">
-                    <a href="#"><img src="~/Content/assets/images/product_03.jpg" alt=""></a>
-                    <div class="down-content">
-                        <a href="#"><h4>Tittle goes here</h4></a>
-                        <h6>$20.45</h6>
-                        <p>Sixteen Clothing is free CSS template provided by TemplateMo.</p>
-                        <ul class="stars">
-                            <li><i class="fa fa-star"></i></li>
-                            <li><i class="fa fa-star"></i></li>
-                            <li><i class="fa fa-star"></i></li>
-                            <li><i class="fa fa-star"></i></li>
-                            <li><i class="fa fa-star"></i></li>
-                        </ul>
-                        <span>Reviews (36)</span>
+
+
+                @foreach (var item in Model)
+                {
+                    <div class=" col-xl-2 col-lg-3 col-md-4 col-sm-6">
+                        <div class="product-item">
+                            <a href="@Url.Action("Details", "Album", new { id = item.AlbumID })">
+                                <img src="~/Content/assets/images/albumImages/@item.AlbumImage" alt="@item.AlbumName cover" title="@item.AlbumName cover" id="albumArt" />
+                            </a>
+                            <div class="down-content">
+                                <a href="@Url.Action("Details", "Album", new { id = item.AlbumID })" style="font-weight:bold; color: black;">
+                                    @Html.DisplayFor(modelItem => item.AlbumName)
+                                </a>
+
+                                <a href="@Url.Action("Details", "Album", new { id = item.AlbumID })" color: black;">
+                                    @foreach (var artist in item.AlbumArtist)
+                                    {
+                                        if (artist.PrimaryArtist == true)
+                                        {
+                                            <h2>@artist.Artist.ArtistName</h2>
+                                        }
+                                    }
+                                </a>
+
+                                (@Html.DisplayFor(modelItem => item.Year))
+
+
+                                @Html.DisplayFor(modelItem => item.Format.FormatType)
+
+
+                                <h6 class="pull-left">@Html.DisplayFor(modelItem => item.Price)</h6>
+
+                                @using (Html.BeginForm("AddToCart", "Album", new { albumID = item.AlbumID }, FormMethod.Post))
+                                {
+
+                                    if (item.UnitsInStock == 0)
+                                    {
+                                        <div class="pull-right"><input value="Unavailible" class="btn btn-danger" style="width: 120px;" /></div>
+                                    }
+                                    else
+                                    {
+                                        @Html.TextBox("qty", 1, new { @class = "form-control", @style = "max-width: 50px; display: none;", onkeyup = "checkQty()" })
+                                        <div id="btnSubmit" class="pull-right">
+                                            <input type="submit" value="Add To Cart" class="btn btn-dark" />
+                                        </div>
+                                    }
+                                }
+                                <div class="clearfix"></div>
+                            </div>
+                        </div>
                     </div>
-                </div>
+
+
+
+
+
+                }
+
             </div>
-            <div class="col-md-4">
-                <div class="product-item">
-                    <a href="#"><img src="~/Content/assets/images/product_04.jpg" alt=""></a>
-                    <div class="down-content">
-                        <a href="#"><h4>Tittle goes here</h4></a>
-                        <h6>$15.25</h6>
-                        <p>Lorem ipsume dolor sit amet, adipisicing elite. Itaque, corporis nulla aspernatur.</p>
-                        <ul class="stars">
-                            <li><i class="fa fa-star"></i></li>
-                            <li><i class="fa fa-star"></i></li>
-                            <li><i class="fa fa-star"></i></li>
-                            <li><i class="fa fa-star"></i></li>
-                            <li><i class="fa fa-star"></i></li>
-                        </ul>
-                        <span>Reviews (48)</span>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class="product-item">
-                    <a href="#"><img src="~/Content/assets/images/product_05.jpg" alt=""></a>
-                    <div class="down-content">
-                        <a href="#"><h4>Tittle goes here</h4></a>
-                        <h6>$12.50</h6>
-                        <p>Lorem ipsume dolor sit amet, adipisicing elite. Itaque, corporis nulla aspernatur.</p>
-                        <ul class="stars">
-                            <li><i class="fa fa-star"></i></li>
-                            <li><i class="fa fa-star"></i></li>
-                            <li><i class="fa fa-star"></i></li>
-                            <li><i class="fa fa-star"></i></li>
-                            <li><i class="fa fa-star"></i></li>
-                        </ul>
-                        <span>Reviews (16)</span>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class="product-item">
-                    <a href="#"><img src="~/Content/assets/images/product_06.jpg" alt=""></a>
-                    <div class="down-content">
-                        <a href="#"><h4>Tittle goes here</h4></a>
-                        <h6>$22.50</h6>
-                        <p>Lorem ipsume dolor sit amet, adipisicing elite. Itaque, corporis nulla aspernatur.</p>
-                        <ul class="stars">
-                            <li><i class="fa fa-star"></i></li>
-                            <li><i class="fa fa-star"></i></li>
-                            <li><i class="fa fa-star"></i></li>
-                            <li><i class="fa fa-star"></i></li>
-                            <li><i class="fa fa-star"></i></li>
-                        </ul>
-                        <span>Reviews (32)</span>
-                    </div>
-                </div>
-            </div>
-        </div>
+            @Html.PagedListPager(Model, page => Url.Action("Index", new { page }))
+        }
     </div>
+
 </div>
 
 <div class="best-features">
@@ -182,22 +147,3 @@
     </div>
 </div>
 
-<div class="call-to-action">
-    <div class="container">
-        <div class="row">
-            <div class="col-md-12">
-                <div class="inner-content">
-                    <div class="row">
-                        <div class="col-md-8">
-                            <h4>Creative &amp; Unique <em>Sixteen</em> Products</h4>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Itaque corporis amet elite author nulla.</p>
-                        </div>
-                        <div class="col-md-4">
-                            <a href="@Url.Action("Products", "Home")"class="filled-button">Shop Now</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>

@@ -3,36 +3,57 @@ using System;
 using System.Net;
 using System.Net.Mail;
 using System.Configuration;
+using System.Web;
 using System.Web.Mvc;
+using System.Linq;
 using RecordStore.UI.MVC.Models;
+using RecordStore.Data.EF;
+//May not be needed
+using System.Collections.Generic;
+using System.Data;
+using System.Data.Entity;
+using System.Drawing; //Added for access to the Image class
+using RecordStore.UI.MVC.Utilities; //Added for access to Image Utilities
+using PagedList; //Added for access to the PagedList base classes
+using PagedList.Mvc; //Added for access to the PagedList.MVC functionality
 
-namespace RecordStore.Controllers
+
+namespace RecordStore.UI.MVC.Controllers
+//namespace RecordStore.Controllers
 {
     public class HomeController : Controller
     {
-        [HttpGet]
-        public ActionResult Index()
+        private RecordStoreEntities db = new RecordStoreEntities();
+
+        public ActionResult Index(int page = 1)
         {
-            return View();
+            int pageSize = 12; //We will use this value to set how many records/objects per page
+
+            var albums = db.Album.ToList();
+            return View(albums.ToPagedList(page, pageSize));
         }
 
+        public ActionResult Home()
+        {
+            var albums = db.Album.ToList();
+            return View(albums);
+        }
+
+        #region About Page
         [HttpGet]
         [Authorize]
         public ActionResult About()
         {
-            ViewBag.Message = "Your app description page.";
-
             return View();
         }
+        #endregion
 
 
         [HttpGet]
         public ActionResult Products()
         {
-
             return View();
         }
-
 
 
         #region Ajax Contact Form
@@ -97,9 +118,6 @@ namespace RecordStore.Controllers
 
 
         #endregion
-
-
-
 
 
         #region Original Contact Form

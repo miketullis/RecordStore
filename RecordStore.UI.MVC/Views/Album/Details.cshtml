@@ -9,11 +9,11 @@
 
 
     <div class="row">
-        <div col-md-5>
+        <div col-md-5 style="padding-right: 5em;">
             <img src="~/Content/assets/images/albumImages/@Model.AlbumImage" alt="@Model.AlbumName Cover" title="@Model.AlbumName Cover" id="albumArt" />
         </div>
 
-        <div col-md-7 style="padding-left: 5em;">
+        <div col-md-7>
             <dl class="dl-horizontal">
                 <dd>
                     <h2>@Html.DisplayFor(model => model.AlbumName)</h2>
@@ -43,7 +43,7 @@
                         {
                             <span>Featuring: </span>
                         }
-                        @foreach (var artist in Model.AlbumArtist)
+                        @foreach (var artist in Model.AlbumArtist.OrderBy(x => x.Artist.ArtistName))
                         {
                             if ((bool)artist.PrimaryArtist == false)
                             {
@@ -61,41 +61,58 @@
                 </dd>
 
                 <dd>
-                    <span style="font-weight: bold;">Year:&nbsp;&nbsp;</span>
-                    @Html.DisplayFor(model => model.ReleaseYear)
-                </dd>
-                <dd>
-                    <span style="font-weight: bold;">Year:&nbsp;&nbsp;</span>
+                    <span class="font-weight-bold">Year:&nbsp;&nbsp;</span>
                     @Html.DisplayFor(model => model.Year)
                 </dd>
                 <dd>
-                    <span style="font-weight: bold;">Format:&nbsp;&nbsp;</span>
-                    @Html.DisplayFor(model => model.Num) @Html.DisplayFor(model => model.Format.FormatType)@(Model.Num == 1 ? "" : "s"), @Html.DisplayFor(model => model.Tracks)
-                    @(Model.Tracks == 1 ? "Track" : Model.Tracks > 1 ? "Tracks" : "tracks unknown" ) @*ternary operator to display track info*@
+                    <span class="font-weight-bold">Format:&nbsp;&nbsp;</span>
+                    @Html.DisplayFor(model => model.Num) @Html.DisplayFor(model => model.Format.FormatType)@(Model.Num == 1 ? "" : "s")
+                    @(Model.Tracks >= 1 ? ", " : " ") @Html.DisplayFor(model => model.Tracks)
+                    @(Model.Tracks == 1 ? "Track" : Model.Tracks > 1 ? "Tracks" : "" ) @*ternary operator to display track info*@
                 </dd>
                 <dd>
-                    <span style="font-weight: bold;">Label:&nbsp;&nbsp;</span>
+                    <span class="font-weight-bold">Label:&nbsp;&nbsp;</span>
                     @Html.DisplayFor(model => model.Label.LabelName)
                 </dd>
                 <dd>
-                    <span style="font-weight: bold;">Catalog No.:&nbsp;&nbsp;</span>
+                    <span class="font-weight-bold">Catalog No.:&nbsp;&nbsp;</span>
                     @Html.DisplayFor(model => model.CatalogNum)
                 </dd>
+
+                <dd>
+                    @* Create comma separated list Of non-primary Artists.  Add "feat." before list *@
+                    <div style="word-wrap: normal;">
+                        <span class="font-weight-bold">Genre:&nbsp;&nbsp;</span>
+                        @foreach (var genre in Model.AlbumGenre.OrderBy(x => x.Genre.GenreName))
+                        {
+                            if (Model.AlbumGenre.ToList().IndexOf(genre) == Model.AlbumGenre.Count - 2)
+                            {
+                                @genre.Genre.GenreName
+                            }
+                            else
+                            {
+                                @genre.Genre.GenreName<span>, </span>
+                            }
+
+                        }
+                    </div>
+                </dd>
+
                 <hr />
                 <dd>
-                    <span style="font-weight: bold;">Status:&nbsp;&nbsp;</span>
+                    <span class="font-weight-bold">Status:&nbsp;&nbsp;</span>
                     @Html.DisplayFor(model => model.AlbumStatus.AlbumStatusName)
                 </dd>
                 <dd>
-                    <span style="font-weight: bold;">Units In Stock:&nbsp;&nbsp;</span>
+                    <span class="font-weight-bold">Units In Stock:&nbsp;&nbsp;</span>
                     @Html.DisplayFor(model => model.UnitsInStock)
                 </dd>
                 <dd>
-                    <span style="font-weight: bold;">Compilation:&nbsp;&nbsp;</span>
+                    <span class="font-weight-bold">Compilation:&nbsp;&nbsp;</span>
                     @Html.DisplayFor(model => model.CompilationAlbum)
                 </dd>
                 <dd>
-                    <span style="font-weight: bold;">Still In Print:&nbsp;&nbsp;</span>
+                    <span class="font-weight-bold">Still In Print:&nbsp;&nbsp;</span>
                     @Html.DisplayFor(model => model.IsInPrint)
                 </dd>
 
@@ -113,43 +130,66 @@
                 </dt>
 
                 <dd>
-                    <h3> @Html.DisplayFor(model => model.Price)</h3>
+                    <h3>@Html.DisplayFor(model => model.Price)</h3>
                 </dd>
 
             </dl>
         </div>
     </div>
 
-    @* added this <p> for "Add To Cart" fuctionality *@
-    <p>
-        @using (Html.BeginForm("AddToCart", "Album", new { albumID = Model.AlbumID }, FormMethod.Post))
+    @* "Add To Cart" fuctionality *@
+    @using (Html.BeginForm("AddToCart", "Album", new { albumID = Model.AlbumID }, FormMethod.Post))
+    {
+        if (Model.UnitsInStock == 0)
         {
-
+            <div>
+                <input value="Currently Unavailible" class="btn btn-danger" />
+            </div>
+        }
+        else
+        {
             @Html.HiddenFor(a => a.AlbumID)
             <span class="label">Quantity: </span>
-            @Html.TextBox("Qty", 1, new { @class = "form-control", @style = "max-width: 50px; display: inline;" })
+            @Html.TextBox("qty", 1, new { @class = "form-control", @style = "max-width: 50px; display: inline;", onkeyup = "checkQty()" })
 
-            //if (Model.UnitsInStock >= qty) //only add to cart if requested quantity is in stock
-            //{
-            <input type="submit" value="Add To Cart" class="btn btn-dark" name="qty" />
-            //}
-            //else
-            //{
-            //    ViewBag.ErrorMessage = "Insufficient quantity in stock.  Please select a lower quanity, or choose a different title.";
-            //}
+            <div id="btnSubmit">
+                <input type="submit" value="Add To Cart" class="btn btn-dark" />
+            </div>
         }
 
-    </p>
-
-    @Html.ActionLink("Back to Albums", "Index", "", new { @class = "btn btn-dark" })
-
-
-    @if (User.IsInRole("Admin"))
-    {
-        <p>
-            <span>Admin Functions: &nbsp;</span>
-            @Html.ActionLink("Edit", "Edit", new { id = Model.AlbumID }) |
-            @Html.ActionLink("Delete", "Delete", new { id = Model.AlbumID })
-        </p>
+        @Html.ActionLink("Back to Albums", "Index", "", new { @class = "btn btn-dark" })
+        if (User.IsInRole("Admin"))
+        {
+            <span></span>@Html.ActionLink("Edit", "Edit", new { id = Model.AlbumID }, new { @class = "btn btn-dark" })
+            <span></span>@Html.ActionLink("Delete", "Delete", new { id = Model.AlbumID }, new { @class = "btn btn-dark" })
+        }
     }
 </div>
+
+
+
+@section scripts{
+    <script>
+        //On page load, store the units in stock as a JS variable for use in the function
+        let uis = @Model.UnitsInStock;
+
+        //Use some JS for this since it's dependent upon the user typing in the quantity for the cart.  The function fires onkeyup -  after someone types something into the textbox for quantity, this function executes
+        function checkQty() {
+            //textbox value
+            //alert("Check QTY")
+            let qty = document.getElementById("qty").value;
+            console.log(uis);
+            console.log(Qty);
+
+            //div surrounding button - use this to modify innerHTML depending on stock QTY
+            let btnDiv = document.getElementById("btnSubmit");
+            if (uis >= qty) {
+                 btnDiv.innerHTML='<input type="submit" value="Add To Cart" class="btn btn-dark" />';
+            }
+            else
+            {
+            btnDiv.innerHTML='<span class="text-danger">Insufficient quantity in stock.<br/> Please select a lower quantity, or choose a different title.</span>';
+            }
+        }
+    </script>
+}

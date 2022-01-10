@@ -21,21 +21,7 @@ namespace RecordStore.UI.MVC.Controllers
             return View(db.Format.ToList());
         }
 
-        // GET: Formats/Details/5
-        public ActionResult Details(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Format format = db.Format.Find(id);
-            if (format == null)
-            {
-                return HttpNotFound();
-            }
-            return View(format);
-        }
-
+        #region Create
         // GET: Formats/Create
         public ActionResult Create()
         {
@@ -58,7 +44,9 @@ namespace RecordStore.UI.MVC.Controllers
 
             return View(format);
         }
+        #endregion
 
+        #region Edit
         // GET: Formats/Edit/5
         public ActionResult Edit(int? id)
         {
@@ -89,6 +77,9 @@ namespace RecordStore.UI.MVC.Controllers
             }
             return View(format);
         }
+        #endregion
+
+        #region Delete
 
         // GET: Formats/Delete/5
         public ActionResult Delete(int? id)
@@ -115,6 +106,8 @@ namespace RecordStore.UI.MVC.Controllers
             db.SaveChanges();
             return RedirectToAction("Index");
         }
+        #endregion
+
 
         protected override void Dispose(bool disposing)
         {

@@ -5,11 +5,8 @@
 }
 
 <div id="rrWrapper">
-
-    <h2 class="text-center">@ViewBag.Title</h2>
+    <h2 class="text-center"> @ViewBag.Title</h2>
     <br />
-    @Html.ActionLink("Create A New Department", "Create", null, new { @class = "btn btn-dark" })
-    <br /><br />
     <table class="table" id="myTable">
         <thead>
             <tr>
@@ -19,7 +16,10 @@
                 <th>
                     @Html.DisplayNameFor(model => model.DeptDescription)
                 </th>
-                <th></th>
+                <th>
+                    @Html.ActionLink("Add New Department", "Create")
+                    @*<a href="" class="DeptCreate">Add New Department</a>*@
+                </th>
             </tr>
         </thead>
 
@@ -34,14 +34,20 @@
                         @Html.DisplayFor(modelItem => item.DeptDescription)
                     </td>
                     <td>
+                        @*<a href="" class="DeptEdit">Edit</a>*@
                         @Html.ActionLink("Edit", "Edit", new { id = item.DepartmentID }) |
-                        @Html.ActionLink("Details", "Details", new { id = item.DepartmentID }) |
                         @Html.ActionLink("Delete", "Delete", new { id = item.DepartmentID })
+                        @*<a href="" class="DeptDelete">Delete</a>*@
                     </td>
                 </tr>
             }
         </tbody>
     </table>
+
+    @* Placeholders for the creating, deleting, & editing Departments in a dialog box *@
+    <div id="DeptCreate"></div>
+    <div id="DeptDelete"></div>
+    <div id="DeptEdit"></div>
 </div>
 
 @section Scripts{

@@ -278,15 +278,15 @@ namespace RecordStore.Data.EF//.Metadata
        
         public string NamePlusPosition
         {
-            get { return  LastName + ", " + FirstName + " - (" + Position + ")" ; }
+            get { return  Position + ": " + FirstName + " " + LastName;}
         }
 
         public string FullName
         {
-            get { return  LastName + ", " + FirstName; }
+            get { return  FirstName + " " + LastName; }
         }
 
-        public string FullAddress
+        public string FullAddress 
         {
             get { return Address + ", " + City + ", " + State + ", " + ZipCode; }
         }

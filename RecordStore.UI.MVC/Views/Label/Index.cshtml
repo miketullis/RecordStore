@@ -41,8 +41,9 @@
                         </td>
                         <td>
                             @Html.ActionLink("Edit", "Edit", new { id = item.LabelID }) |
-                            @Html.ActionLink("Details", "Details", new { id = item.LabelID }) |
-                            @Html.ActionLink("Delete", "Delete", new { id = item.LabelID })
+                            @*<a href="" class="LabelEdit">Edit</a>*@
+                            @*@Html.ActionLink("Delete", "Delete", new { id = item.LabelID })*@
+                            <a href="" class="LabelDelete">Delete</a>
                         </td>
                     </tr>
                 }
@@ -55,11 +56,10 @@
     }
 
 
-    @* Placeholder for the creating a new Label in a dialog box *@
-    <div id="LabelCreate">
-    </div>
-
-
+    @* Placeholder for the creating, deleting, & editing Labels in a dialog box *@
+    <div id="LabelCreate"></div>
+    <div id="LabelDelete"></div>
+    <div id="LabelEdit"></div>
 
 </div>
 
@@ -67,15 +67,29 @@
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
 
-    <script src="https://cdn.jsdelivr.net/jquery.ajax.unobtrusive/3.2.4/jquery.unobtrusive-ajax.min.js"></script>
-
     <script>
         $(document).ready(function () {
             $('#myTable').DataTable();
         });
-    </script>
- 
-    <script>
+
+
+        //*********** AJAX LABEL DELETE DIALOG/POP-UP BOX ************//
+        $('a.LabelDelete').click(function (e) {
+            e.preventDefault();
+            $("#LabelDelete")
+                .dialog({
+                    width: 450,
+                    height: 150,
+                    open: function () {
+                        $(this).load("/Label/AjaxLabelDelete");
+                    },
+                    title: "Delete Label",
+                    modal: true,
+                    resizable: false
+                }); //End dialog box for the div
+        }); //End details button click event handler
+
+        
 
         //*********** AJAX LABEL CREATE DIALOG/POP-UP BOX ************//
         $('a.LabelCreate').click(function (e) {
@@ -85,27 +99,23 @@
                     width: 450,
                     height: 350,
                     open: function () {
-                        $(this).load("/Label/LabelCreate");
+                        $(this).load("/Label/AjaxLabelCreate");
                     },
                     title: "Create New Label",
                     modal: true,
                     resizable: false
                 }); //End dialog box for the div
-        }); //End details button click event handler
-
-    </script>
-
-    @*//*********** AJAX ARTIST CREATE DIALOG/POP-UP BOX ************//*@
+         }); //End details button click event handler
 
 
-    <script>
+       @*//*********** AJAX CREATE ************//*@
         $("#LabelCreateForm").submit(function (e) {
             var formData = $(this).serializeArray();
             console.log(formData);
             e.preventDefault();//Prevent the default page reload on submit
 
             $.ajax({
-                url: "/Label/LabelCreate",
+                url: "/Label/AjaxLabelCreate",
                 type: "POST",
                 data: formData,
                 dataType: "json",
@@ -123,17 +133,16 @@
                             '<tr><td>' + foo.LabelName +
                             '</td><td>' + foo.Country +
                             '</td><td>' + foo.IsStillDistributing +
-                            '</td><td>Refresh to view</td></tr > ';
+                            '</td><td>Refresh to view</td></tr>';
                         $("#myTable").append(row);
                     }); //End of build & append label functionality
 
-                    //close dialog on successful submit (not working)
+                    //close dialog on successful submit
                     $("#LabelCreate").dialog("close");
 
                 } //End success
             }); //End Ajax form submission properties
         }); //End form submit event handler
     </script>
-
 }
 
