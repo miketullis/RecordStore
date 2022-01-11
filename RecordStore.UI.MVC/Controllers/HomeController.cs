@@ -25,13 +25,27 @@ namespace RecordStore.UI.MVC.Controllers
     {
         private RecordStoreEntities db = new RecordStoreEntities();
 
-        public ActionResult Index(int page = 1)
+        public ActionResult Index(string searchFilter, int page = 1)
         {
             int pageSize = 12; //We will use this value to set how many records/objects per page
 
-            var albums = db.Album.ToList();
+            var albums = db.Album.OrderBy(x => x.AlbumID).ToList();
+            //return View(albums.ToPagedList(page, pageSize));
+
+
+
+            if (!String.IsNullOrEmpty(searchFilter))
+            {
+                albums = (from m in albums
+                          where m.AlbumName.ToLower().Contains(searchFilter.ToLower())
+                          select m).ToList();
+            }
+
             return View(albums.ToPagedList(page, pageSize));
         }
+
+ 
+      
 
         public ActionResult Home()
         {

@@ -49,28 +49,13 @@
                             Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
                         </span>
                     </div>
-
-
-
-                    @using (Html.BeginForm("Index", "Home", FormMethod.Get))
-                    {
-                        <p>
-                            Search:
-                            <input type="text" name="searchString" />
-                            <input type="submit" value="Search" />
-                        </p>
-                    }
-
-
-
                     <hr />
-
                 </div>
 
 
                 @foreach (var item in Model)
                 {
-                    <div class="col-lg-3 col-md-4 col-sm-6">
+                    <div class=" col-xl-2 col-lg-3 col-md-4 col-sm-6">
                         <div class="product-item">
                             <a href="@Url.Action("Details", "Album", new { id = item.AlbumID })">
                                 <img src="~/Content/assets/images/albumImages/@item.AlbumImage" alt="@item.AlbumName cover" title="@item.AlbumName cover" id="albumArt" />
@@ -126,10 +111,6 @@
 
             </div>
             @Html.PagedListPager(Model, page => Url.Action("Index", new { page }))
-        }
-        else
-        {
-            <p>Sorry, your search criteria did not return any results. Please try again or hit GO to refresh.</p>
         }
     </div>
 

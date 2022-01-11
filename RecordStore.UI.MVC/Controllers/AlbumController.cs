@@ -206,13 +206,15 @@ namespace RecordStore.UI.MVC.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "AlbumID,AlbumName,ReleaseYear,ArtistID,Description,LabelID,CompilationAlbum,CatalogNum,Price,IsInPrint,FormatID,UnitsInStock,AlbumStatusID,AlbumImage,Num,Year")] Album album, HttpPostedFileBase albumCover, int[] artists, int[] genres, int primaryArtistId)
+        public ActionResult Edit([Bind(Include = "AlbumID,AlbumName,ReleaseYear,ArtistID,Description,LabelID,CompilationAlbum,CatalogNum,Price,IsInPrint,FormatID,UnitsInStock,AlbumStatusID,AlbumImage,Num,Year")] Album album, HttpPostedFileBase albumCover, int[] artists, int[] genres, int primaryArtistId, int? id)
         {
             if (ModelState.IsValid)
             {
                 #region Upload AlbumImage File
 
-                string file = "noImage.jpg";
+                //AlbumImage = existing AlbumImage
+                //This way AlbumImage stays the same unless a new image is uploaded
+                string file = album.AlbumImage;
 
                 if (albumCover != null)
                 {
@@ -247,15 +249,20 @@ namespace RecordStore.UI.MVC.Controllers
                 //Updated image file to name of images saved to DB
                 album.AlbumImage = file;
 
-                //create AlbumArtist record for each checkbox that was checked
+
+
+                //Delete existing AlbumArtist record 
+                var albumArtists = db.AlbumArtist.Where(x => x.AlbumID == id);
+                db.AlbumArtist.RemoveRange(albumArtists);
+
+                //create new AlbumArtist record for each checkbox that was checked
                 if (artists != null)
                 {
                     foreach (var artistId in artists)
                     {
-                        var ar = db.Artist.Find(artistId);
                         AlbumArtist aa = new AlbumArtist();
                         aa.AlbumID = album.AlbumID;
-                        aa.ArtistID = ar.ArtistID;
+                        aa.ArtistID = artistId;
                         // primaryArtist check and set true/false
                         if (artistId == primaryArtistId)
                         {
@@ -265,25 +272,33 @@ namespace RecordStore.UI.MVC.Controllers
                         {
                             aa.PrimaryArtist = false;
                         }
-                        db.AlbumArtist.Add(aa);
+
+                        var existingAAs = album.AlbumArtist.Where(x => x.AlbumID == album.AlbumID && x.ArtistID == artistId).Count();
+                        if (db.AlbumArtist.Where(x => x.AlbumID == album.AlbumID && x.ArtistID == artistId).Count() == 0)
+                        {
+                            db.AlbumArtist.Add(aa);
+                        }
                     }
-                    db.Entry(artists).State = EntityState.Modified;
-                    db.SaveChanges();
                 }
 
-                //create AlbumGenre record for each checkbox that was checked
+
+                //delete existing AlbumGenre record 
+                var albumGenres = db.AlbumGenre.Where(x => x.AlbumID == id);
+                db.AlbumGenre.RemoveRange(albumGenres);
+
+                //create new AlbumGenre record for each checkbox that was checked
                 if (genres != null)
                 {
                     foreach (var genreId in genres)
                     {
-                        var g = db.Genre.Find(genreId);
                         AlbumGenre ag = new AlbumGenre();
                         ag.AlbumID = album.AlbumID;
-                        ag.GenreID = g.GenreID;
-                        db.AlbumGenre.Add(ag);
+                        ag.GenreID = genreId;
+                        if (db.AlbumGenre.Where(x => x.AlbumID == album.AlbumID && x.GenreID == genreId).Count() == 0)
+                        {
+                            db.AlbumGenre.Add(ag);
+                        }
                     }
-                    db.Entry(genres).State = EntityState.Modified;
-                    db.SaveChanges();
                 }
 
                 db.Entry(album).State = EntityState.Modified;
@@ -336,7 +351,7 @@ namespace RecordStore.UI.MVC.Controllers
             }
 
             //delete AlbumArtist & AlbumGerne records if album is deleted
-            var albumArtists = db.AlbumArtist. Where(x => x.AlbumID == id);
+            var albumArtists = db.AlbumArtist.Where(x => x.AlbumID == id);
             db.AlbumArtist.RemoveRange(albumArtists);
             var albumGenres = db.AlbumGenre.Where(x => x.AlbumID == id);
             db.AlbumGenre.RemoveRange(albumGenres);
@@ -414,7 +429,7 @@ namespace RecordStore.UI.MVC.Controllers
             db.Album.Remove(album);
             db.SaveChanges();
 
-            string confirmMessage = string.Format($"Album {album.AlbumName} had been deleted." );
+            string confirmMessage = string.Format($"Album {album.AlbumName} had been deleted.");
             return Json(new { id = id, message = confirmMessage });
         }
         #endregion
