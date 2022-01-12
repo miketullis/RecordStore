@@ -32,26 +32,32 @@ namespace RecordStore.UI.MVC.Controllers
             var albums = db.Album.OrderBy(x => x.AlbumID).ToList();
             //return View(albums.ToPagedList(page, pageSize));
 
+            var artist = db.Artist.ToList();
+            var albumArtist = db.AlbumArtist.ToList();
+            var genre = db.Genre.ToList();
+            var albumGenre = db.AlbumGenre.ToList();
+
 
 
             if (!String.IsNullOrEmpty(searchFilter))
             {
-                albums = (from m in albums
-                          where m.AlbumName.ToLower().Contains(searchFilter.ToLower())
-                          select m).ToList();
+                albums = (from a in albums join aa in albumArtist on a.AlbumID equals aa.AlbumID
+                          join ar in artist on aa.ArtistID equals ar.ArtistID
+                          join ag in albumGenre on a.AlbumID equals ag.AlbumID
+                          join g in genre on ag.GenreID equals g.GenreID
+                          where a.AlbumName.ToLower().Contains(searchFilter.ToLower()) ||
+                          a.Label.LabelName.ToLower().Contains(searchFilter.ToLower()) ||
+                          a.Year.ToString().Contains(searchFilter) || 
+                          ar.ArtistName.ToLower().Contains(searchFilter.ToLower()) ||
+                          g.GenreName.ToLower().Contains(searchFilter.ToLower()) ||
+                          a.CatalogNum.ToLower().Contains(searchFilter.ToLower()) ||
+                          a.Label.Country.ToLower().Contains(searchFilter.ToLower())
+                          select a).Distinct().ToList();
             }
-
             return View(albums.ToPagedList(page, pageSize));
         }
 
- 
-      
 
-        public ActionResult Home()
-        {
-            var albums = db.Album.ToList();
-            return View(albums);
-        }
 
         #region About Page
         [HttpGet]

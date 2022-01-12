@@ -8,10 +8,11 @@
 <div id="rrWrapper">
     <h3 class="text-center">@ViewBag.title</h3>
     <br />
-    @using (Html.BeginForm("Create", "Album", FormMethod.Post, new { enctype = "multipart/form-data" }))
+    @using (Html.BeginForm("Edit", "Album", FormMethod.Post, new { enctype = "multipart/form-data" }))
     {
         @Html.AntiForgeryToken()
         @Html.HiddenFor(x => x.AlbumID)
+        @Html.HiddenFor(x => x.AlbumImage)
 
         <div class="form-horizontal">
             @Html.ValidationSummary(true, "", new { @class = "text-danger" })
@@ -112,7 +113,7 @@
                                     </div>
                                 </li>
                             }
-                        </ul>
+                         </ul>
                     </div>
 
                     <div class="form-group col-md-12">

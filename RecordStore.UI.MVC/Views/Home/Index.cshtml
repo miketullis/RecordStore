@@ -35,40 +35,39 @@
 <div class="latest-products">
     <div class="container">
 
-        @if (Model.PageCount > 0)
-        {
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="section-heading">
-                        <h2>Latest Products</h2>
-                    </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="section-heading">
+                    <h2>Latest Products</h2>
+                </div>
 
-                    <div class="mb-2">
+                <div class="pageSearch">
+                    <div class="psLeft">
                         @Html.PagedListPager(Model, page => Url.Action("Index", new { page }))
-                        <span class="pl-3 ">
+                        <span class="pageCount">
                             Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
                         </span>
                     </div>
-
-
-
-                    @using (Html.BeginForm("Index", "Home", FormMethod.Get))
-                    {
-                        <p>
-                            Search:
-                            <input type="text" name="searchString" />
-                            <input type="submit" value="Search" />
-                        </p>
-                    }
-
-
-
-                    <hr />
-
+                    <div class="psRight">
+                        @using (Html.BeginForm("Index", "Home", FormMethod.Get))
+                        {
+                            <div>
+                                <input type="text" name="searchFilter" />
+                                <input type="submit" value="Search" class="btn-dark" />
+                            </div>
+                        }
+                    </div>
                 </div>
+                <div class="clearfix"></div>
+
+                <hr />
+            </div>
+
+            @if (Model.PageCount > 0)
+            {
 
 
-                @foreach (var item in Model)
+                foreach (var item in Model)
                 {
                     <div class="col-lg-3 col-md-4 col-sm-6">
                         <div class="product-item">
@@ -118,19 +117,18 @@
                         </div>
                     </div>
 
-
-
-
-
                 }
 
-            </div>
-            @Html.PagedListPager(Model, page => Url.Action("Index", new { page }))
-        }
-        else
-        {
-            <p>Sorry, your search criteria did not return any results. Please try again or hit GO to refresh.</p>
-        }
+
+
+            }
+            else
+            {
+                <h4 class="text-danger">Sorry, your search criteria did not return any results.<br /> Please try again or hit "Search" again to refresh.</h4>
+            }
+        </div>
+        @Html.PagedListPager(Model, page => Url.Action("Index", new { page }))
+        <hr />
     </div>
 
 </div>

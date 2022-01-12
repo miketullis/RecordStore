@@ -514,7 +514,6 @@
     <Content Include="Views\Album\Delete.cshtml" />
     <Content Include="Views\Album\Details.cshtml" />
     <Content Include="Views\Album\Edit.cshtml" />
-    <Content Include="Views\Album\Home.cshtml" />
     <Content Include="Views\AlbumArtist\Create.cshtml" />
     <Content Include="Views\AlbumArtist\Delete.cshtml" />
     <Content Include="Views\AlbumArtist\Details.cshtml" />
@@ -553,7 +552,6 @@
     <Content Include="Views\Label\Edit.cshtml" />
     <Content Include="Views\Label\Index.cshtml" />
     <Content Include="Views\Home\EmailConfirmation.cshtml" />
-    <Content Include="Views\Shared\_Layout - Copy.cshtml" />
     <Content Include="Views\ShoppingCart\Index.cshtml" />
     <Content Include="Views\Shared\_AminPartial.cshtml" />
     <Content Include="Views\Artist\Create.cshtml" />
@@ -563,15 +561,12 @@
     <Content Include="Views\Artist\Index.cshtml" />
     <Content Include="Views\Home\ContactAjax.cshtml" />
     <Content Include="Views\Errors\Unresolved.cshtml" />
-    <Content Include="Views\Home\Products.cshtml" />
     <Content Include="Views\Album\Index.cshtml" />
     <Content Include="Views\Album\ArtistCreate.cshtml" />
     <Content Include="Views\Album\LabelCreate.cshtml" />
     <Content Include="Views\Label\AjaxLabelCreate.cshtml" />
     <Content Include="Views\Album\AjaxDelete.cshtml" />
     <Content Include="Views\Label\AjaxLabelDelete.cshtml" />
-    <Content Include="Views\Home\Index - Copy.cshtml" />
-    <Content Include="Views\Home\Index - Copy %282%29.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Views\AlbumViewModel\" />

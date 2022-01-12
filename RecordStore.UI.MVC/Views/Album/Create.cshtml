@@ -10,7 +10,7 @@
     @using (Html.BeginForm("Create", "Album", FormMethod.Post, new { enctype = "multipart/form-data" }))
     {
         @Html.AntiForgeryToken()
-        @Html.HiddenFor(x => x.AlbumID)
+        //@Html.HiddenFor(x => x.AlbumID)
 
         <div class="form-horizontal">
             @Html.ValidationSummary(true, "", new { @class = "text-danger" })

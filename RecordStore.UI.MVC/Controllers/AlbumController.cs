@@ -24,11 +24,6 @@ namespace RecordStore.UI.MVC.Controllers
             return View(albums);
         }
 
-        public ActionResult Home()
-        {
-            var albums = db.Album.ToList();
-            return View(albums);
-        }
 
         #region Details
         // GET: Albums/Details/5
@@ -70,7 +65,7 @@ namespace RecordStore.UI.MVC.Controllers
         // POST: Albums/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "AlbumID,AlbumName,ReleaseYear,ArtistID,GenreID,Description,LabelID,CompilationAlbum,CatalogNum,Price,IsInPrint,FormatID,UnitsInStock,AlbumStatusID,AlbumImage,Num,Year")] Album album, HttpPostedFileBase albumCover, int[] artists, int[] genres, int primaryArtistId)
+        public ActionResult Create([Bind(Include = "AlbumID,AlbumName,ReleaseYear,ArtistID,GenreID,Description,LabelID,CompilationAlbum,CatalogNum,Price,IsInPrint,FormatID,UnitsInStock,AlbumStatusID,AlbumImage,Num,Tracks,Year")] Album album, HttpPostedFileBase albumCover, int[] artists, int[] genres, int primaryArtistId)
         {
             if (ModelState.IsValid)
             {
@@ -206,8 +201,10 @@ namespace RecordStore.UI.MVC.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "AlbumID,AlbumName,ReleaseYear,ArtistID,Description,LabelID,CompilationAlbum,CatalogNum,Price,IsInPrint,FormatID,UnitsInStock,AlbumStatusID,AlbumImage,Num,Year")] Album album, HttpPostedFileBase albumCover, int[] artists, int[] genres, int primaryArtistId, int? id)
+        public ActionResult Edit([Bind(Include = "AlbumID,AlbumName,ReleaseYear,ArtistID,Description,LabelID,CompilationAlbum,CatalogNum,Price,IsInPrint,FormatID,UnitsInStock,AlbumStatusID,AlbumImage,Num,Tracks,Year")] Album album, HttpPostedFileBase albumCover, int[] artists, int[] genres, int primaryArtistId, int? id)
         {
+            RecordStoreEntities context = new RecordStoreEntities();
+
             if (ModelState.IsValid)
             {
                 #region Upload AlbumImage File
@@ -249,11 +246,10 @@ namespace RecordStore.UI.MVC.Controllers
                 //Updated image file to name of images saved to DB
                 album.AlbumImage = file;
 
-
-
                 //Delete existing AlbumArtist record 
-                var albumArtists = db.AlbumArtist.Where(x => x.AlbumID == id);
-                db.AlbumArtist.RemoveRange(albumArtists);
+                var albumArtists = context.AlbumArtist.Where(x => x.AlbumID == id);
+                context.AlbumArtist.RemoveRange(albumArtists);
+                context.SaveChanges();
 
                 //create new AlbumArtist record for each checkbox that was checked
                 if (artists != null)
@@ -273,18 +269,19 @@ namespace RecordStore.UI.MVC.Controllers
                             aa.PrimaryArtist = false;
                         }
 
-                        var existingAAs = album.AlbumArtist.Where(x => x.AlbumID == album.AlbumID && x.ArtistID == artistId).Count();
-                        if (db.AlbumArtist.Where(x => x.AlbumID == album.AlbumID && x.ArtistID == artistId).Count() == 0)
+                        var existingAAs = context.AlbumArtist.Where(x => x.AlbumID == album.AlbumID && x.ArtistID == artistId).Count();
+                        if (context.AlbumArtist.Where(x => x.AlbumID == album.AlbumID && x.ArtistID == artistId).Count() == 0)
                         {
-                            db.AlbumArtist.Add(aa);
+                            context.AlbumArtist.Add(aa);
                         }
                     }
                 }
-
-
+                context.SaveChanges();
+                
                 //delete existing AlbumGenre record 
-                var albumGenres = db.AlbumGenre.Where(x => x.AlbumID == id);
-                db.AlbumGenre.RemoveRange(albumGenres);
+                var albumGenres = context.AlbumGenre.Where(x => x.AlbumID == id);
+                context.AlbumGenre.RemoveRange(albumGenres);
+                context.SaveChanges();
 
                 //create new AlbumGenre record for each checkbox that was checked
                 if (genres != null)
@@ -294,16 +291,18 @@ namespace RecordStore.UI.MVC.Controllers
                         AlbumGenre ag = new AlbumGenre();
                         ag.AlbumID = album.AlbumID;
                         ag.GenreID = genreId;
-                        if (db.AlbumGenre.Where(x => x.AlbumID == album.AlbumID && x.GenreID == genreId).Count() == 0)
+                        if (context.AlbumGenre.Where(x => x.AlbumID == album.AlbumID && x.GenreID == genreId).Count() == 0)
                         {
-                            db.AlbumGenre.Add(ag);
+                            context.AlbumGenre.Add(ag);
                         }
                     }
                 }
-
+                context.SaveChanges();
                 db.Entry(album).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
+
+
             }
 
             ViewBag.AlbumStatusID = new SelectList(db.AlbumStatus, "AlbumStatusID", "AlbumStatusName", album.AlbumStatusID);
@@ -371,7 +370,6 @@ namespace RecordStore.UI.MVC.Controllers
             base.Dispose(disposing);
         }
         #endregion
-
 
         #region AJAX Create Artist & Label
         //******** AJAX CREATE *********//

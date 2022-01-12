@@ -71,15 +71,6 @@
                     @(Model.Tracks == 1 ? "Track" : Model.Tracks > 1 ? "Tracks" : "" ) @*ternary operator to display track info*@
                 </dd>
                 <dd>
-                    <span class="font-weight-bold">Label:&nbsp;&nbsp;</span>
-                    @Html.DisplayFor(model => model.Label.LabelName)
-                </dd>
-                <dd>
-                    <span class="font-weight-bold">Catalog No.:&nbsp;&nbsp;</span>
-                    @Html.DisplayFor(model => model.CatalogNum)
-                </dd>
-
-                <dd>
                     @* Create comma separated list Of non-primary Artists.  Add "feat." before list *@
                     <div style="word-wrap: normal;">
                         <span class="font-weight-bold">Genre:&nbsp;&nbsp;</span>
@@ -97,6 +88,19 @@
                         }
                     </div>
                 </dd>
+                <dd>
+                    <span class="font-weight-bold">Label:&nbsp;&nbsp;</span>
+                    @Html.DisplayFor(model => model.Label.LabelName)
+                </dd>
+                <dd>
+                    <span class="font-weight-bold">Catalog No.:&nbsp;&nbsp;</span>
+                    @Html.DisplayFor(model => model.CatalogNum)
+                </dd>
+                <dd>
+                    <span class="font-weight-bold">Country:&nbsp;&nbsp;</span>
+                    @Html.DisplayFor(model => model.Label.Country)
+                </dd>
+
 
                 <hr />
                 <dd>

@@ -32,6 +32,7 @@ namespace RecordStore.Data.EF//.Metadata
 
         [Display(Name = "Catalog No.")] //Cat# often have a mixture a letters and numbers
         [StringLength(25, ErrorMessage = "* Cannot exceed 25 characters *")]
+        [DisplayFormat(NullDisplayText = "[-N/A-]")]
         public string CatalogNum { get; set; }
 
         [Required(ErrorMessage = "* Price is required *")]
@@ -55,7 +56,7 @@ namespace RecordStore.Data.EF//.Metadata
         [Range(0, double.MaxValue, ErrorMessage = "* Value must be a valid number, 0 or larger *")]
         [DisplayFormat(NullDisplayText = "[-N/A-]")]
         public Nullable<int> Num { get; set; }
-
+       
         [Range(0, double.MaxValue, ErrorMessage = "* Value must be a valid number, 0 or larger *")]
         public Nullable<int> Tracks { get; set; }
         
