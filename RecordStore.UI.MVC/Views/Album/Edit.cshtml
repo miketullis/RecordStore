@@ -113,7 +113,9 @@
                                     </div>
                                 </li>
                             }
-                         </ul>
+                        </ul>
+                        <p id="checkerror" class="text-danger">* Artist is required *</p>
+                        <p id="radioerror" class="text-danger">* Primary Artist is required *</p>
                     </div>
 
                     <div class="form-group col-md-12">
@@ -233,7 +235,7 @@
             <div class="form-group">
                 <div class="col-md-offset-2 col-md-10">
                     <input type="submit" value="Save Changes" class="btn btn-dark" /> &nbsp;
-                    @Html.ActionLink("Cancel", "Index", "", new { @class = "btn btn-dark" })
+                    @Html.ActionLink("Cancel", "Index", "Home", new { @class = "btn btn-dark" })
                 </div>
             </div>
         </div>
@@ -253,65 +255,88 @@
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
 
-    <script>
-        var expanded = false;
+<script>
+    var expanded = false;
 
-        function showArtists() {
-            var checkArtists = document.getElementById("checkArtists");
-            if (!expanded) {
-                checkArtists.style.display = "block";
-                expanded = true;
-            } else {
-                checkArtists.style.display = "none";
-                expanded = false;
-            }
+    function showArtists() {
+        var checkArtists = document.getElementById("checkArtists");
+        if (!expanded) {
+            checkArtists.style.display = "block";
+            expanded = true;
+        } else {
+            checkArtists.style.display = "none";
+            expanded = false;
+        }
+    }
+
+    function showGenres() {
+        var checkGenres = document.getElementById("checkGenres");
+        if (!expanded) {
+            checkGenres.style.display = "block";
+            expanded = true;
+        } else {
+            checkGenres.style.display = "none";
+            expanded = false;
+        }
+    }
+
+
+    //*********** AJAX ARTIST CREATE DIALOG/POP-UP BOX ************//
+    $('a.ArtistCreate').click(function (e) {
+        e.preventDefault();
+        $("#ArtistCreate")
+            .dialog({
+                width: 450,
+                height: 250,
+                open: function () {
+                    $(this).load("/Album/ArtistCreate");
+                },
+                title: "Create New Artist",
+                modal: true,
+                resizable: false
+            }); //End dialog box for the div
+    }); //End details button click event handler
+
+
+    //*********** AJAX LABEL CREATE DIALOG/POP-UP BOX ************//
+    $('a.LabelCreate').click(function (e) {
+        e.preventDefault();
+        $("#LabelCreate")
+            .dialog({
+                width: 450,
+                height: 350,
+                open: function () {
+                    $(this).load("/Album/LabelCreate");
+                },
+                title: "Create New Label",
+                modal: true,
+                resizable: false
+            }); //End dialog box for the div
+    }); //End details button click event handler
+
+    //*********** VALIDATE CHECK & RADIO BOXES ************//
+    $(document).ready(function () {
+        $('#radioerror').hide();
+        $('#checkerror').hide();
+    });
+
+    $('#checkform').click(function () {
+        if (!$('input[type=radio][name=primaryArtistID]:checked').length != 0) {
+            $('#radioerror').show();
+            return false;
+        }
+        else {
+            $('#radioerror').hide();
         }
 
-        function showGenres() {
-            var checkGenres = document.getElementById("checkGenres");
-            if (!expanded) {
-                checkGenres.style.display = "block";
-                expanded = true;
-            } else {
-                checkGenres.style.display = "none";
-                expanded = false;
-            }
+        if ($('input[type=checkbox][name=artists]:checked').length < 1) {
+            $('#checkerror').show();
+            return false;
         }
-
-
-        //*********** AJAX ARTIST CREATE DIALOG/POP-UP BOX ************//
-        $('a.ArtistCreate').click(function (e) {
-            e.preventDefault();
-            $("#ArtistCreate")
-                .dialog({
-                    width: 450,
-                    height: 250,
-                    open: function () {
-                        $(this).load("/Album/ArtistCreate");
-                    },
-                    title: "Create New Artist",
-                    modal: true,
-                    resizable: false
-                }); //End dialog box for the div
-        }); //End details button click event handler
-
-
-        //*********** AJAX LABEL CREATE DIALOG/POP-UP BOX ************//
-        $('a.LabelCreate').click(function (e) {
-            e.preventDefault();
-            $("#LabelCreate")
-                .dialog({
-                    width: 450,
-                    height: 350,
-                    open: function () {
-                        $(this).load("/Album/LabelCreate");
-                    },
-                    title: "Create New Label",
-                    modal: true,
-                    resizable: false
-                }); //End dialog box for the div
-        }); //End details button click event handler
-
-    </script>
+        else {
+            $('#checkerror').hide();
+        }
+    });
+</script>
 
 }

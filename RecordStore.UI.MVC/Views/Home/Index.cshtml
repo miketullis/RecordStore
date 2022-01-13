@@ -72,42 +72,40 @@
                     <div class="col-lg-3 col-md-4 col-sm-6">
                         <div class="product-item">
                             <a href="@Url.Action("Details", "Album", new { id = item.AlbumID })">
-                                <img src="~/Content/assets/images/albumImages/@item.AlbumImage" alt="@item.AlbumName cover" title="@item.AlbumName cover" id="albumArt" />
+                                <img src="~/Content/assets/images/albumImages/@item.AlbumImage" alt="@item.AlbumName cover" title="@item.AlbumName cover" id="albumArt" class="m-3" style="max-width:90%;"/>
                             </a>
                             <div class="down-content">
                                 <a href="@Url.Action("Details", "Album", new { id = item.AlbumID })" style="font-weight:bold; color: black;">
                                     @Html.DisplayFor(modelItem => item.AlbumName)
                                 </a>
 
+
                                 <a href="@Url.Action("Details", "Album", new { id = item.AlbumID })" color: black;">
                                     @foreach (var artist in item.AlbumArtist)
                                     {
                                         if (artist.PrimaryArtist == true)
                                         {
-                                            <h2>@artist.Artist.ArtistName</h2>
+                                            <h2>by @artist.Artist.ArtistName</h2>
                                         }
                                     }
                                 </a>
-
-                                (@Html.DisplayFor(modelItem => item.Year))
-
-
-                                @Html.DisplayFor(modelItem => item.Format.FormatType)
-
-
-                                <h6 class="pull-left">@Html.DisplayFor(modelItem => item.Price)</h6>
+                                <div class="pt-1 pb-1">
+                                    @Html.DisplayFor(modelItem => item.Format.FormatType) | (@Html.DisplayFor(modelItem => item.Year))
+                                </div>
+                  
+                                <h6 class="pr-pull-left">@Html.DisplayFor(modelItem => item.Price)</h6>
 
                                 @using (Html.BeginForm("AddToCart", "Album", new { albumID = item.AlbumID }, FormMethod.Post))
                                 {
 
                                     if (item.UnitsInStock == 0)
                                     {
-                                        <div class="pull-right"><input value="Unavailible" class="btn btn-danger" style="width: 120px;" /></div>
+                                        <div class="btn-pull-right"><input value="Unavailible" class="btn btn-danger" style="width: 120px;" /></div>
                                     }
                                     else
                                     {
                                         @Html.TextBox("qty", 1, new { @class = "form-control", @style = "max-width: 50px; display: none;", onkeyup = "checkQty()" })
-                                        <div id="btnSubmit" class="pull-right">
+                                        <div id="btnSubmit" class="btn-pull-right">
                                             <input type="submit" value="Add To Cart" class="btn btn-dark" />
                                         </div>
                                     }
@@ -143,21 +141,21 @@
             </div>
             <div class="col-md-6">
                 <div class="left-content">
-                    <h4>Looking for the best products?</h4>
-                    <p><a rel="nofollow" href="https://templatemo.com/tm-546-sixteen-clothing" target="_parent">This template</a> is free to use for your business websites. However, you have no permission to redistribute the downloadable ZIP file on any template collection website. <a rel="nofollow" href="https://templatemo.com/contact">Contact us</a> for more info.</p>
+                    <h4>Looking for rare and live recordings?</h4>
+                    <p>This template is free to use for your business websites. However, you have no permission to redistribute the downloadable ZIP file on any template collection website. <a href="@Url.Action("Contact", "Home")">Contact Us</a> for more info.</p>
                     <ul class="featured-list">
-                        <li><a href="#">Lorem ipsum dolor sit amet</a></li>
-                        <li><a href="#">Consectetur an adipisicing elit</a></li>
-                        <li><a href="#">It aquecorporis nulla aspernatur</a></li>
-                        <li><a href="#">Corporis, omnis doloremque</a></li>
-                        <li><a href="#">Non cum id reprehenderit</a></li>
+                        <li>Lorem ipsum dolor sit amet</li>
+                        <li>Lorem ipsum dolor sit amet</li>
+                        <li>Lorem ipsum dolor sit amet</li>
+                        <li>Lorem ipsum dolor sit amet</li>
+                        <li>Lorem ipsum dolor sit amet</li>
                     </ul>
-                    <a href="@Url.Action("About", "Home")" class="filled-button">Read More</a>
+                    
                 </div>
             </div>
             <div class="col-md-6">
                 <div class="right-image">
-                    <img src="~/Content/assets/images/feature-image.jpg" alt="">
+                    <img src="~/Content/assets/images/feature-image.jpg" alt="Woman listening to music with headphones" class="feature-image">
                 </div>
             </div>
         </div>

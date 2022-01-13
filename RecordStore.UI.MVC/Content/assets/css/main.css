@@ -420,8 +420,9 @@ header .navbar {
 }
 
 .product-item {
-	border: 1px solid #eee;
-	margin-bottom: 30px;
+    border: 1px solid #23272B;
+    margin-bottom: 30px;
+    box-shadow: 0 5px 8px 3px #808080;
 }
 
 .product-item .down-content {

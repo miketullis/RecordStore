@@ -70,7 +70,11 @@
 
 #albumArt {
     box-shadow: 0 5px 8px 3px #808080;
-    margin-bottom: 2em;
+    /*margin-bottom: 2em;*/
+}
+
+.feature-image {
+    box-shadow: 0 5px 8px 3px #808080;
 }
 
 #contactConfirm {
@@ -158,9 +162,10 @@ div.row {
     margin: 0;
     z-index: 99;
     width: auto;
-    max-height: 200px;
+    max-height: 125px;
     overflow-x: hidden;
     overflow-y: auto;
+    box-shadow: 0 1px 8px 2px #cfcaca;
 }
 
 ul #checkArtists, ul #checkGenres {
@@ -176,7 +181,7 @@ ul #checkArtists, ul #checkGenres {
         background-color: #1e90ff;
     }
 
-div.row {
+div.row-p-0 {
     padding-right: unset;
     padding-left: unset;
 }
@@ -212,10 +217,37 @@ div.row {
     bottom: 13px;
 }
 
+#checkerror, #radioerror {
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.6;
+    margin-bottom: unset;
+}
 
-
-
+.btn-pull-right{
+    position: absolute;
+    right: 20px;
+    bottom: 10px;
+}
+.pr-pull-left{
+    position: absolute;
+    bottom: 20px;
+}
 /*Home Page Product Restyling*/
+.product-item {
+    margin-bottom: 30px;
+    box-shadow: 0 5px 8px 3px #808080;
+}
+
+    .product-item .down-content {
+        padding: unset;
+        padding-top: 15px;
+        padding-right: 30px;
+        padding-bottom: 15px;
+        padding-left: 30px;
+        min-height:175px;
+    }
+
 .product-item .down-content h4 {
     margin-bottom: 20px !important;
 }
@@ -232,7 +264,6 @@ div.row {
     right: 30px !important;*/
     top: unset;
     right: unset;
-    bottom: 36px;
     font-size: 1.4em;
 }
 

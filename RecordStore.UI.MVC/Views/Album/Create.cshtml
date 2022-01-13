@@ -49,7 +49,11 @@
                         </li>
                     }
                 </ul>
+                <p id="checkerror" class="text-danger">* Artist is required *</p>
+                <p id="radioerror" class="text-danger">* Primary Artist is required *</p>
             </div>
+
+
 
 
             <div class="form-group col-md-12">
@@ -167,8 +171,8 @@
 
             <div class="form-group">
                 <div class="col-md-offset-2 col-md-12">
-                    <input type="submit" value="Create New Album" class="btn btn-dark" />
-                    @Html.ActionLink("Cancel", "Index", "Album", null, new { @class = "btn btn-dark" })
+                    <input type="submit" value="Create New Album" class="btn btn-dark" id="checkform" />
+                    @Html.ActionLink("Cancel", "Index", "Home", null, new { @class = "btn btn-dark" })
                 </div>
             </div>
         </div>
@@ -240,5 +244,32 @@
                     resizable: false
                 }); //End dialog box for the div
         }); //End details button click event handler
+
+
+
+        //*********** VALIDATE CHECK & RADIO BOXES ************//
+        $(document).ready(function () {
+            $('#radioerror').hide();
+            $('#checkerror').hide();
+        });
+
+        $('#checkform').click(function () {
+            if (!$('input[type=radio][name=primaryArtistID]:checked').length != 0) {
+                $('#radioerror').show();
+                return false;
+            }
+            else {
+                $('#radioerror').hide();
+            }
+
+            if ($('input[type=checkbox][name=artists]:checked').length < 1) {
+                $('#checkerror').show();
+                return false;
+            }
+            else {
+                $('#checkerror').hide();
+            }
+        });
     </script>
+
 }
