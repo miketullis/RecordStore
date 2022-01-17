@@ -19,20 +19,9 @@ namespace RecordStore.UI.MVC.Controllers
         private RecordStoreEntities db = new RecordStoreEntities();
 
         // GET: Artist
-        public ActionResult Index(string searchString, int page = 1)
+        public ActionResult Index()
         {
-            int pageSize = 5;
-
-            var artists = db.Artist.OrderBy(a => a.ArtistName).ToList();
-
-            if (!String.IsNullOrEmpty(searchString))
-            {
-                artists = (from a in artists
-                          where a.ArtistName.ToLower().Contains(searchString.ToLower())
-                          select a).ToList();
-            }
-
-            return View(artists.ToPagedList(page, pageSize));
+            return View(db.Artist.ToList());
         }
 
         // GET: Artist/Details/5
@@ -60,19 +49,65 @@ namespace RecordStore.UI.MVC.Controllers
         // POST: Artist/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
+        //public ActionResult Create([Bind(Include = "ArtistID,ArtistName,IsStillActive")] Artist artist)
+        //{
+        //    if (ModelState.IsValid)
+        //    {
+        //        db.Artist.Add(artist);
+        //        db.SaveChanges();
+        //        return RedirectToAction("Index");
+        //    }
+
+        //    return View(artist);
+        //}
+
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "ArtistID,ArtistName,IsStillActive")] Artist artist)
         {
+
             if (ModelState.IsValid)
             {
+
+                #region Create Artist Name For Sorting
+
+                //If ArtistName begins with "The ", remove and place at end of name
+                string artistName = artist.ArtistName;
+
+                if (artistName != null)
+                {
+                    //first param of substring is the starting point, next param is the ending point
+                    string firstWord = artistName.Substring(0, artistName.IndexOf(' ')+1);
+
+                    if (firstWord.ToLower() == "the ")
+                    {
+                        //in this overload of substring, the starting point is after the first space, and through the end
+                        artistName = artistName.Substring(artistName.IndexOf(' ')+1) + ", The";
+                    }
+                    else
+                    {
+                        artistName = artist.ArtistName; //use original unput
+                    }
+
+                }//end if(albumCover != null)
+
+                artist.ArtistNameSort = artistName;
+
+                #endregion
+
+
                 db.Artist.Add(artist);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-
             return View(artist);
         }
+
+
+
 
 
         // GET: Artist/Edit/5
@@ -100,6 +135,33 @@ namespace RecordStore.UI.MVC.Controllers
         {
             if (ModelState.IsValid)
             {
+
+                #region Create Artist Name For Sorting
+
+                //If ArtistName begins with "The ", remove and place at end of name
+                string artistName = artist.ArtistName;
+
+                if (artistName != null)
+                {
+                    //first param of substring is the starting point, next param is the ending point
+                    string firstWord = artistName.Substring(0, artistName.IndexOf(' ') + 1);
+
+                    if (firstWord.ToLower() == "the ")
+                    {
+                        //in this overload of substring, the starting point is after the first space, and through the end
+                        artistName = artistName.Substring(artistName.IndexOf(' ') + 1) + ", The";
+                    }
+                    else
+                    {
+                        artistName = artist.ArtistName; //use original unput
+                    }
+
+                }//end if(albumCover != null)
+
+                artist.ArtistNameSort = artistName;
+
+                #endregion
+
                 db.Entry(artist).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
@@ -142,12 +204,7 @@ namespace RecordStore.UI.MVC.Controllers
             base.Dispose(disposing);
         }
 
-
-
-
-
-
-
-
     }
+
+       
 }

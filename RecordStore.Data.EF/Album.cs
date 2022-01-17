@@ -23,7 +23,6 @@ namespace RecordStore.Data.EF
     
         public int AlbumID { get; set; }
         public string AlbumName { get; set; }
-        public Nullable<System.DateTime> ReleaseYear { get; set; }
         public string Description { get; set; }
         public int LabelID { get; set; }
         public bool CompilationAlbum { get; set; }
@@ -38,6 +37,8 @@ namespace RecordStore.Data.EF
         public Nullable<int> Tracks { get; set; }
         public Nullable<bool> IsFeatured { get; set; }
         public Nullable<int> Year { get; set; }
+        public string AlbumNameSort { get; set; }
+        public string RearImage { get; set; }
     
         public virtual AlbumStatus AlbumStatus { get; set; }
         public virtual Format Format { get; set; }

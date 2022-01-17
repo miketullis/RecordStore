@@ -1,64 +1,64 @@
-﻿@*@model IEnumerable<RecordStore.Data.EF.Artist>*@
-@model PagedList.IPagedList<RecordStore.Data.EF.Artist>
-@using PagedList.Mvc
-
+﻿@model IEnumerable<RecordStore.Data.EF.Artist>
+@using RecordStore.UI.MVC.Helpers
 
 @{
     ViewBag.Title = "Artists";
 }
 
-
 <div id="rrWrapper">
-
     <h2 class="text-center"> @ViewBag.Title</h2>
-
-    @*Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount*@
-
-    @Html.PagedListPager(Model, page => Url.Action("Index", new { page }))
-
-    @using (Html.BeginForm("Index", "Artist", FormMethod.Get))
-    {
-        <p style="padding-bottom: 1em; font-weight: bold;">
-            <input type="text" name="searchString" style="max-width:250px;" />
-            <input type="submit" value="Search" />
-            &nbsp;&nbsp;
-            @if (User.IsInRole("Admin"))
-            {
-
-                @Html.ActionLink("Add A New Artist", "Create")
-            }
-
-        </p>
-    }
-
-
-    <table class="table">
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.FirstOrDefault().ArtistName)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.FirstOrDefault().IsStillActive)
-            </th>
-            <th></th>
-        </tr>
-
-        @foreach (var item in Model)
-        {
+    <br />
+    <table class="table" id="myTable">
+        <thead>
             <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.ArtistName)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.IsStillActive)
-                </td>
-                <td>
-                    @Html.ActionLink("Edit", "Edit", new { id = item.ArtistID }) |
-                    @Html.ActionLink("Details", "Details", new { id = item.ArtistID }) |
-                    @Html.ActionLink("Delete", "Delete", new { id = item.ArtistID })
-                </td>
+                <th>
+                    @Html.DisplayNameFor(model => model.FirstOrDefault().ArtistName)
+                </th>
+                <th class="text-center">
+                    @Html.DisplayNameFor(model => model.FirstOrDefault().IsStillActive)
+                </th>
+                <th class="text-right">@Html.ActionLink("Add A New Artist", "Create")</th>
             </tr>
-        }
+        </thead>
+        <tbody>
 
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @*@Html.DisplayFor(modelItem => item.ArtistName)*@
+                        @* Use reformatted ArtistName for ABC displaying *@
+                        @Html.DisplayFor(modelItem => item.ArtistNameSort)
+                    </td>
+
+
+                    <td class="text-center">
+                        @if (item.IsStillActive == true)
+                        {<span>Yes</span>}
+                        else
+                        { <span>No</span>}
+                    </td>
+                    <td class="text-right">
+                        @Html.ActionLink("Edit", "Edit", new { id = item.ArtistID }) |
+                        @Html.ActionLink("Details", "Details", new { id = item.ArtistID }) |
+                        @Html.ActionLink("Delete", "Delete", new { id = item.ArtistID })
+                    </td>
+                </tr>
+            }
+        </tbody>
     </table>
+
+
+    @* Placeholders for the creating, deleting, & editing Departments in a dialog box *@
+    <div id="ArtistCreate"></div>
+    <div id="ArtistDelete"></div>
+    <div id="ArtistEdit"></div>
 </div>
+
+@section Scripts{
+    <script>
+        $(document).ready(function () {
+            $('#myTable').DataTable();
+        });
+    </script>
+}

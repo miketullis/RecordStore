@@ -17,12 +17,6 @@ namespace RecordStore.Data.EF//.Metadata
         [Display(Name = "Album")]
         public string AlbumName { get; set; }
 
-      
-        [Display(Name = "Year")]
-        //[DisplayFormat(DataFormatString = "{0:yyyy}", ApplyFormatInEditMode = true)]
-        [DisplayFormat(DataFormatString = "{0:yyyy}")]
-        public Nullable<System.DateTime> ReleaseYear { get; set; }
-       
         [UIHint("MultilineText")]
         [DisplayFormat(NullDisplayText = "[-N/A-]")]
         public string Description { get; set; }
@@ -42,7 +36,7 @@ namespace RecordStore.Data.EF//.Metadata
 
         [Display(Name = "In Print")]
         public bool IsInPrint { get; set; }
-                
+
         [Display(Name = "Units In Stock")]
         [Range(0, double.MaxValue, ErrorMessage = "* Value must be a valid number, 0 or larger *")]
         [DisplayFormat(NullDisplayText = "[-N/A-]")]
@@ -56,10 +50,10 @@ namespace RecordStore.Data.EF//.Metadata
         [Range(0, double.MaxValue, ErrorMessage = "* Value must be a valid number, 0 or larger *")]
         [DisplayFormat(NullDisplayText = "[-N/A-]")]
         public Nullable<int> Num { get; set; }
-       
+
         [Range(0, double.MaxValue, ErrorMessage = "* Value must be a valid number, 0 or larger *")]
         public Nullable<int> Tracks { get; set; }
-        
+
         [Required(ErrorMessage = "* Label ID is required *")]
         [Display(Name = "Label")]
         public int LabelID { get; set; }
@@ -158,7 +152,7 @@ namespace RecordStore.Data.EF//.Metadata
         [DisplayFormat(NullDisplayText = "[-N/A-]")]
         public string Country { get; set; }
 
-        [Display(Name = "In Distribution")]
+        [Display(Name = "Still In Distribution")]
         public bool IsStillDistributing { get; set; }
     }
 
@@ -213,10 +207,6 @@ namespace RecordStore.Data.EF//.Metadata
     #endregion
 
 
-
-
-
-
     #region Employee Metadata
     public class EmployeeMetadata
     {
@@ -232,7 +222,7 @@ namespace RecordStore.Data.EF//.Metadata
         [Display(Name = "Last Name")]
         public string LastName { get; set; }
 
-        [StringLength(10, ErrorMessage = "* Cannot exceed 10 characters")]
+        [StringLength(25, ErrorMessage = "* Cannot exceed 25 characters")]
         [DisplayFormat(NullDisplayText = "[-N/A-]")]
         public string Position { get; set; }
 
@@ -264,10 +254,10 @@ namespace RecordStore.Data.EF//.Metadata
         [DisplayFormat(DataFormatString = "{0:###-###-####}", NullDisplayText = "[-N/A-]")]
         public string Phone { get; set; }
 
-        [DisplayFormat(DataFormatString = "{0:yyyy/MM/dd}", ApplyFormatInEditMode = true)]
+        [DisplayFormat(DataFormatString = "{0:M/d/yyyy}", ApplyFormatInEditMode = true)]
         public Nullable<System.DateTime> Birthday { get; set; }
 
-        [DisplayFormat(DataFormatString = "{0:yyyy/MM/dd}", ApplyFormatInEditMode = true)]
+        [DisplayFormat(DataFormatString = "{0:M/d/yyyy}", ApplyFormatInEditMode = true)]
         public Nullable<System.DateTime> HireDate { get; set; }
 
         //public int DirectReportID { get; set; }
@@ -276,18 +266,18 @@ namespace RecordStore.Data.EF//.Metadata
     [MetadataType(typeof(EmployeeMetadata))]
     public partial class Employee
     {
-       
+
         public string NamePlusPosition
         {
-            get { return  Position + ": " + FirstName + " " + LastName;}
+            get { return Position + ": " + FirstName + " " + LastName; }
         }
 
         public string FullName
         {
-            get { return  FirstName + " " + LastName; }
+            get { return FirstName + " " + LastName; }
         }
 
-        public string FullAddress 
+        public string FullAddress
         {
             get { return Address + ", " + City + ", " + State + ", " + ZipCode; }
         }

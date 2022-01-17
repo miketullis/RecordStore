@@ -12,20 +12,18 @@ namespace RecordStore.Data.EF
     using System;
     using System.Collections.Generic;
     
-    public partial class Artist
+    public partial class AspNetRoles
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Artist()
+        public AspNetRoles()
         {
-            this.AlbumArtist = new HashSet<AlbumArtist>();
+            this.AspNetUsers = new HashSet<AspNetUsers>();
         }
     
-        public int ArtistID { get; set; }
-        public string ArtistName { get; set; }
-        public bool IsStillActive { get; set; }
-        public string ArtistNameSort { get; set; }
+        public string Id { get; set; }
+        public string Name { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<AlbumArtist> AlbumArtist { get; set; }
+        public virtual ICollection<AspNetUsers> AspNetUsers { get; set; }
     }
 }

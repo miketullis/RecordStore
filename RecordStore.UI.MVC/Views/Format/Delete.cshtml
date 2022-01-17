@@ -1,40 +1,42 @@
 ﻿@model RecordStore.Data.EF.Format
 
 @{
-    ViewBag.Title = "Delete";
+    ViewBag.Title = "Delete Format: " + @Model.FormatType;
 }
+<div id="rrWrapper">
+    <h2 class="text-center mb-5">@ViewBag.Title</h2>
+    <div>
+        <dl class="dl-horizontal text-center m-auto">
+            <dt>
+                @Html.DisplayNameFor(model => model.FormatType)
+            </dt>
 
-<h2>Delete</h2>
+            <dd>
+                @Html.DisplayFor(model => model.FormatType)
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.MultiFormat)
+            </dt>
+            <dd>
+                @*@Html.DisplayFor(model => model.MultiFormat)*@
+                @if (Model.MultiFormat == true)
+                {<span>Yes</span>}
+                else
+                { <span>No</span>}
+            </dd>
+        </dl>
 
-<h3>Are you sure you want to delete this?</h3>
-<div>
-    <h4>Format</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.FormatType)
-        </dt>
+        <h4 class="text-danger text-center mb-5">Are you sure you want to delete <span class="font-italic">@Model.FormatType</span>?</h4>
 
-        <dd>
-            @Html.DisplayFor(model => model.FormatType)
-        </dd>
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
 
-        <dt>
-            @Html.DisplayNameFor(model => model.MultiFormat)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.MultiFormat)
-        </dd>
-
-    </dl>
-
-    @using (Html.BeginForm()) {
-        @Html.AntiForgeryToken()
-
-        <div class="form-actions no-color">
-            <input type="submit" value="Delete" class="btn btn-default" /> |
-            @Html.ActionLink("Back to List", "Index")
-        </div>
-    }
+            <div class="form-actions no-color text-center pt-1">
+                <input type="submit" value="Yes" class="btn btn-dark" />
+                <a href="javascript:void(0);" onclick="history.go(-1);" class="btn btn-dark">No</a>
+                @*@Html.ActionLink("Cancel", "Index", "Format", null, new { @class = "btn btn-dark" })*@
+            </div>
+        }
+    </div>
 </div>

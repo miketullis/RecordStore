@@ -5,15 +5,12 @@
 }
 
 <div id="rrWrapper">
-
-
-
     <div class="row">
-        <div col-md-5 style="padding-right: 5em;">
-            <img src="~/Content/assets/images/albumImages/@Model.AlbumImage" alt="@Model.AlbumName Cover" title="@Model.AlbumName Cover" id="albumArt" />
+        <div class="col-md-5 pr-5">
+            <img src="~/Content/assets/images/albumImages/@Model.AlbumImage" alt="@Model.AlbumName Cover" title="@Model.AlbumName Cover" id="albumArt" class="albumArtBG mb-5"/>
         </div>
 
-        <div col-md-7>
+        <div class="col-md-7">
             <dl class="dl-horizontal">
                 <dd>
                     <h2>@Html.DisplayFor(model => model.AlbumName)</h2>
@@ -100,9 +97,7 @@
                     <span class="font-weight-bold">Country:&nbsp;&nbsp;</span>
                     @Html.DisplayFor(model => model.Label.Country)
                 </dd>
-
-
-                <hr />
+               <hr />
                 <dd>
                     <span class="font-weight-bold">Status:&nbsp;&nbsp;</span>
                     @Html.DisplayFor(model => model.AlbumStatus.AlbumStatusName)
@@ -113,13 +108,20 @@
                 </dd>
                 <dd>
                     <span class="font-weight-bold">Compilation:&nbsp;&nbsp;</span>
-                    @Html.DisplayFor(model => model.CompilationAlbum)
+                    @*@Html.DisplayFor(model => model.CompilationAlbum)*@
+                    @if (Model.CompilationAlbum == true)
+                    {<span>Yes</span>}
+                    else
+                    { <span>No</span>}
                 </dd>
                 <dd>
                     <span class="font-weight-bold">Still In Print:&nbsp;&nbsp;</span>
-                    @Html.DisplayFor(model => model.IsInPrint)
+                    @*@Html.DisplayFor(model => model.IsInPrint)*@
+                    @if (Model.IsInPrint == true)
+                    {<span>Yes</span>}
+                    else
+                    { <span>No</span>}
                 </dd>
-
                 <hr />
                 <dt>
                     @Html.DisplayNameFor(model => model.Description):
@@ -136,40 +138,38 @@
                 <dd>
                     <h3>@Html.DisplayFor(model => model.Price)</h3>
                 </dd>
-
             </dl>
         </div>
     </div>
-
-    @* "Add To Cart" fuctionality *@
-    @using (Html.BeginForm("AddToCart", "Album", new { albumID = Model.AlbumID }, FormMethod.Post))
-    {
-        if (Model.UnitsInStock == 0)
+    <div class="col-md-12 pt-3">
+        @* "Add To Cart" fuctionality *@
+        @using (Html.BeginForm("AddToCart", "Album", new { albumID = Model.AlbumID }, FormMethod.Post))
         {
-            <div>
-                <input value="Currently Unavailible" class="btn btn-danger" />
-            </div>
-        }
-        else
-        {
-            @Html.HiddenFor(a => a.AlbumID)
-            <span class="label">Quantity: </span>
-            @Html.TextBox("qty", 1, new { @class = "form-control", @style = "max-width: 50px; display: inline;", onkeyup = "checkQty()" })
+            if (Model.UnitsInStock == 0)
+            {
+                <div>
+                    <input value="Currently Unavailible" class="btn btn-danger" />
+                </div>
+            }
+            else
+            {
+                @Html.HiddenFor(a => a.AlbumID)
+                <span class="label">Quantity: </span>
+                @Html.TextBox("qty", 1, new { @class = "form-control text-center", @style = "max-width: 45px; display: inline; position:relative; bottom: 4px;", onkeyup = "checkQty()" })
+                <div id="btnSubmit" class="d-inline">
+                    <input type="submit" value="Add To Cart" class="btn btn-dark" />
+                </div>
+            }
 
-            <div id="btnSubmit">
-                <input type="submit" value="Add To Cart" class="btn btn-dark" />
-            </div>
+            <a href="javascript:void(0);" onclick="history.go(-1);" class="btn btn-dark">Return</a>
+            if (User.IsInRole("Admin"))
+            {
+                <span></span>@Html.ActionLink("Edit", "Edit", new { id = Model.AlbumID }, new { @class = "btn btn-dark" })
+                <span></span>@Html.ActionLink("Delete", "Delete", new { id = Model.AlbumID }, new { @class = "btn btn-dark" })
+            }
         }
-
-        @Html.ActionLink("Back to Albums", "Index", "", new { @class = "btn btn-dark" })
-        if (User.IsInRole("Admin"))
-        {
-            <span></span>@Html.ActionLink("Edit", "Edit", new { id = Model.AlbumID }, new { @class = "btn btn-dark" })
-            <span></span>@Html.ActionLink("Delete", "Delete", new { id = Model.AlbumID }, new { @class = "btn btn-dark" })
-        }
-    }
+    </div>
 </div>
-
 
 
 @section scripts{

@@ -5,18 +5,17 @@
 }
 
 <div id="rrWrapper">
-    <h2 class="text-center"> @ViewBag.Title</h2>
-    <br />
+    <h2 class="text-center mb-5"> @ViewBag.Title</h2>
     <table class="table" id="myTable">
         <thead>
             <tr>
-                <th>
+                <th class="text-left">
                     @Html.DisplayNameFor(model => model.DepartmentName)
                 </th>
-                <th>
+                <th class="text-center">
                     @Html.DisplayNameFor(model => model.DeptDescription)
                 </th>
-                <th>
+                <th class="text-right">
                     @Html.ActionLink("Add New Department", "Create")
                     @*<a href="" class="DeptCreate">Add New Department</a>*@
                 </th>
@@ -27,13 +26,13 @@
             @foreach (var item in Model)
             {
                 <tr>
-                    <td>
+                    <td class="text-left">
                         @Html.DisplayFor(modelItem => item.DepartmentName)
                     </td>
-                    <td>
+                    <td class="text-center">
                         @Html.DisplayFor(modelItem => item.DeptDescription)
                     </td>
-                    <td>
+                    <td class="text-right">
                         @*<a href="" class="DeptEdit">Edit</a>*@
                         @Html.ActionLink("Edit", "Edit", new { id = item.DepartmentID }) |
                         @Html.ActionLink("Delete", "Delete", new { id = item.DepartmentID })

@@ -5,10 +5,9 @@
 }
 
 <div id="rrWrapper">
-    <h2>@ViewBag.Title</h2>
-    <br />
+    <h2 class="text-center mb-4">@ViewBag.Title</h2>
     <div>
-        <dl class="dl-horizontal">
+        <dl class="dl-horizontal text-center">
             <dt>
                 @Html.DisplayNameFor(model => model.ArtistName)
             </dt>
@@ -20,15 +19,19 @@
             <dt>
                 @Html.DisplayNameFor(model => model.IsStillActive)
             </dt>
-
             <dd>
-                @Html.DisplayFor(model => model.IsStillActive)
+                @*@Html.DisplayFor(model => model.IsStillActive)*@
+                @if (Model.IsStillActive == true)
+                {<span>Yes</span>}
+                else
+                { <span>No</span>}
             </dd>
-
         </dl>
     </div>
-    <p>
-        @Html.ActionLink("Edit Artist", "Edit", new { id = Model.ArtistID }, new { @class="btn btn-dark"}) &nbsp;
-        @Html.ActionLink("Return to Artists", "Index", "Artist", null, new { @class = "btn btn-dark" })
+    <p class="text-center pt-2">
+        @Html.ActionLink("Edit", "Edit", new { id = Model.ArtistID }, new { @class = "btn btn-dark" })
+        @Html.ActionLink("Delete", "Delete", new { id = Model.ArtistID }, new { @class = "btn btn-dark" })
+        <a href="javascript:void(0);" onclick="history.go(-1);" class="btn btn-dark">Return</a>
+        @*@Html.ActionLink("Return to Artists", "Index", "Artist", null, new { @class = "btn btn-dark" })*@
     </p>
 </div>

@@ -19,11 +19,12 @@ namespace RecordStore
         }
 
 
-        protected void Application_Error()
-        {
-          Response.Redirect("~/Errors/Unresolved");
+        /*-----Comment Out Below To Stop Custom Error Handling-----*/
+        //protected void Application_Error()
+        //{
+        //    Response.Redirect("~/Errors/Unresolved");
 
-        }
+        //}
 
 
     }

@@ -17,7 +17,6 @@
     padding-right: 20%;
 }
 
-
 .navbar-nav .dropdown-menu {
     /*position: static;*/
     float: none;
@@ -73,6 +72,14 @@
     /*margin-bottom: 2em;*/
 }
 
+.albumArtBG {
+    width: 100%;
+    object-fit: cover;
+    max-width: 500px;
+    height: auto;
+}
+
+
 .feature-image {
     box-shadow: 0 5px 8px 3px #808080;
 }
@@ -97,10 +104,6 @@ label {
     font-weight: bold;
 }
 
-div.row {
-    padding-left: 15px;
-    padding-right: 15px;
-}
 
 .textSwell {
     font-size: 1rem;
@@ -110,6 +113,12 @@ div.row {
 .banner {
     padding-top: 0;
 }
+
+.btn-dark {
+    min-width: 80px;
+}
+
+
 
 
 /*AJAX Popup Dialog Styling*/
@@ -123,8 +132,6 @@ div.row {
 .ui-widget-content a.btn-dark {
     color: white;
 }
-
-
 
 /*dropdown with checkboxes*/
 .selectBox {
@@ -181,39 +188,35 @@ ul #checkArtists, ul #checkGenres {
         background-color: #1e90ff;
     }
 
-div.row-p-0 {
-    padding-right: unset;
-    padding-left: unset;
-}
-
-
 .pagination {
     margin: unset;
 }
+
 .pagination-container {
-    display:inline-block;
+    display: inline-block;
 }
 
 .pagination > .active > a, .pagination > .active > span, .pagination > .active > a:hover, .pagination > .active > span:hover, .pagination > .active > a:focus, .pagination > .active > span:focus {
     background-color: #23272B;
     border-color: #23272B
 }
+
 .pagination a {
     color: #23272B;
     border-color: #23272B
 }
 
-.psLeft{
+.psLeft {
     float: left;
 }
 
-.psRight{
+.psRight {
     float: right;
 }
 
-.pageCount{
+.pageCount {
     padding-left: 10px;
-    position:relative;
+    position: relative;
     bottom: 13px;
 }
 
@@ -224,15 +227,46 @@ div.row-p-0 {
     margin-bottom: unset;
 }
 
-.btn-pull-right{
+.btn-pull-right {
     position: absolute;
     right: 20px;
     bottom: 10px;
 }
-.pr-pull-left{
+
+.pr-pull-left {
     position: absolute;
     bottom: 20px;
 }
+
+.calcWidth {
+    width: calc(100% - 160px);
+}
+
+.ArtistCreate {
+    position: absolute;
+    bottom: 0;
+    right: 15px;
+}
+
+dd {
+    margin-bottom: 1rem;
+    margin-left: 0;
+}
+
+.btn-light {
+    color: #fff;
+    background-color: #656464;
+    border-color: #656464;
+}
+
+    .btn-light:hover {
+        color: #fff;
+        background-color: #C0C0C0;
+        border-color: #C0C0C0;
+    }
+
+
+
 /*Home Page Product Restyling*/
 .product-item {
     margin-bottom: 30px;
@@ -240,38 +274,47 @@ div.row-p-0 {
 }
 
     .product-item .down-content {
-        padding: unset;
-        padding-top: 15px;
+        padding: 15px 30px 15px 30px;
+        /*padding-top: 15px;
         padding-right: 30px;
         padding-bottom: 15px;
-        padding-left: 30px;
-        min-height:175px;
+        padding-left: 30px;*/
+        min-height: 175px;
     }
 
-.product-item .down-content h4 {
-    margin-bottom: 20px !important;
-}
+        .product-item .down-content h4 {
+            margin-bottom: 20px !important;
+        }
 
-.product-item .down-content h2 {
-    font-size: 16px;
-    color: black;
-    font-weight: 300;
-}
+        .product-item .down-content h2 {
+            font-size: 16px;
+            color: black;
+            font-weight: 300;
+        }
 
-.product-item .down-content h6 {
-    position: absolute !important;
-    /*top: 30px !important;
+        .product-item .down-content h6 {
+            position: absolute !important;
+            /*top: 30px !important;
     right: 30px !important;*/
-    top: unset;
-    right: unset;
-    font-size: 1.4em;
+            top: unset;
+            right: unset;
+            font-size: 1.4em;
+        }
+
+        .product-item .down-content span {
+            position: absolute !important;
+            right: 30px !important;
+            bottom: 30px !important;
+        }
+
+
+div.details div.font-weight-bold {
+    padding-top: .75em;
 }
 
-.product-item .down-content span {
-    position: absolute !important;
-    right: 30px !important;
-    bottom: 30px !important;
-}
+
+
+
 
 
 
@@ -279,7 +322,6 @@ div.row-p-0 {
 
 
 /*fix media queries!!!!!*/
-
 @media screen and (min-width: 1080px) {
     #rrWrapper {
         padding-left: 20%;
@@ -308,11 +350,9 @@ div.row-p-0 {
     div.container {
         max-width: 80%;
     }
+}
 
-
-
-
-}@media (max-width: 991px) {
+@media (max-width: 991px) {
     div.container {
         width: 90%;
     }
@@ -321,17 +361,28 @@ div.row-p-0 {
         float: unset;
     }
 
-     .psRight {
+    .psRight {
         float: left;
     }
-
-
 }
+
+@media (max-width: 575px) {
+    .text-sm-center {
+        text-align: center !important;
+    }
+}
+
 
 @media (min-width: 768px) {
     /*.container {
         max-width: 720px;
     }*/
+
+    .col-md-12 {
+        -ms-flex: 0 0 100%;
+        flex: 0 0 100%;
+        max-width: 100%;
+    }
 }
 
 @media (min-width: 576px) {

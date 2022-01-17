@@ -191,9 +191,9 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Helpers\DisplayHelper.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\AdminViewModel.cs" />
-    <Compile Include="Models\AlbumViewModel.cs" />
     <Compile Include="Models\CartItemViewModel.cs" />
     <Compile Include="Models\ContactViewModel.cs" />
     <Compile Include="Models\IdentityModels.cs" />
@@ -204,6 +204,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="App_Data\RecordStoreDB.sql" />
+    <Content Include="Content\assets\bootstrap-toggle\bootstrap-toggle.css" />
     <Content Include="Content\assets\css\custom.css" />
     <Content Include="Content\assets\css\flex-slider.css" />
     <Content Include="Content\assets\css\fontawesome.css" />
@@ -214,7 +215,6 @@
     <Content Include="Content\assets\fonts\fontawesome-webfont.svg" />
     <Content Include="Content\assets\fonts\slick.svg" />
     <Content Include="Content\assets\images\404.png" />
-    <Content Include="Content\assets\images\about-heading.jpg" />
     <Content Include="Content\assets\images\albumImages\3ddDangerousGames.jpg" />
     <Content Include="Content\assets\images\albumImages\AcDcBreakingBalls.jpg" />
     <Content Include="Content\assets\images\albumImages\AeroBoston1994.jpg" />
@@ -297,28 +297,12 @@
     <Content Include="Content\assets\images\albumImages\t_noImage.jpg" />
     <Content Include="Content\assets\images\albumImages\t_OffspringAmerica99.jpg" />
     <Content Include="Content\assets\images\albumImages\t_StonesStLouis2021.jpg" />
-    <Content Include="Content\assets\images\client-01.png" />
     <Content Include="Content\assets\images\contact-heading.jpg" />
     <Content Include="Content\assets\images\Error.png" />
     <Content Include="Content\assets\images\feature-image.jpg" />
-    <Content Include="Content\assets\images\more-info.jpg" />
-    <Content Include="Content\assets\images\products-heading.jpg" />
-    <Content Include="Content\assets\images\product_01.jpg" />
-    <Content Include="Content\assets\images\product_02.jpg" />
-    <Content Include="Content\assets\images\product_03.jpg" />
-    <Content Include="Content\assets\images\product_04.jpg" />
-    <Content Include="Content\assets\images\product_05.jpg" />
-    <Content Include="Content\assets\images\product_06.jpg" />
-    <Content Include="Content\assets\images\services-bg.jpg" />
     <Content Include="Content\assets\images\slide_01.jpg" />
     <Content Include="Content\assets\images\slide_02.jpg" />
     <Content Include="Content\assets\images\slide_03.jpg" />
-    <Content Include="Content\assets\images\team_01.jpg" />
-    <Content Include="Content\assets\images\team_02.jpg" />
-    <Content Include="Content\assets\images\team_03.jpg" />
-    <Content Include="Content\assets\images\team_04.jpg" />
-    <Content Include="Content\assets\images\team_05.jpg" />
-    <Content Include="Content\assets\images\team_06.jpg" />
     <Content Include="Content\assets\js\accordions.js" />
     <Content Include="Content\assets\js\custom.js" />
     <Content Include="Content\assets\js\isotope.js" />
@@ -473,12 +457,6 @@
     <Content Include="Views\RolesAdmin\Details.cshtml" />
     <Content Include="Views\RolesAdmin\Delete.cshtml" />
     <Content Include="Views\RolesAdmin\Create.cshtml" />
-    <Content Include="Views\Manage\VerifyPhoneNumber.cshtml" />
-    <Content Include="Views\Manage\SetPassword.cshtml" />
-    <Content Include="Views\Manage\ManageLogins.cshtml" />
-    <Content Include="Views\Manage\Index.cshtml" />
-    <Content Include="Views\Manage\ChangePassword.cshtml" />
-    <Content Include="Views\Manage\AddPhoneNumber.cshtml" />
     <Content Include="Views\Account\ResetPasswordConfirmation.cshtml" />
     <Content Include="Views\Account\ResetPassword.cshtml" />
     <Content Include="Views\Account\Register.cshtml" />
@@ -514,16 +492,6 @@
     <Content Include="Views\Album\Delete.cshtml" />
     <Content Include="Views\Album\Details.cshtml" />
     <Content Include="Views\Album\Edit.cshtml" />
-    <Content Include="Views\AlbumArtist\Create.cshtml" />
-    <Content Include="Views\AlbumArtist\Delete.cshtml" />
-    <Content Include="Views\AlbumArtist\Details.cshtml" />
-    <Content Include="Views\AlbumArtist\Edit.cshtml" />
-    <Content Include="Views\AlbumArtist\Index.cshtml" />
-    <Content Include="Views\AlbumGenre\Create.cshtml" />
-    <Content Include="Views\AlbumGenre\Delete.cshtml" />
-    <Content Include="Views\AlbumGenre\Details.cshtml" />
-    <Content Include="Views\AlbumGenre\Edit.cshtml" />
-    <Content Include="Views\AlbumGenre\Index.cshtml" />
     <Content Include="Views\AlbumStatus\Create.cshtml" />
     <Content Include="Views\AlbumStatus\Delete.cshtml" />
     <Content Include="Views\AlbumStatus\Details.cshtml" />
@@ -564,13 +532,8 @@
     <Content Include="Views\Album\Index.cshtml" />
     <Content Include="Views\Album\ArtistCreate.cshtml" />
     <Content Include="Views\Album\LabelCreate.cshtml" />
-    <Content Include="Views\Label\AjaxLabelCreate.cshtml" />
-    <Content Include="Views\Album\AjaxDelete.cshtml" />
-    <Content Include="Views\Label\AjaxLabelDelete.cshtml" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Views\AlbumViewModel\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Content Include="Content\bootstrap.rtl.min.css.map" />
     <Content Include="Content\bootstrap.rtl.css.map" />

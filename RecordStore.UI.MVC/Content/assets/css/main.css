@@ -226,7 +226,7 @@ header .navbar {
 	top: 0;
 	position: fixed;
 	background-color: #fff!important;
-	box-shadow: 0px 1px 10px rgba(0,0,0,0.1);
+	box-shadow: 0px 4px 15px rgba(0,0,0,0.8);
 }
 .background-header .navbar-brand h2 {
 	color: #121212!important;
@@ -312,12 +312,12 @@ header .navbar {
 
 /* Banner Style */
 .banner {
-	position: relative;
+	position: relative; 
 	text-align: center;
 }
 
 .banner-item-01 {
-	padding: 300px 0px;
+	padding: 200px 0px;
 	background-image: url(../images/slide_01.jpg);
 	background-size: cover;
 	background-repeat: no-repeat;
@@ -325,7 +325,7 @@ header .navbar {
 }
 
 .banner-item-02 {
-	padding: 300px 0px;
+	padding: 200px 0px;
 	background-image: url(../images/slide_02.jpg);
 	background-size: cover;
 	background-repeat: no-repeat;
@@ -333,7 +333,7 @@ header .navbar {
 }
 
 .banner-item-03 {
-	padding: 300px 0px;
+	padding: 200px 0px;
 	background-image: url(../images/slide_03.jpg);
 	background-size: cover;
 	background-repeat: no-repeat;
@@ -407,7 +407,7 @@ header .navbar {
 /* Latest Produtcs */
 
 .latest-products {
-	margin-top: 100px;
+	margin-top: 50px;
 }
 
 .latest-products .section-heading a {
@@ -473,7 +473,6 @@ header .navbar {
 
 
 
-
 /* Best Features */
 
 .about-features {
@@ -495,7 +494,7 @@ header .navbar {
 }
 
 .best-features .container .row {
-	border-bottom: 1px solid #eee;
+
 	padding-bottom: 60px;
 }
 
@@ -511,8 +510,9 @@ header .navbar {
 }
 
 .best-features ul.featured-list li {
-	display: block;
 	margin-bottom: 10px;
+    margin-left: 20px;
+    list-style-type: disc;
 }
 
 .best-features p {
