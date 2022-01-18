@@ -33,10 +33,7 @@
             <input type="submit" value="Create New Label" class="btn btn-dark" />
         </div>
     </div>
-
 }
-
-
 
 
 
@@ -65,13 +62,13 @@
                 $("#LabelCreateForm")[0].reset();
                 $(function () {
                     var li =
-                        '<option value="' + foo.LabelID + '">' + foo.LabelName + '</option>';
+                        '<option value="' + foo.LabelID + '">" + foo.LabelName + '</option>';
 					$("#LabelID").append(li);
                 }); //End of build & append label functionality
-              $("#LabelCreate").dialog("close");
+                //close dialog on successful submit (not working)
+                $("#LabelCreate").dialog("close");
+
             } //End success
         }); //End Ajax form submission properties
     }); //End form submit event handler
 </script>
-
-
