@@ -38,7 +38,6 @@ namespace RecordStore.UI.MVC.Controllers
             var albumGenre = db.AlbumGenre.ToList();
 
 
-
             if (!String.IsNullOrEmpty(searchFilter))
             {
                 albums = (from a in albums join aa in albumArtist on a.AlbumID equals aa.AlbumID
@@ -51,7 +50,8 @@ namespace RecordStore.UI.MVC.Controllers
                           ar.ArtistName.ToLower().Contains(searchFilter.ToLower()) ||
                           g.GenreName.ToLower().Contains(searchFilter.ToLower()) ||
                           a.CatalogNum.ToLower().Contains(searchFilter.ToLower()) ||
-                          a.Label.Country.ToLower().Contains(searchFilter.ToLower())
+                          a.Label.Country.ToLower().Contains(searchFilter.ToLower())||
+                          a.Description.ToLower().Contains(searchFilter.ToLower()) 
                           select a).Distinct().ToList();
             }
             return View(albums.ToPagedList(page, pageSize));

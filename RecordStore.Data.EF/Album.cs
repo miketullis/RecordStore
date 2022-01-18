@@ -19,6 +19,7 @@ namespace RecordStore.Data.EF
         {
             this.AlbumArtist = new HashSet<AlbumArtist>();
             this.AlbumGenre = new HashSet<AlbumGenre>();
+            this.AlbumRecording = new HashSet<AlbumRecording>();
         }
     
         public int AlbumID { get; set; }
@@ -47,5 +48,7 @@ namespace RecordStore.Data.EF
         public virtual ICollection<AlbumArtist> AlbumArtist { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<AlbumGenre> AlbumGenre { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<AlbumRecording> AlbumRecording { get; set; }
     }
 }

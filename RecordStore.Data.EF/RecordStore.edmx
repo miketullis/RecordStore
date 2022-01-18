@@ -45,6 +45,14 @@
           <Property Name="AlbumID" Type="int" Nullable="false" />
           <Property Name="GenreID" Type="int" Nullable="false" />
         </EntityType>
+        <EntityType Name="AlbumRecording">
+          <Key>
+            <PropertyRef Name="AlbumRecordingID" />
+          </Key>
+          <Property Name="AlbumRecordingID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="AlbumID" Type="int" Nullable="false" />
+          <Property Name="RecordingID" Type="int" Nullable="false" />
+        </EntityType>
         <EntityType Name="AlbumStatus">
           <Key>
             <PropertyRef Name="AlbumStatusID" />
@@ -128,7 +136,7 @@
           <Property Name="EmployeeID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="FirstName" Type="varchar" MaxLength="20" Nullable="false" />
           <Property Name="LastName" Type="varchar" MaxLength="25" Nullable="false" />
-          <Property Name="Position" Type="char" MaxLength="20" />
+          <Property Name="Position" Type="varchar" MaxLength="25" />
           <Property Name="PayRate" Type="money" />
           <Property Name="IsFullTime" Type="bit" Nullable="false" />
           <Property Name="Address" Type="nvarchar" MaxLength="50" />
@@ -164,6 +172,13 @@
           <Property Name="LabelName" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="Country" Type="nvarchar" MaxLength="50" />
           <Property Name="IsStillDistributing" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Recording">
+          <Key>
+            <PropertyRef Name="RecordingID" />
+          </Key>
+          <Property Name="RecordingID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="RecordingType" Type="nvarchar" MaxLength="25" Nullable="false" />
         </EntityType>
         <EntityType Name="sysdiagrams">
           <Key>
@@ -268,6 +283,30 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_AlbumRecording_Album">
+          <End Role="Album" Type="Self.Album" Multiplicity="1" />
+          <End Role="AlbumRecording" Type="Self.AlbumRecording" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Album">
+              <PropertyRef Name="AlbumID" />
+            </Principal>
+            <Dependent Role="AlbumRecording">
+              <PropertyRef Name="AlbumID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_AlbumRecording_Recording">
+          <End Role="Recording" Type="Self.Recording" Multiplicity="1" />
+          <End Role="AlbumRecording" Type="Self.AlbumRecording" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Recording">
+              <PropertyRef Name="RecordingID" />
+            </Principal>
+            <Dependent Role="AlbumRecording">
+              <PropertyRef Name="RecordingID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
           <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1">
             <OnDelete Action="Cascade" />
@@ -364,6 +403,7 @@
           <EntitySet Name="Album" EntityType="Self.Album" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="AlbumArtist" EntityType="Self.AlbumArtist" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="AlbumGenre" EntityType="Self.AlbumGenre" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="AlbumRecording" EntityType="Self.AlbumRecording" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="AlbumStatus" EntityType="Self.AlbumStatus" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Artist" EntityType="Self.Artist" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="AspNetRoles" EntityType="Self.AspNetRoles" Schema="dbo" store:Type="Tables" />
@@ -376,6 +416,7 @@
           <EntitySet Name="Format" EntityType="Self.Format" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Genre" EntityType="Self.Genre" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Label" EntityType="Self.Label" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Recording" EntityType="Self.Recording" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="UserDetails" EntityType="Self.UserDetails" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK_Album_AlbumStatus" Association="Self.FK_Album_AlbumStatus">
@@ -405,6 +446,14 @@
           <AssociationSet Name="FK_AlbumGenre_Genre" Association="Self.FK_AlbumGenre_Genre">
             <End Role="Genre" EntitySet="Genre" />
             <End Role="AlbumGenre" EntitySet="AlbumGenre" />
+          </AssociationSet>
+          <AssociationSet Name="FK_AlbumRecording_Album" Association="Self.FK_AlbumRecording_Album">
+            <End Role="Album" EntitySet="Album" />
+            <End Role="AlbumRecording" EntitySet="AlbumRecording" />
+          </AssociationSet>
+          <AssociationSet Name="FK_AlbumRecording_Recording" Association="Self.FK_AlbumRecording_Recording">
+            <End Role="Recording" EntitySet="Recording" />
+            <End Role="AlbumRecording" EntitySet="AlbumRecording" />
           </AssociationSet>
           <AssociationSet Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" Association="Self.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
@@ -508,6 +557,16 @@
             <End Role="AspNetRoles" EntitySet="AspNetRoles" />
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
           </AssociationSet>
+          <EntitySet Name="AlbumRecording" EntityType="RecordStoreModel.AlbumRecording" />
+          <EntitySet Name="Recording" EntityType="RecordStoreModel.Recording" />
+          <AssociationSet Name="FK_AlbumRecording_Album" Association="RecordStoreModel.FK_AlbumRecording_Album">
+            <End Role="Album" EntitySet="Album" />
+            <End Role="AlbumRecording" EntitySet="AlbumRecording" />
+          </AssociationSet>
+          <AssociationSet Name="FK_AlbumRecording_Recording" Association="RecordStoreModel.FK_AlbumRecording_Recording">
+            <End Role="Recording" EntitySet="Recording" />
+            <End Role="AlbumRecording" EntitySet="AlbumRecording" />
+          </AssociationSet>
           </EntityContainer>
         <EntityType Name="Album">
           <Key>
@@ -536,6 +595,7 @@
           <Property Name="Year" Type="Int32" />
           <Property Name="AlbumNameSort" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="RearImage" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="AlbumRecording" Relationship="RecordStoreModel.FK_AlbumRecording_Album" FromRole="Album" ToRole="AlbumRecording" />
         </EntityType>
         <EntityType Name="AlbumArtist">
           <Key>
@@ -593,7 +653,7 @@
           <Property Name="EmployeeID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="FirstName" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
           <Property Name="LastName" Type="String" Nullable="false" MaxLength="25" FixedLength="false" Unicode="false" />
-          <Property Name="Position" Type="String" MaxLength="20" FixedLength="true" Unicode="false" />
+          <Property Name="Position" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
           <Property Name="PayRate" Type="Decimal" Precision="19" Scale="4" />
           <Property Name="IsFullTime" Type="Boolean" Nullable="false" />
           <Property Name="Address" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
@@ -858,6 +918,48 @@
           <End Type="RecordStoreModel.AspNetRoles" Role="AspNetRoles" Multiplicity="*" />
           <End Type="RecordStoreModel.AspNetUsers" Role="AspNetUsers" Multiplicity="*" />
         </Association>
+        <EntityType Name="AlbumRecording">
+          <Key>
+            <PropertyRef Name="AlbumRecordingID" />
+          </Key>
+          <Property Name="AlbumRecordingID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="AlbumID" Type="Int32" Nullable="false" />
+          <Property Name="RecordingID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Album" Relationship="RecordStoreModel.FK_AlbumRecording_Album" FromRole="AlbumRecording" ToRole="Album" />
+          <NavigationProperty Name="Recording" Relationship="RecordStoreModel.FK_AlbumRecording_Recording" FromRole="AlbumRecording" ToRole="Recording" />
+        </EntityType>
+        <EntityType Name="Recording">
+          <Key>
+            <PropertyRef Name="RecordingID" />
+          </Key>
+          <Property Name="RecordingID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="RecordingType" Type="String" Nullable="false" MaxLength="25" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="AlbumRecording" Relationship="RecordStoreModel.FK_AlbumRecording_Recording" FromRole="Recording" ToRole="AlbumRecording" />
+        </EntityType>
+        <Association Name="FK_AlbumRecording_Album">
+          <End Type="RecordStoreModel.Album" Role="Album" Multiplicity="1" />
+          <End Type="RecordStoreModel.AlbumRecording" Role="AlbumRecording" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Album">
+              <PropertyRef Name="AlbumID" />
+            </Principal>
+            <Dependent Role="AlbumRecording">
+              <PropertyRef Name="AlbumID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_AlbumRecording_Recording">
+          <End Type="RecordStoreModel.Recording" Role="Recording" Multiplicity="1" />
+          <End Type="RecordStoreModel.AlbumRecording" Role="AlbumRecording" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Recording">
+              <PropertyRef Name="RecordingID" />
+            </Principal>
+            <Dependent Role="AlbumRecording">
+              <PropertyRef Name="RecordingID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1057,6 +1159,23 @@
               <ScalarProperty Name="Id" ColumnName="RoleId" />
             </EndProperty>
           </AssociationSetMapping>
+          <EntitySetMapping Name="AlbumRecording">
+            <EntityTypeMapping TypeName="RecordStoreModel.AlbumRecording">
+              <MappingFragment StoreEntitySet="AlbumRecording">
+                <ScalarProperty Name="RecordingID" ColumnName="RecordingID" />
+                <ScalarProperty Name="AlbumID" ColumnName="AlbumID" />
+                <ScalarProperty Name="AlbumRecordingID" ColumnName="AlbumRecordingID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Recording">
+            <EntityTypeMapping TypeName="RecordStoreModel.Recording">
+              <MappingFragment StoreEntitySet="Recording">
+                <ScalarProperty Name="RecordingType" ColumnName="RecordingType" />
+                <ScalarProperty Name="RecordingID" ColumnName="RecordingID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

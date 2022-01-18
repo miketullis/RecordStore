@@ -898,7 +898,7 @@ footer .inner-content p a {
 }
 
 /* Responsive Style */
-@media (max-width: 768px) {
+/*@media (max-width: 768px) {
 	.banner .text-content {
 		width: 90%;
 		margin-left: 5%;
@@ -929,7 +929,7 @@ footer .inner-content p a {
 		margin-top: 0px;
 		display: block;
 		/*margin-bottom: 20px;*/
-	}
+	/*}
 	.product-item .down-content h4 {
 		margin-bottom: 20px!important;
 	}
@@ -970,7 +970,7 @@ footer .inner-content p a {
 		margin-top: 30px;
 		margin-left: 0px;
 	}
-}
+}*/
 
 @media (max-width: 992px) {
 	.navbar .navbar-brand {

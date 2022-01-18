@@ -41,5 +41,7 @@ namespace RecordStore.Data.EF
         public virtual DbSet<AspNetUserClaims> AspNetUserClaims { get; set; }
         public virtual DbSet<AspNetUserLogins> AspNetUserLogins { get; set; }
         public virtual DbSet<sysdiagrams> sysdiagrams { get; set; }
+        public virtual DbSet<AlbumRecording> AlbumRecording { get; set; }
+        public virtual DbSet<Recording> Recording { get; set; }
     }
 }

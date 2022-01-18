@@ -186,6 +186,25 @@ namespace RecordStore.Data.EF//.Metadata
     #endregion
 
 
+    #region Recording Metadata
+    public class RecordingMetadata
+    {
+        //public int RecordingID { get; set; }
+
+        [Required(ErrorMessage = "* Recording Type is required *")]
+        [StringLength(25, ErrorMessage = "* Cannot exceed 25 characters *")]
+        [Display(Name = "Recording Type")]
+        public string RecordingType{ get; set; }
+    }
+
+    [MetadataType(typeof(RecordingMetadata))]
+    public partial class Recording
+    {
+
+    }
+    #endregion
+
+
     #region Album Status Metadata
     public class AlbumStatusMetadata
     {

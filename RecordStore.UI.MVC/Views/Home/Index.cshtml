@@ -65,8 +65,8 @@
             {
                 foreach (var item in Model)
                 {
-                    <div class="col-lg-3 col-md-4 col-sm-6">
-                        <div class="product-item">
+                    <div class=" col-lg-4 col-md-6 col-xl-3 col-sm-6">
+                        <div class="product-item mx-auto">
                             <div class="col-md-12 albumArtBG text-center">
                                 <a href="@Url.Action("Details", "Album", new { id = item.AlbumID })">
                                     <img src="~/Content/assets/images/albumImages/@item.AlbumImage" alt="@item.AlbumName cover" title="@item.AlbumName cover" id="albumArt" class="albumArtBG text-center mt-3" />

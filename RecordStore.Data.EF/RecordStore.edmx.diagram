@@ -27,6 +27,10 @@
         <AssociationConnector Association="RecordStoreModel.FK_Employees_Employees" />
         <EntityTypeShape EntityType="RecordStoreModel.AspNetUsers" Width="1.5" PointX="8.875" PointY="0.75" />
         <AssociationConnector Association="RecordStoreModel.FK_UserDetails_AspNetUsers" />
+        <EntityTypeShape EntityType="RecordStoreModel.AlbumRecording" Width="1.5" PointX="2.75" PointY="6.75" />
+        <EntityTypeShape EntityType="RecordStoreModel.Recording" Width="1.5" PointX="0.625" PointY="7.125" />
+        <AssociationConnector Association="RecordStoreModel.FK_AlbumRecording_Album" />
+        <AssociationConnector Association="RecordStoreModel.FK_AlbumRecording_Recording" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

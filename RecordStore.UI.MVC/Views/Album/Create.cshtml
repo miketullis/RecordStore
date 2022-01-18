@@ -22,8 +22,7 @@
                 @Html.ValidationMessageFor(model => model.AlbumName, "", new { @class = "text-danger" })
             </div>
         </div>
-
-
+        
         <div class="form-group col-md-12 mb-1">
             <label class="control-label pull-left mb-0">Artist</label>
             <a href="" class="ArtistCreate pull-right">Need A New Artist?</a>
@@ -41,7 +40,7 @@
                 {
                     <li>
                         <div class="row">
-                            <div class="col-md-4">
+                            <div class="col-md-4 ml-3">
                                 <input type="checkbox" name="artists" value="@artist.ArtistID" />
                                 <span>&nbsp;@artist.ArtistNameSort</span>
 
@@ -57,10 +56,6 @@
             <p id="checkerror" class="text-danger">* Artist is required *</p>
             <p id="radioerror" class="text-danger">* Primary Artist is required *</p>
         </div>
-
-
-
-
         <div class="form-group col-md-12">
             @Html.LabelFor(model => model.LabelID, "Label", htmlAttributes: new { @class = "control-label" })
             <a style="float:right;" href="" class="LabelCreate">Need A New Label?</a>
@@ -69,11 +64,20 @@
                 @Html.ValidationMessageFor(model => model.LabelID, "", new { @class = "text-danger" })
             </div>
         </div>
-        <div class="form-group">
-            <div class="col-md-12">
-                @Html.LabelFor(model => model.CatalogNum, htmlAttributes: new { @class = "control-label" })
-                @Html.EditorFor(model => model.CatalogNum, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.CatalogNum, "", new { @class = "text-danger" })
+        <div class="col-md-12">
+            <div class="form-group">
+                <div class="row">
+                    <div class="col-md-6">
+                        @Html.LabelFor(model => model.CatalogNum, htmlAttributes: new { @class = "control-label" })
+                        @Html.EditorFor(model => model.CatalogNum, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.CatalogNum, "", new { @class = "text-danger" })
+                    </div>
+                    <div class="col-md-6">
+                        @Html.LabelFor(model => model.Year, "Release Year", htmlAttributes: new { @class = "control-label", })
+                        @Html.EditorFor(model => model.Year, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.Year, "", new { @class = "text-danger" })
+                    </div>
+                </div>
             </div>
         </div>
         <div class="form-group">
@@ -87,9 +91,9 @@
             <div class="form-group">
                 <div class="row">
                     <div class="col-md-4">
-                        @Html.LabelFor(model => model.Year, "Release Year", htmlAttributes: new { @class = "control-label", })
-                        @Html.EditorFor(model => model.Year, new { htmlAttributes = new { @class = "form-control" } })
-                        @Html.ValidationMessageFor(model => model.Year, "", new { @class = "text-danger" })
+                        @Html.LabelFor(model => model.FormatID, "Format", htmlAttributes: new { @class = "control-label" })
+                        @Html.DropDownList("FormatID", null, "", htmlAttributes: new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.FormatID, "", new { @class = "text-danger" })
                     </div>
                     <div class="col-md-4">
                         @Html.LabelFor(model => model.Num, "No. of CDs/LPs/Etc.", htmlAttributes: new { @class = "control-label" })
@@ -124,16 +128,28 @@
                             }
                         </ul>
                     </div>
-
                     <div class="col-md-4">
-                        @Html.LabelFor(model => model.FormatID, "Format", htmlAttributes: new { @class = "control-label" })
-                        @Html.DropDownList("FormatID", null, "", htmlAttributes: new { @class = "form-control" })
-                        @Html.ValidationMessageFor(model => model.FormatID, "", new { @class = "text-danger" })
+                        <label class="control-label">Recording Type</label>
+                        <div class="selectBox" onclick="showRecordings()">
+                            <select style="color:#888B7D;">
+                                <option>Select Type(s)</option>
+                            </select>
+                            <div class="overSelect"></div>
+                        </div>
+                        <ul id="checkRecordings">
+                            @foreach (RecordStore.Data.EF.Recording recording in ViewBag.Recording)
+                            {
+                                <li class="col-md-12">
+                                    <input type="checkbox" name="Recordings" value="@recording.RecordingID" />
+                                    <span>&nbsp;@recording.RecordingType</span>
+                                </li>
+                            }
+                        </ul>
                     </div>
                     <div class="col-md-4">
-                        @Html.LabelFor(model => model.AlbumStatusID, "Status", htmlAttributes: new { @class = "control-label" })
-                        @Html.DropDownList("AlbumStatusID", null, "", htmlAttributes: new { @class = "form-control" })
-                        @Html.ValidationMessageFor(model => model.AlbumStatusID, "", new { @class = "text-danger" })
+                        @Html.LabelFor(model => model.Price, htmlAttributes: new { @class = "control-label" })
+                        @Html.EditorFor(model => model.Price, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.Price, "", new { @class = "text-danger" })
                     </div>
                 </div>
             </div>
@@ -146,14 +162,13 @@
                         @Html.ValidationMessageFor(model => model.UnitsInStock, "", new { @class = "text-danger" })
                     </div>
                     <div class="col-md-4">
-                        @Html.LabelFor(model => model.Price, htmlAttributes: new { @class = "control-label" })
-                        @Html.EditorFor(model => model.Price, new { htmlAttributes = new { @class = "form-control" } })
-                        @Html.ValidationMessageFor(model => model.Price, "", new { @class = "text-danger" })
+                        @Html.LabelFor(model => model.AlbumStatusID, "Status", htmlAttributes: new { @class = "control-label" })
+                        @Html.DropDownList("AlbumStatusID", null, "", htmlAttributes: new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.AlbumStatusID, "", new { @class = "text-danger" })
                     </div>
                     <div class="col-md-2 col-sm-6 text-center">
                         @Html.LabelFor(model => model.CompilationAlbum, "Compilation", htmlAttributes: new { @class = "control-label" })
                         <div class="checkbox">
-                            @*@Html.EditorFor(model => model.CompilationAlbum)*@
                             @Html.CheckBoxFor(model => model.CompilationAlbum, new { data_toggle = "toggle", data_on = "Yes", data_off = "No" })
                             @Html.ValidationMessageFor(model => model.CompilationAlbum, "", new { @class = "text-danger" })
                         </div>
@@ -161,13 +176,13 @@
                     <div class="col-md-2 col-sm-6 col- text-center">
                         @Html.LabelFor(model => model.IsInPrint, htmlAttributes: new { @class = "control-label" })
                         <div class="checkbox">
-                            @*@Html.EditorFor(model => model.IsInPrint)*@
                             @Html.CheckBoxFor(model => model.IsInPrint, new { data_toggle = "toggle", data_on = "Yes", data_off = "No" })
                             @Html.ValidationMessageFor(model => model.IsInPrint, "", new { @class = "text-danger" })
                         </div>
                     </div>
                 </div>
             </div>
+
         </div>
 
         <div class="form-group">
@@ -220,6 +235,20 @@
                 expanded = false;
             }
         }
+
+        function showRecordings() {
+            var checkRecordings = document.getElementById("checkRecordings");
+            if (!expanded) {
+                checkRecordings.style.display = "block";
+                expanded = true;
+            } else {
+                checkRecordings.style.display = "none";
+                expanded = false;
+            }
+        }
+
+
+
 
         //*********** AJAX ARTIST CREATE DIALOG/POP-UP BOX ************//
         $('a.ArtistCreate').click(function (e) {

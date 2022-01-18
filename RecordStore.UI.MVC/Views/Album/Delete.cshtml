@@ -16,7 +16,6 @@
                 </dd>
                 <hr />
                 <dd>
-                    @* In a Details View, we have only passed a single Album object from the controller to this view.  When referencing the Album, we call  it with Model (* note, capital M)*@
                     @foreach (var artist in Model.AlbumArtist)
                     {
                         if (artist.PrimaryArtist != null)

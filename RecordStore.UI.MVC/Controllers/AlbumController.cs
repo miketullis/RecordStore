@@ -18,12 +18,13 @@ namespace RecordStore.UI.MVC.Controllers
     {
         private RecordStoreEntities db = new RecordStoreEntities();
 
+        #region Index
         public ActionResult Index()
         {
             var albums = db.Album.OrderBy(x => x.AlbumNameSort).ToList();
             return View(albums);
         }
-
+        #endregion
 
         #region Details
         // GET: Albums/Details/5
@@ -58,6 +59,7 @@ namespace RecordStore.UI.MVC.Controllers
             //Since going through linking tables to get this info, pass a list of artists then loop through them 
             ViewBag.Artist = db.Artist.OrderBy(x => x.ArtistNameSort).ToList();
             ViewBag.Genre = db.Genre.OrderBy(x => x.GenreName).ToList();
+            ViewBag.Recording = db.Recording.OrderBy(x => x.RecordingType).ToList();
 
             return View();
         }
@@ -65,7 +67,7 @@ namespace RecordStore.UI.MVC.Controllers
         // POST: Albums/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "AlbumID,AlbumName,ArtistID,GenreID,Description,LabelID,CompilationAlbum,CatalogNum,Price,IsInPrint,FormatID,UnitsInStock,AlbumStatusID,AlbumImage,RearImage,Num,Tracks,Year")] Album album, HttpPostedFileBase albumCover, int[] artists, int[] genres, int primaryArtistId)
+        public ActionResult Create([Bind(Include = "AlbumID,AlbumName,ArtistID,GenreID,Description,LabelID,CompilationAlbum,CatalogNum,Price,IsInPrint,FormatID,UnitsInStock,AlbumStatusID,AlbumImage,RearImage,Num,Tracks,Year")] Album album, HttpPostedFileBase albumCover, int[] artists, int[] genres, int primaryArtistId, int[] recordings)
         {
             if (ModelState.IsValid)
             {
@@ -176,6 +178,20 @@ namespace RecordStore.UI.MVC.Controllers
                     db.SaveChanges();
                 }
 
+                //create AlbumRecording record for each checkbox that was checked
+                if (recordings != null)
+                {
+                    foreach (var recordingId in recordings)
+                    {
+                        var r = db.Recording.Find(recordingId);
+                        AlbumRecording ar = new AlbumRecording();
+                        ar.AlbumID = album.AlbumID;
+                        ar.RecordingID = r.RecordingID;
+                        db.AlbumRecording.Add(ar);
+                    }
+                    db.SaveChanges();
+                }
+
                 #endregion
 
 
@@ -190,6 +206,7 @@ namespace RecordStore.UI.MVC.Controllers
             //Since going through linking tables to get this info, pass a list of artists then loop through them 
             ViewBag.Artist = db.Artist.ToList();
             ViewBag.Genre = db.Genre.ToList();
+            ViewBag.Recording = db.Recording.ToList();
 
             return View(album);
         }
@@ -223,6 +240,7 @@ namespace RecordStore.UI.MVC.Controllers
             //Since going through linking tables to get this info, pass a list of artists then loop through them 
             ViewBag.Artist = db.Artist.OrderBy(x => x.ArtistName).ToList();
             ViewBag.Genre = db.Genre.OrderBy(x => x.GenreName).ToList();
+            ViewBag.Recording = db.Recording.OrderBy(x => x.RecordingType).ToList();
 
             return View(album);
         }
@@ -232,7 +250,7 @@ namespace RecordStore.UI.MVC.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "AlbumID,AlbumName,ArtistID,Description,LabelID,CompilationAlbum,CatalogNum,Price,IsInPrint,FormatID,UnitsInStock,AlbumStatusID,AlbumImage,RearImage,Num,Tracks,Year")] Album album, HttpPostedFileBase albumCover, int[] artists, int[] genres, int primaryArtistId, int? id)
+        public ActionResult Edit([Bind(Include = "AlbumID,AlbumName,ArtistID,Description,LabelID,CompilationAlbum,CatalogNum,Price,IsInPrint,FormatID,UnitsInStock,AlbumStatusID,AlbumImage,RearImage,Num,Tracks,Year")] Album album, HttpPostedFileBase albumCover, int[] artists, int[] genres, int primaryArtistId, int[] recordings, int? id)
         {
             RecordStoreEntities context = new RecordStoreEntities();
 
@@ -304,7 +322,7 @@ namespace RecordStore.UI.MVC.Controllers
 
                 #endregion
 
-                #region Remove and Sanve new record in linking tables
+                #region Remove and Save new record in linking tables
 
                 //Delete existing AlbumArtist record 
                 var albumArtists = context.AlbumArtist.Where(x => x.AlbumID == id);
@@ -358,6 +376,29 @@ namespace RecordStore.UI.MVC.Controllers
                     }
                 }
                 context.SaveChanges();
+
+                //delete existing AlbumRecording record 
+                var albumRecordings = context.AlbumRecording.Where(x => x.AlbumID == id);
+                context.AlbumRecording.RemoveRange(albumRecordings);
+                context.SaveChanges();
+
+                //create new AlbumRecording record for each checkbox that was checked
+                if (recordings != null)
+                {
+                    foreach (var recordingId in recordings)
+                    {
+                        var r = db.Recording.Find(recordingId);
+                        AlbumRecording ar = new AlbumRecording();
+                        ar.AlbumID = album.AlbumID;
+                        ar.RecordingID = r.RecordingID;
+                        if (context.AlbumRecording.Where(x => x.AlbumID == album.AlbumID && x.RecordingID == recordingId).Count() == 0)
+                        {
+                            context.AlbumRecording.Add(ar);
+                        }
+                    }
+                }
+                context.SaveChanges();
+
                 #endregion
 
                 db.Entry(album).State = EntityState.Modified;
@@ -374,6 +415,8 @@ namespace RecordStore.UI.MVC.Controllers
             //Since going through linking tables to get this info, pass a list of artists then loop through them 
             ViewBag.Artist = db.Artist.ToList();
             ViewBag.Genre = db.Genre.ToList();
+            ViewBag.Recording = db.Recording.ToList();
+
 
             return View(album);
             
@@ -411,11 +454,13 @@ namespace RecordStore.UI.MVC.Controllers
                 ImageUtility.Delete(path, album.AlbumImage);
             }
 
-            //delete AlbumArtist & AlbumGerne records if album is deleted
+            //delete AlbumArtist, AlbumGerne, & AlbumRecording records if album is deleted
             var albumArtists = db.AlbumArtist.Where(x => x.AlbumID == id);
             db.AlbumArtist.RemoveRange(albumArtists);
             var albumGenres = db.AlbumGenre.Where(x => x.AlbumID == id);
             db.AlbumGenre.RemoveRange(albumGenres);
+            var albumRecordings = db.AlbumRecording.Where(x => x.AlbumID == id);
+            db.AlbumRecording.RemoveRange(albumRecordings);
             db.SaveChanges();
 
             db.Album.Remove(album);

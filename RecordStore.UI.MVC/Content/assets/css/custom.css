@@ -162,7 +162,7 @@ label {
     bottom: 0;
 }
 
-#checkArtists, #checkGenres {
+#checkArtists, #checkGenres, #checkRecordings {
     display: none;
     border: 1px solid black;
     padding: 0;
@@ -175,16 +175,16 @@ label {
     box-shadow: 0 1px 8px 2px #cfcaca;
 }
 
-ul #checkArtists, ul #checkGenres {
+ul #checkArtists, ul #checkGenres, ul #checkRecordings {
     display: none;
     background-color: gray;
 }
 
-#checkArtists label, #checkGenres label {
+#checkArtists label, #checkGenres label, #checkRecordings label {
     display: block;
 }
 
-    #checkArtists label:hover, #checkGernes label:hover {
+    #checkArtists label:hover, #checkGernes label:hover, #checkRecordings label:hover {
         background-color: #1e90ff;
     }
 
@@ -271,6 +271,7 @@ dd {
 .product-item {
     margin-bottom: 30px;
     box-shadow: 0 5px 8px 3px #808080;
+    max-width: 500px;
 }
 
     .product-item .down-content {
@@ -295,7 +296,7 @@ dd {
         .product-item .down-content h6 {
             position: absolute !important;
             /*top: 30px !important;
-    right: 30px !important;*/
+            right: 30px !important;*/
             top: unset;
             right: unset;
             font-size: 1.4em;
@@ -320,7 +321,6 @@ div.details div.font-weight-bold {
 
 
 
-
 /*fix media queries!!!!!*/
 @media screen and (min-width: 1080px) {
     #rrWrapper {
@@ -332,17 +332,10 @@ div.details div.font-weight-bold {
 
 
 
-@media screen and (min-width: 1800px) {
+/*@media screen and (min-width: 1800px) {
 
     div.container {
         max-width: 1800px;
-    }
-}
-
-@media (min-width: 1200px) {
-
-    div.container {
-        max-width: 70%;
     }
 }
 
@@ -350,10 +343,25 @@ div.details div.font-weight-bold {
     div.container {
         max-width: 80%;
     }
+}*/
+
+@media (min-width: 557px) {
+    .container {
+        max-width: 90%;
+    }
+}
+
+
+@media (max-width: 768px) {
+    .product-item .down-content h6 {
+        position: absolute;
+        right: unset;
+        top: unset;
+    }
 }
 
 @media (max-width: 991px) {
-    div.container {
+    div .container {
         width: 90%;
     }
 
@@ -372,21 +380,8 @@ div.details div.font-weight-bold {
     }
 }
 
-
-@media (min-width: 768px) {
-    /*.container {
-        max-width: 720px;
-    }*/
-
-    .col-md-12 {
-        -ms-flex: 0 0 100%;
-        flex: 0 0 100%;
-        max-width: 100%;
-    }
+@media (min-width: 1200px) {
+.container {
+    max-width: 80%;
 }
-
-@media (min-width: 576px) {
-    /*.container {
-        max-width: 540px;
-    }*/
 }
