@@ -32,28 +32,28 @@
 
 
 <div id="rrWrapper">
+    <div class="max100p">
         <table class="table" id="myTable">
             <thead>
-                <tr>
+                <tr class="text-center">
                     <th>
-                        @*@Html.DisplayNameFor(model => model.FirstOrDefault().AlbumImage)*@
                     </th>
-                    <th>
+                    <th class="text-left">
                         @Html.DisplayNameFor(model => model.FirstOrDefault().AlbumName)
                     </th>
-                    <th class="text-center">
+                    <th>
                         Artist
                     </th>
-                    <th class="text-center">
+                    <th>
                         @Html.DisplayNameFor(model => model.FirstOrDefault().Year)
                     </th>
                     <th>
                         @Html.DisplayNameFor(model => model.FirstOrDefault().Label.LabelName)
                     </th>
-                    <th class="text-center">
+                    <th>
                         Genre(s)
                     </th>
-                    <th class="text-center">
+                    <th>
                         @Html.DisplayNameFor(model => model.FirstOrDefault().Format.FormatType)
                     </th>
                     <th>
@@ -68,40 +68,37 @@
                 </tr>
             </thead>
 
-            <tbody>
+            <tbody class="text-center">
                 @foreach (var item in Model)
                 {
                     <tr>
                         <td>
-                            <a href="@Url.Action("Details", new { id = item.AlbumID })" >
+                            <a href="@Url.Action("Details", new { id = item.AlbumID })">
                                 <img src="~/Content/assets/images/albumImages/t_@item.AlbumImage" alt="@item.AlbumName cover" title="@item.AlbumName cover" id="albumArt" />
                             </a>
                         </td>
-                        <td>
+                        <td class="text-left">
                             <a href="@Url.Action("Details", new { id = item.AlbumID })" style="font-weight:bold; color: black;">
                                 @Html.DisplayFor(modelItem => item.AlbumNameSort)
                             </a>
                         </td>
-                        <td class="text-center">
+                        <td>
                             @foreach (var artist in item.AlbumArtist)
                             {
                                 //only list primary artist in index listing
                                 if (artist.PrimaryArtist == true)
                                 {
-                                    <span>
-                                        @artist.Artist.ArtistName
-                                    </span>
+                                    <span>@artist.Artist.ArtistName</span>
                                 }
                             }
                         </td>
-                        <td class="text-center">
+                        <td>
                             @Html.DisplayFor(modelItem => item.Year)
                         </td>
-
-                        <td class="text-center">
+                        <td>
                             @Html.DisplayFor(modelItem => item.Label.LabelName)
                         </td>
-                        <td class="text-center">
+                        <td>
                             @foreach (var genre in item.AlbumGenre)
                             {
                                 <ul>
@@ -109,10 +106,10 @@
                                 </ul>
                             }
                         </td>
-                        <td class="text-center">
+                        <td>
                             @Html.DisplayFor(modelItem => item.Format.FormatType)
                         </td>
-                        <td class="text-center">
+                        <td>
                             @Html.DisplayFor(modelItem => item.Price)
                         </td>
                         <td class="text-right">
@@ -135,7 +132,7 @@
                                     }
                                     else
                                     {
-                                        @Html.TextBox("qty", 1, new { @class = "form-control", @style = "max-width: 50px; display: none;", onkeyup = "checkQty()" })
+                                        @Html.TextBox("qty", 1, new { @class = "form-control text-center", @style = "max-width: 50px; display: none;", onkeyup = "checkQty()" })
                                         <div id="btnSubmit">
                                             <input type="submit" value="Add To Cart" class="btn btn-dark" />
                                         </div>
@@ -147,6 +144,8 @@
                 }
             </tbody>
         </table>
+
+    </div>
 </div>
 
 @section Scripts{

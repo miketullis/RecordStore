@@ -75,10 +75,12 @@
 .albumArtBG {
     width: 100%;
     object-fit: cover;
-    max-width: 500px;
     height: auto;
 }
 
+.error {
+    max-width: 90%;
+}
 
 .feature-image {
     box-shadow: 0 5px 8px 3px #808080;
@@ -119,6 +121,47 @@ label {
 }
 
 
+
+.max80p {
+    max-width: 80%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.max90p {
+    max-width: 90%;
+    margin-left: auto;
+    margin-right: auto;
+}
+.max100p {
+    max-width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.max600 {
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.max700 {
+    max-width: 700px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.max800 {
+    max-width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.max900 {
+    max-width: 900px;
+    margin-left: auto;
+    margin-right: auto;
+}
 
 
 /*AJAX Popup Dialog Styling*/
@@ -308,11 +351,10 @@ dd {
             bottom: 30px !important;
         }
 
-
-div.details div.font-weight-bold {
-    padding-top: .75em;
+#map {
+    border: 0;
+    box-shadow: 0 5px 8px 3px #808080;
 }
-
 
 
 
@@ -381,7 +423,7 @@ div.details div.font-weight-bold {
 }
 
 @media (min-width: 1200px) {
-.container {
-    max-width: 80%;
-}
+    .container {
+        max-width: 80%;
+    }
 }

@@ -5,43 +5,44 @@
 }
 
 <div id="rrWrapper">
-    <h2 class="text-center pb-5">@ViewBag.Title</h2>
-    <div>
-        <dl class="dl-horizontal text-center m-auto">
-            <dt>
-                @Html.DisplayNameFor(model => model.LabelName)
-            </dt>
-           <dd>
-                @Html.DisplayFor(model => model.LabelName)
-            </dd>
-            <dt>
-                @Html.DisplayNameFor(model => model.Country)
-            </dt>
-            <dd>
-                @Html.DisplayFor(model => model.Country)
-            </dd>
-            <dt>
-                @Html.DisplayNameFor(model => model.IsStillDistributing)
-            </dt>
-            <dd>
-                @*@Html.DisplayFor(model => model.IsStillDistributing)*@
-                @if (Model.IsStillDistributing == true)
-                {<span>Yes</span>}
-                else
-                { <span>No</span>}
-            </dd>
-        </dl>
-        <h4 class="text-danger text-center p-4">Are you sure you want to delete <span class="font-italic">@Model.LabelName</span>?</h4>
+    <div class="max700">
+        <h2 class="text-center pb-5">@ViewBag.Title</h2>
+        <div>
+            <dl class="dl-horizontal text-center m-auto">
+                <dt>
+                    @Html.DisplayNameFor(model => model.LabelName)
+                </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.LabelName)
+                </dd>
+                <dt>
+                    @Html.DisplayNameFor(model => model.Country)
+                </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.Country)
+                </dd>
+                <dt>
+                    @Html.DisplayNameFor(model => model.IsStillDistributing)
+                </dt>
+                <dd>
+                    @if (Model.IsStillDistributing == true)
+                    {<span>Yes</span>}
+                    else
+                    { <span>No</span>}
+                </dd>
+            </dl>
+            <h4 class="text-danger text-center p-4">Are you sure you want to delete <span class="font-italic">@Model.LabelName</span>?</h4>
 
-        @using (Html.BeginForm())
-        {
-            @Html.AntiForgeryToken()
+            @using (Html.BeginForm())
+            {
+                @Html.AntiForgeryToken()
 
-        <div class="form-actions no-color m-auto text-center">
-            <input type="submit" value="Yes" class="btn btn-dark" />
-            <a href="javascript:void(0);" onclick="history.go(-1);" class="btn btn-dark">No</a>
-            @*@Html.ActionLink("Cancel", "Index", "Label", null, new { @class = "btn btn-dark" })*@
+                <div class="form-actions no-color m-auto text-center">
+                    <input type="submit" value="Yes" class="btn btn-dark" />
+                    <a href="javascript:void(0);" onclick="history.go(-1);" class="btn btn-dark">No</a>
+                    @*@Html.ActionLink("Cancel", "Index", "Label", null, new { @class = "btn btn-dark" })*@
+                </div>
+            }
         </div>
-        }
     </div>
 </div>

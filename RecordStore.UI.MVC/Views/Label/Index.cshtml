@@ -4,62 +4,53 @@
     ViewBag.Title = "Record Labels";
 }
 
-
 <div id="rrWrapper">
+    <div class="max800">
+        <h2 class="text-center mb-3"> @ViewBag.Title</h2>
 
-    <h2 class="text-center mb-3"> @ViewBag.Title</h2>
-
-    <table class="table" id="myTable">
-        <thead>
-            <tr>
-                <th>
-                    @Html.DisplayNameFor(model => model.FirstOrDefault().LabelName)
-                </th>
-                <th class="text-center">
-                    @Html.DisplayNameFor(model => model.FirstOrDefault().Country)
-                </th>
-                <th class="text-center">
-                    @Html.DisplayNameFor(model => model.FirstOrDefault().IsStillDistributing)
-                </th>
-                <th class="text-right">
-                    @Html.ActionLink("Add A New Label", "Create")
-                    @*<a href="" class="LabelCreate">Add New Label?</a>*@
-                </th>
-            </tr>
-        </thead>
-
-        <tbody>
-            @foreach (var item in Model)
-            {
+        <table class="table" id="myTable">
+            <thead>
                 <tr>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.LabelName)
-                    </td>
-                    <td class="text-center">
-                        @Html.DisplayFor(modelItem => item.Country)
-                    </td>
-                    <td class="text-center">
-                        @*@Html.DisplayFor(modelItem => item.IsStillDistributing)*@
-                        @if (item.IsStillDistributing == true)
-                        {<span>Yes</span>}
-                        else
-                        { <span>No</span>}
-                    </td>
-                    <td class="text-right">
-                        @Html.ActionLink("Edit", "Edit", new { id = item.LabelID }) |
-                        @*<a href="" class="LabelEdit">Edit</a>*@
-                        @Html.ActionLink("Delete", "Delete", new { id = item.LabelID })
-                        @*<a href="" class="LabelDelete">Delete</a>*@
-                    </td>
+                    <th>
+                        @Html.DisplayNameFor(model => model.FirstOrDefault().LabelName)
+                    </th>
+                    <th class="text-center">
+                        @Html.DisplayNameFor(model => model.FirstOrDefault().Country)
+                    </th>
+                    <th class="text-center">
+                        @Html.DisplayNameFor(model => model.FirstOrDefault().IsStillDistributing)
+                    </th>
+                    <th class="text-right">
+                        @Html.ActionLink("Add A New Label", "Create")
+                    </th>
                 </tr>
-            }
-        </tbody>
-    </table>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.LabelName)
+                        </td>
+                        <td class="text-center">
+                            @Html.DisplayFor(modelItem => item.Country)
+                        </td>
+                        <td class="text-center">
+                            @if (item.IsStillDistributing == true)
+                            {<span>Yes</span>}
+                            else
+                            { <span>No</span>}
+                        </td>
+                        <td class="text-right">
+                            @Html.ActionLink("Edit", "Edit", new { id = item.LabelID }) |
+                            @Html.ActionLink("Delete", "Delete", new { id = item.LabelID })
 
-    @* Placeholder for the creating, deleting, & editing Labels in a dialog box *@
-    <div id="LabelCreate"></div>
-    <div id="LabelDelete"></div>
-    <div id="LabelEdit"></div>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
 </div>
 
 

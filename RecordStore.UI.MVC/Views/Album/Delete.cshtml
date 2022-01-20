@@ -4,69 +4,73 @@
     ViewBag.Title = "Delete Album: " + Model.AlbumName;
 }
 
-<div id="rrWrapper">
-    <div class="row ">
-        <div class="col-md-6 pb-5">
-            <img src="~/Content/assets/images/albumImages/@Model.AlbumImage" alt="@Model.AlbumName Cover" title="@Model.AlbumName Cover" id="albumArt" class="albumArtBG"/>
-        </div>
-        <div class="col-md-6">
-            <dl class="dl-horizontal">
-                <dd>
-                    <h2>@Html.DisplayFor(model => model.AlbumName)</h2>
-                </dd>
-                <hr />
-                <dd>
-                    @foreach (var artist in Model.AlbumArtist)
-                    {
-                        if (artist.PrimaryArtist != null)
-                        {
-                            if ((bool)artist.PrimaryArtist)
+
+    <div id="rrWrapper">
+        <div class="max100p">
+            <div class="row">
+                <div class="col-md-6 pb-5">
+                    <img src="~/Content/assets/images/albumImages/@Model.AlbumImage" alt="@Model.AlbumName Cover" title="@Model.AlbumName Cover" id="albumArt" class="albumArtBG" />
+                </div>
+                <div class="col-md-6">
+                    <dl class="dl-horizontal">
+                        <dd>
+                            <h2>@Html.DisplayFor(model => model.AlbumName)</h2>
+                        </dd>
+                        <hr />
+                        <dd>
+                            @foreach (var artist in Model.AlbumArtist)
                             {
-                                <div>
-                                    <span style="font-weight: bold;">
-                                        Artist:&nbsp;&nbsp;
-                                    </span>
-                                    @artist.Artist.ArtistName
-                                </div>
+                                if (artist.PrimaryArtist != null)
+                                {
+                                    if ((bool)artist.PrimaryArtist)
+                                    {
+                                        <div>
+                                            <span style="font-weight: bold;">
+                                                Artist:&nbsp;&nbsp;
+                                            </span>
+                                            @artist.Artist.ArtistName
+                                        </div>
+                                    }
+                                }
                             }
-                        }
-                    }
-                <dd>
-                    <span class="font-weight-bold">Year:&nbsp;&nbsp;</span>
-                    @Html.DisplayFor(model => model.Year)
-                </dd>
-                <dd>
-                    <span class="font-weight-bold">Label:&nbsp;&nbsp;</span>
-                    @Html.DisplayFor(model => model.Label.LabelName)
-                </dd>
-                <dd>
-                    <span class="font-weight-bold">Catalog No.:&nbsp;&nbsp;</span>
-                    @Html.DisplayFor(model => model.CatalogNum)
-                </dd>
-                <dd>
-                    <span class="font-weight-bold">Country:&nbsp;&nbsp;</span>
-                    @Html.DisplayFor(model => model.Label.Country)
-                </dd>
-                <dd>
-                    <span class="font-weight-bold">Format:&nbsp;&nbsp;</span>
-                    @Html.DisplayFor(model => model.Format.FormatType)
-                </dd>
-            </dl>
+                        <dd>
+                            <span class="font-weight-bold">Year:&nbsp;&nbsp;</span>
+                            @Html.DisplayFor(model => model.Year)
+                        </dd>
+                        <dd>
+                            <span class="font-weight-bold">Label:&nbsp;&nbsp;</span>
+                            @Html.DisplayFor(model => model.Label.LabelName)
+                        </dd>
+                        <dd>
+                            <span class="font-weight-bold">Catalog No.:&nbsp;&nbsp;</span>
+                            @Html.DisplayFor(model => model.CatalogNum)
+                        </dd>
+                        <dd>
+                            <span class="font-weight-bold">Country:&nbsp;&nbsp;</span>
+                            @Html.DisplayFor(model => model.Label.Country)
+                        </dd>
+                        <dd>
+                            <span class="font-weight-bold">Format:&nbsp;&nbsp;</span>
+                            @Html.DisplayFor(model => model.Format.FormatType)
+                        </dd>
+                    </dl>
+                </div>
+            </div>
+
+            <h4 class="text-danger text-center mt-5 mb-5">Are you sure you want to delete <span class="font-italic">@Model.AlbumName</span>?</h4>
+            
+            @using (Html.BeginForm())
+            {
+                @Html.AntiForgeryToken()
+
+                <div class="form-actions no-color text-center">
+                    <input type="submit" value="Yes" class="btn btn-dark" />
+                    <a href="javascript:void(0);" onclick="history.go(-1);" class="btn btn-dark">No</a>
+                    @*@Html.ActionLink("Cancel", "Index", "Album", null, new { @class = "btn btn-dark" })*@
+                </div>
+            }
+
         </div>
-    </div>
-
-    <h4 class="text-danger text-center">Are you sure you want to delete <span class="font-italic">@Model.AlbumName</span>?</h4>
-    <br />
-    @using (Html.BeginForm())
-    {
-        @Html.AntiForgeryToken()
-
-    <div class="form-actions no-color text-center">
-        <input type="submit" value="Yes" class="btn btn-dark" />
-        <a href="javascript:void(0);" onclick="history.go(-1);" class="btn btn-dark">No</a>
-        @*@Html.ActionLink("Cancel", "Index", "Album", null, new { @class = "btn btn-dark" })*@
-    </div>
-    }
 </div>
 
 

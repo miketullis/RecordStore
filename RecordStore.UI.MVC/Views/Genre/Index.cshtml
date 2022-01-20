@@ -5,43 +5,36 @@
 }
 
 <div id="rrWrapper">
-    <h2 class="text-center mb-5"> @ViewBag.Title</h2>
-    @if (Model.Count() > 0)
-    {<table class="table" id="myTable">
-            <thead>
-                <tr>
-                    <th class="text-left">
-                        @Html.DisplayNameFor(model => model.GenreName)
-                    </th>
-                    <th class="text-right">
-                        @Html.ActionLink("Add New Genre", "Create")
-                        @*<a href="" class="GenreCreate">Add New Genre</a>*@
-                    </th>
-                </tr>
-            <tbody>
-                @foreach (var item in Model)
-                {
+    <div class="max600">
+        <h2 class="text-center mb-5"> @ViewBag.Title</h2>
+        @if (Model.Count() > 0)
+        {<table class="table" id="myTable">
+                <thead>
                     <tr>
-                        <td class="text-left">
-                            @Html.DisplayFor(modelItem => item.GenreName)
-                        </td>
-                        <td class="text-right">
-                            @*<a href="" class="GenreEdit">Edit</a>*@
-                            @Html.ActionLink("Edit", "Edit", new { id = item.GenreID }) |
-                            @Html.ActionLink("Delete", "Delete", new { id = item.GenreID })
-                            @*<a href="" class="GenreDelete">Delete</a>*@
-                        </td>
+                        <th class="text-left">
+                            @Html.DisplayNameFor(model => model.GenreName)
+                        </th>
+                        <th class="text-right">
+                            @Html.ActionLink("Add New Genre", "Create")
+                        </th>
                     </tr>
-                }
-            </tbody>
-        </table>
-    }
-
-    @* Placeholders for the creating, deleting, & editing Labels in a dialog box *@
-    <div id="GenreCreate"></div>
-    <div id="GenreDelete"></div>
-    <div id="GenreEdit"></div>
-
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td class="text-left">
+                                @Html.DisplayFor(modelItem => item.GenreName)
+                            </td>
+                            <td class="text-right">
+                                @Html.ActionLink("Edit", "Edit", new { id = item.GenreID }) |
+                                @Html.ActionLink("Delete", "Delete", new { id = item.GenreID })
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        }
+    </div>
 </div>
 
 @section Scripts {

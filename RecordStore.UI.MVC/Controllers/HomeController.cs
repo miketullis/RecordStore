@@ -8,12 +8,7 @@ using System.Web.Mvc;
 using System.Linq;
 using RecordStore.UI.MVC.Models;
 using RecordStore.Data.EF;
-//May not be needed
-using System.Collections.Generic;
 using System.Data;
-using System.Data.Entity;
-using System.Drawing; //Added for access to the Image class
-using RecordStore.UI.MVC.Utilities; //Added for access to Image Utilities
 using PagedList; //Added for access to the PagedList base classes
 using PagedList.Mvc; //Added for access to the PagedList.MVC functionality
 
@@ -25,56 +20,57 @@ namespace RecordStore.UI.MVC.Controllers
     {
         private RecordStoreEntities db = new RecordStoreEntities();
 
+        #region Index
         public ActionResult Index(string searchFilter, int page = 1)
         {
-            int pageSize = 12; //We will use this value to set how many records/objects per page
+            int pageSize = 12; //value to set number of records/objects per page
 
             var albums = db.Album.OrderBy(x => x.AlbumID).ToList();
-            //return View(albums.ToPagedList(page, pageSize));
 
+
+            #region SearchFilter
             var artist = db.Artist.ToList();
             var albumArtist = db.AlbumArtist.ToList();
             var genre = db.Genre.ToList();
             var albumGenre = db.AlbumGenre.ToList();
+            var recording = db.Recording.ToList();
+            var albumRecording = db.AlbumRecording.ToList();
 
 
             if (!String.IsNullOrEmpty(searchFilter))
             {
-                albums = (from a in albums join aa in albumArtist on a.AlbumID equals aa.AlbumID
+                albums = (from a in albums
+                          join aa in albumArtist on a.AlbumID equals aa.AlbumID
                           join ar in artist on aa.ArtistID equals ar.ArtistID
                           join ag in albumGenre on a.AlbumID equals ag.AlbumID
                           join g in genre on ag.GenreID equals g.GenreID
+                          join art in albumRecording on a.AlbumID equals art.AlbumID
+                          join rt in recording on art.RecordingID equals rt.RecordingID
                           where a.AlbumName.ToLower().Contains(searchFilter.ToLower()) ||
                           a.Label.LabelName.ToLower().Contains(searchFilter.ToLower()) ||
-                          a.Year.ToString().Contains(searchFilter) || 
+                          a.Year.ToString().Contains(searchFilter) ||
                           ar.ArtistName.ToLower().Contains(searchFilter.ToLower()) ||
                           g.GenreName.ToLower().Contains(searchFilter.ToLower()) ||
                           a.CatalogNum.ToLower().Contains(searchFilter.ToLower()) ||
-                          a.Label.Country.ToLower().Contains(searchFilter.ToLower())||
-                          a.Description.ToLower().Contains(searchFilter.ToLower()) 
+                          a.Label.Country.ToLower().Contains(searchFilter.ToLower()) ||
+                          a.Description.ToLower().Contains(searchFilter.ToLower()) ||
+                          rt.RecordingType.ToLower().Contains(searchFilter.ToLower())
                           select a).Distinct().ToList();
             }
+            #endregion
+
             return View(albums.ToPagedList(page, pageSize));
-        }
-
-
-
-        #region About Page
-        [HttpGet]
-        [Authorize]
-        public ActionResult About()
-        {
-            return View();
         }
         #endregion
 
-
+        #region Products
         [HttpGet]
         public ActionResult Products()
         {
             return View();
         }
 
+        #endregion
 
         #region Ajax Contact Form
 
@@ -113,8 +109,8 @@ namespace RecordStore.UI.MVC.Controllers
                  ConfigurationManager.AppSettings["EmailPass"].ToString());
 
             //Client Properties
-            client.Port = 25;
-            client.EnableSsl = false;
+            client.Port = 8889;
+            //client.EnableSsl = false;
 
             //Try to send the email
             try
@@ -136,9 +132,7 @@ namespace RecordStore.UI.MVC.Controllers
             return View("EmailConfirmation", cvm);
         }
 
-
         #endregion
-
 
         #region Original Contact Form
 
@@ -203,7 +197,7 @@ namespace RecordStore.UI.MVC.Controllers
 
 
         //    //Client Properties
-        //    client.Port = 25;
+        //    client.Port = 8889;
         //    client.EnableSsl = false;
 
 

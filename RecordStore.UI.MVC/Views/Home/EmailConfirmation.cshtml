@@ -3,8 +3,10 @@
 <div>
     @if (Model != null)
     {
-        <h4>Thank you, @Model.Name! We have received your message.</h4>
-        <p>Message:<br />@Model.Message</p>
-        <h4>We will respond to @Model.Email as soon as possible.</h4>
+        <div class="pl-2">
+            <h4>Thank you, @Model.Name! We have received your message.</h4>
+            <p>Message:<br />@Model.Message</p>
+            <h4>We will respond to @Model.Email as soon as possible.</h4>
+        </div>
     }
 </div>

@@ -45,6 +45,7 @@ namespace RecordStore.UI.MVC.Controllers
 
         #region Create
         // GET: Albums/Create
+        [Authorize(Roles = "Admin")]
         public ActionResult Create()
         {
 
@@ -83,8 +84,8 @@ namespace RecordStore.UI.MVC.Controllers
                     string ext = file.Substring(file.LastIndexOf('.'));
                     //declare list of valid file extension
                     string[] validExts = { ".jpeg", ".jpg", ".png", ".gif" };
-                    //is extension valid and filesize under 4mb
-                    if (validExts.Contains(ext.ToLower()) && albumCover.ContentLength <= 4194304)
+                    //is extension valid 
+                    if (validExts.Contains(ext.ToLower()))
                     {
                         file = Guid.NewGuid() + ext; //Create a unique new filename for the file (using a GUID)
 
@@ -194,8 +195,8 @@ namespace RecordStore.UI.MVC.Controllers
 
                 #endregion
 
-
-                return RedirectToAction("Index");
+                //return RedirectToAction("Index");
+                return RedirectToAction("Details", new { id = album.AlbumID });
             }
 
             ViewBag.AlbumStatusID = new SelectList(db.AlbumStatus, "AlbumStatusID", "AlbumStatusName", album.AlbumStatusID);
@@ -210,7 +211,6 @@ namespace RecordStore.UI.MVC.Controllers
 
             return View(album);
         }
-
         #endregion
 
         #region Edit
@@ -270,8 +270,8 @@ namespace RecordStore.UI.MVC.Controllers
                     string ext = file.Substring(file.LastIndexOf('.'));
                     //declare list of valid file extension
                     string[] validExts = { ".jpeg", ".jpg", ".png", ".gif" };
-                    //is extension valid and filesize under 4mb
-                    if (validExts.Contains(ext.ToLower()) && albumCover.ContentLength <= 4194304)
+                    //is extension valid
+                    if (validExts.Contains(ext.ToLower()))
                     {
                         file = Guid.NewGuid() + ext; //Create a unique new filename for the file (using a GUID)
 
@@ -403,7 +403,9 @@ namespace RecordStore.UI.MVC.Controllers
 
                 db.Entry(album).State = EntityState.Modified;
                 db.SaveChanges();
-               return RedirectToAction("Index");
+
+                //return RedirectToAction("Index");
+                return RedirectToAction("Details", new { id = album.AlbumID });
 
             }
 

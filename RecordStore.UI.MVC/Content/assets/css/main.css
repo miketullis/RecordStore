@@ -33,25 +33,26 @@ h1,h2,h3,h4,h5,h6 {
 }
 
 ul.social-icons li {
-	display: inline-block;
-	margin-right: 3px;
+    display: inline-block;
+    margin-right: 3px;
 }
 
 ul.social-icons li:last-child {
 	margin-right: 0px;
 }
 
-ul.social-icons li a {
-	width: 50px;
-	height: 50px;
-	display: inline-block;
-	line-height: 50px;
-	background-color: #eee;
-	color: #121212;
-	font-size: 18px;
-	text-align: center;
-	transition: all .3s;
-}
+    ul.social-icons li a {
+        width: 50px;
+        height: 50px;
+        display: inline-block;
+        line-height: 50px;
+        background-color: #eee;
+        color: #121212;
+        font-size: 18px;
+        text-align: center;
+        transition: all .3s;
+        box-shadow: 2px 2px 6px 2px #989797;
+    }
 
 ul.social-icons li a:hover {
 	background-color: #f33f3f;

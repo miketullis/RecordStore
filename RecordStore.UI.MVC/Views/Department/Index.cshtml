@@ -5,48 +5,41 @@
 }
 
 <div id="rrWrapper">
-    <h2 class="text-center mb-5"> @ViewBag.Title</h2>
-    <table class="table" id="myTable">
-        <thead>
-            <tr>
-                <th class="text-left">
-                    @Html.DisplayNameFor(model => model.DepartmentName)
-                </th>
-                <th class="text-center">
-                    @Html.DisplayNameFor(model => model.DeptDescription)
-                </th>
-                <th class="text-right">
-                    @Html.ActionLink("Add New Department", "Create")
-                    @*<a href="" class="DeptCreate">Add New Department</a>*@
-                </th>
-            </tr>
-        </thead>
-
-        <tbody>
-            @foreach (var item in Model)
-            {
+    <div class="max800">
+        <h2 class="text-center mb-5"> @ViewBag.Title</h2>
+        <table class="table" id="myTable">
+            <thead>
                 <tr>
-                    <td class="text-left">
-                        @Html.DisplayFor(modelItem => item.DepartmentName)
-                    </td>
-                    <td class="text-center">
-                        @Html.DisplayFor(modelItem => item.DeptDescription)
-                    </td>
-                    <td class="text-right">
-                        @*<a href="" class="DeptEdit">Edit</a>*@
-                        @Html.ActionLink("Edit", "Edit", new { id = item.DepartmentID }) |
-                        @Html.ActionLink("Delete", "Delete", new { id = item.DepartmentID })
-                        @*<a href="" class="DeptDelete">Delete</a>*@
-                    </td>
+                    <th class="text-left">
+                        @Html.DisplayNameFor(model => model.DepartmentName)
+                    </th>
+                    <th class="text-center">
+                        @Html.DisplayNameFor(model => model.DeptDescription)
+                    </th>
+                    <th class="text-right">
+                        @Html.ActionLink("Add New Dept.", "Create")
+                    </th>
                 </tr>
-            }
-        </tbody>
-    </table>
-
-    @* Placeholders for the creating, deleting, & editing Departments in a dialog box *@
-    <div id="DeptCreate"></div>
-    <div id="DeptDelete"></div>
-    <div id="DeptEdit"></div>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td class="text-left">
+                            @Html.DisplayFor(modelItem => item.DepartmentName)
+                        </td>
+                        <td class="text-center">
+                            @Html.DisplayFor(modelItem => item.DeptDescription)
+                        </td>
+                        <td class="text-right">
+                            @Html.ActionLink("Edit", "Edit", new { id = item.DepartmentID }) |
+                            @Html.ActionLink("Delete", "Delete", new { id = item.DepartmentID })
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
 </div>
 
 @section Scripts{

@@ -4,38 +4,36 @@
     ViewBag.Title = "Delete Department: " + Model.DepartmentName;
 }
 
-
 <div id="rrWrapper">
-<h2 class="text-center mb-4">@ViewBag.Title</h2>
+    <div class="max600">
+        <h2 class="text-center mb-4">@ViewBag.Title</h2>
 
-<div>
+        <dl class="dl-horizontal text-center">
+            <dt>
+                @Html.DisplayNameFor(model => model.DepartmentName)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.DepartmentName)
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.DeptDescription)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.DeptDescription)
+            </dd>
+        </dl>
 
-    <dl class="dl-horizontal text-center">
-        <dt>
-            @Html.DisplayNameFor(model => model.DepartmentName)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.DepartmentName)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.DeptDescription)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.DeptDescription)
-        </dd>
-    </dl>
+        <h4 class="text-danger text-center mb-4">Are you sure you want to delete <span class="font-italic">@Model.DepartmentName</span>?</h4>
 
-    <h4 class="text-danger text-center mb-4">Are you sure you want to delete <span class="font-italic">@Model.DepartmentName</span>?</h4>
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
 
-    @using (Html.BeginForm())
-    {
-        @Html.AntiForgeryToken()
-
-        <div class="form-actions no-color text-center">
-            <input type="submit" value="Yes" class="btn btn-dark" /> &nbsp;
-            <a href="javascript:void(0);" onclick="history.go(-1);" class="btn btn-dark">No</a>
-            @*@Html.ActionLink("No", "Index", "Department", null, new { @class = "btn btn-dark" })*@
-        </div>
-    }
-</div>
+            <div class="form-actions no-color text-center">
+                <input type="submit" value="Yes" class="btn btn-dark" /> &nbsp;
+                <a href="javascript:void(0);" onclick="history.go(-1);" class="btn btn-dark">No</a>
+                @*@Html.ActionLink("No", "Index", "Department", null, new { @class = "btn btn-dark" })*@
+            </div>
+        }
+    </div>
 </div>

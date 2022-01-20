@@ -5,53 +5,45 @@
 }
 
 <div id="rrWrapper">
-
-    <h2 class="text-center mb-5"> @ViewBag.Title</h2>
-    <table class="table" id="myTable">
-        <thead>
-            <tr>
-                <th class="text-left">
-                    @Html.DisplayNameFor(model => model.FormatType)
-                </th>
-                <th class="text-center">
-                    @Html.DisplayNameFor(model => model.MultiFormat)
-                </th>
-                <th class="text-right">
-                    @Html.ActionLink("Add New Format", "Create")
-                    @*<a href="" class="FormatCreate">Add New Format</a>*@
-                </th>
-            </tr>
-        </thead>
-
-        <tbody>
-            @foreach (var item in Model)
-            {
+    <div class="max600">
+        <h2 class="text-center mb-5"> @ViewBag.Title</h2>
+        <table class="table" id="myTable">
+            <thead>
                 <tr>
-                    <td class="text-left">
-                        @Html.DisplayFor(modelItem => item.FormatType)
-                    </td>
-                    <td class="text-center m-auto">
-                        @*@Html.DisplayFor(modelItem => item.MultiFormat)*@
-                        @if (item.MultiFormat == true)
-                        {<span>Yes</span>}
-                        else
-                        { <span>No</span>}
-                    </td>
-                    <td class="text-right">
-                        @Html.ActionLink("Edit", "Edit", new { id = item.FormatID }) |
-                        @*<a href="" class="FormatEdit">Delete</a>*@
-                        @Html.ActionLink("Delete", "Delete", new { id = item.FormatID })
-                        @*<a href="" class="FormatDelete">Delete</a>*@
-                    </td>
+                    <th class="text-left">
+                        @Html.DisplayNameFor(model => model.FormatType)
+                    </th>
+                    <th class="text-center">
+                        @Html.DisplayNameFor(model => model.MultiFormat)
+                    </th>
+                    <th class="text-right">
+                        @Html.ActionLink("Add New Format", "Create")
+                    </th>
                 </tr>
-            }
-        </tbody>
-    </table>
+            </thead>
 
-    @* Placeholders for the creating, deleting, & editing Formats in a dialog box *@
-    <div id="FormatCreate"></div>
-    <div id="FormatDelete"></div>
-    <div id="FormatEdit"></div>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td class="text-left">
+                            @Html.DisplayFor(modelItem => item.FormatType)
+                        </td>
+                        <td class="text-center m-auto">
+                            @if (item.MultiFormat == true)
+                            {<span>Yes</span>}
+                            else
+                            { <span>No</span>}
+                        </td>
+                        <td class="text-right">
+                            @Html.ActionLink("Edit", "Edit", new { id = item.FormatID }) |
+                            @Html.ActionLink("Delete", "Delete", new { id = item.FormatID })
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
 </div>
 
 

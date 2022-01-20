@@ -107,10 +107,10 @@ namespace RecordStore.Data.EF//.Metadata
 
         [Required(ErrorMessage = "* Artist Name is required *")]
         [StringLength(50, ErrorMessage = "* Cannot exceed 50 characters *")]
-        [Display(Name = "Artist")]
+        [Display(Name = "Artist Name")]
         public string ArtistName { get; set; }
 
-        [Display(Name = "Still Active")]
+        [Display(Name = "Is Artist Still Active?")]
         public bool IsStillActive { get; set; }
     }
 
