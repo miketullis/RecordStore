@@ -5,8 +5,9 @@
 }
 
 <div id="rrWrapper">
-    <h2 class="text-center mb-5">@ViewBag.Title</h2>
     <div class="max600">
+        <h2 class="text-center mb-5">@ViewBag.Title</h2>
+
         @using (Html.BeginForm())
         {
             @Html.AntiForgeryToken()

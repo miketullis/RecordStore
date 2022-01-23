@@ -120,7 +120,7 @@ namespace RecordStore.Data.EF//.Metadata
 
     }
     #endregion
-
+    
     #region Genre Metadata
     public class GenreMetadata
     {
@@ -163,7 +163,6 @@ namespace RecordStore.Data.EF//.Metadata
     }
     #endregion
 
-
     #region Format Metadata
     public class FormatMetadata
     {
@@ -184,8 +183,7 @@ namespace RecordStore.Data.EF//.Metadata
 
     }
     #endregion
-
-
+    
     #region Recording Metadata
     public class RecordingMetadata
     {
@@ -203,8 +201,7 @@ namespace RecordStore.Data.EF//.Metadata
 
     }
     #endregion
-
-
+    
     #region Album Status Metadata
     public class AlbumStatusMetadata
     {
@@ -224,8 +221,7 @@ namespace RecordStore.Data.EF//.Metadata
 
     }
     #endregion
-
-
+    
     #region Employee Metadata
     public class EmployeeMetadata
     {
@@ -302,9 +298,7 @@ namespace RecordStore.Data.EF//.Metadata
         }
     }
     #endregion
-
-
-
+    
     #region Department Metadata
     public class DepartmentMetadata
     {
@@ -327,7 +321,5 @@ namespace RecordStore.Data.EF//.Metadata
 
     }
     #endregion
-
-
 }
 

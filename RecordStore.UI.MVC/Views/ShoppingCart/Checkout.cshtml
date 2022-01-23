@@ -1,0 +1,27 @@
+﻿
+@{
+    ViewBag.Title = "Checkout";
+}
+
+<div id="rrWrapper">
+    <div class="max700">
+        <div class="col-md-12 text-center">
+            <h1 class="text-warning mb-4" style="padding-top:8vh;">Sorry, No Sale!</h1>
+            <img src="~/Content/assets/images/ShoppingCart.png" class="max90p" />
+
+
+            <p class="textSwell mt-3">
+                This site is for demonstration purposes only, and the albums featured here aren’t really for sale.  Probably because this is my personal collection and I purchased for more than they are listed here.  If you are looking for recordings like the ones featured on this site, your best bet is <a href="https://www.ebay.com/" rel="noreferrer" target="_blank">eBay</a> or, on occasion, <a href="https://www.amazon.com/" rel="noreferrer" target="_blank">Amazon</a>.  Enjoy the rest of the site, and keep those horn up! &#9824;
+            </p>
+
+            <p class="text-center mt-4">
+                <a href="javascript:void(0);" onclick="history.go(-1);" class="btn btn-dark">Previous</a>
+                @Html.ActionLink("Home", "Index", "Home", null, new { @class = "btn btn-dark" })
+            </p>
+        </div>
+    </div>
+
+</div>
+
+
+

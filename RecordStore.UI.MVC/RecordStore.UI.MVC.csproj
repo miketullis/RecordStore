@@ -203,6 +203,7 @@
   <ItemGroup>
     <Content Include="App_Data\RecordStoreDB.sql" />
     <Content Include="Content\assets\bootstrap-toggle\bootstrap-toggle.css" />
+    <Content Include="Content\assets\bootstrap-toggle\bootstrap-toggle.js" />
     <Content Include="Content\assets\css\custom.css" />
     <Content Include="Content\assets\css\flex-slider.css" />
     <Content Include="Content\assets\css\fontawesome.css" />
@@ -298,9 +299,11 @@
     <Content Include="Content\assets\images\contact-heading.jpg" />
     <Content Include="Content\assets\images\Error.png" />
     <Content Include="Content\assets\images\feature-image.jpg" />
+    <Content Include="Content\assets\images\ShoppingCart.png" />
     <Content Include="Content\assets\images\slide_01.jpg" />
     <Content Include="Content\assets\images\slide_02.jpg" />
     <Content Include="Content\assets\images\slide_03.jpg" />
+    <Content Include="Content\assets\images\SpinningRecord.gif" />
     <Content Include="Content\assets\js\accordions.js" />
     <Content Include="Content\assets\js\custom.js" />
     <Content Include="Content\assets\js\isotope.js" />
@@ -456,6 +459,7 @@
     <Content Include="Views\Recording\Delete.cshtml" />
     <Content Include="Views\Recording\Edit.cshtml" />
     <Content Include="Views\Recording\Index.cshtml" />
+    <Content Include="Views\ShoppingCart\Checkout.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

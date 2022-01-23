@@ -1,9 +1,11 @@
 ﻿@*@model IEnumerable<RecordStore.DATA.EF.Album>*@
-
 @model Dictionary<int, RecordStore.UI.MVC.Models.CartItemViewModel>
 
+
 @{
-    ViewBag.Title = "Shopping Cart";
+    /**/
+
+    ViewBag.Title = "Cart";
 
     //add local variable for calculations later on the page
     decimal? cartTotal = 0;
@@ -21,36 +23,35 @@
             <table class="table">
                 <tr class="text-center">
                     <th></th>
-                    <th>Title</th>
+                    <th class="text-left">Title</th>
                     <th>Price</th>
                     <th>Quantity</th>
                     <th>Total</th>
-                    <th></th>
                 </tr>
                 @foreach (var item in Model)
                 {
                     <tr class="text-center">
-                        <td>
-                            @* Thumbnail image link back to details page *@
+                        <td style="width:125px">
                             <a href="@Url.Action("Details", "Album", new { id = item.Value.Product.AlbumID })">
                                 <img src="~/Content/assets/images/albumImages/t_@item.Value.Product.AlbumImage" alt="@item.Value.Product.AlbumName cover" title="@item.Value.Product.AlbumName cover" />
                             </a>
                         </td>
                         <td>
-                            <a href="@Url.Action("Details", "Album", new { id = item.Value.Product.AlbumID })" style="font-weight:bold; color: black;">
+                            <a href="@Url.Action("Details", "Album", new { id = item.Value.Product.AlbumID })" class="abTitle">
                                 @item.Value.Product.AlbumName
                             </a>
                         </td>
                         <td>
                             @string.Format($"{item.Value.Product.Price:c}")
                         </td>
+
                         <td>
                             @using (Html.BeginForm("UpdateCart", "ShoppingCart", FormMethod.Post))
                             {
                                 //Pass Album ID
                                 @Html.Hidden("albumId", item.Key)
-                                @Html.TextBox("qty", item.Value.Qty, new { @class = "form-control text-center", @style = "max-width: 45px; display: inline; position:relative; bottom: 4px;", onkeyup = "checkQty()" })
-                                <div id="btnSubmit" class="d-inline">
+                                @Html.TextBox("qty", item.Value.Qty, new { @class = "form-control text-center unitsSelected", onkeyup = "checkQty(" + item.Value.Product.UnitsInStock + ", this.value, " + item.Key + ")" })
+                                <div id=btnSubmit-@item.Key class="d-inline">
                                     <input type="submit" value="Update" class="btn btn-dark" />
                                 </div>
                                 //On page load, store the units in stock as a JS variable for use in the function
@@ -58,18 +59,17 @@
                             }
                             @{totalCountOfItems += item.Value.Qty;}
                         </td>
-                        <td>
+                        <td style="width:170px">
                             @{decimal? lineTotal = item.Value.Product.Price * item.Value.Qty; cartTotal += lineTotal;}
-                            @string.Format($"{lineTotal:c}")
-                        </td>
-                        <td class="pull-right">
-                            @Html.ActionLink("Remove From Cart", "RemoveFromCart", new { id = item.Key }, new { @class = "btn btn-dark" })
+                            @string.Format($"{lineTotal:c}")<br />
+                            @Html.ActionLink("Remove From Cart", "RemoveFromCart", new { id = item.Key })
                         </td>
                     </tr>
                 } @*end Foreach*@
             </table>
+            <hr />
             <p class="text-right mb-3">
-                @Html.ActionLink("Checkout", "Checkout", "Home", null, new { @class = "btn btn-dark" })
+                @Html.ActionLink("Checkout", "Checkout", "ShoppingCart", null, new { @class = "btn btn-dark" })
                 @Html.ActionLink("Continue Shopping", "Index", "Home", null, new { @class = "btn btn-dark" })
             </p>
             <p class="alert alert-success text-center" style="font-size: 1.25em;">
@@ -81,24 +81,20 @@
 </div>
 
 
-
 @section scripts{
     <script>
-        //Use some JS for this since it's dependent upon the user typing in the quantity for the cart.  The function fires onkeyup -  after someone types something into the textbox for quantity, this function executes
-        function checkQty() {
-            //textbox value
-            let qty = document.getElementById("qty").value;
-            console.log(uis);
-            console.log(qty);
-
+        function checkQty(uis, qty, key) {
             //div surrounding button - use this to modify innerHTML depending on stock QTY
-            let btnDiv = document.getElementById("btnSubmit");
+            let btnDiv = document.getElementById("btnSubmit-" + key);
+
             if (uis >= qty) {
-                btnDiv.innerHTML = '<input type="submit" value="Update Quantity" class="btn btn-dark" />';
+                btnDiv.innerHTML = '<input type="submit" value="Update" class="btn btn-dark" />';
             }
             else {
                 btnDiv.innerHTML = '<p class="text-danger text-center">Insufficient quantity in stock.<br/> Please select a lower quantity.</p>';
             }
         }
     </script>
+}
+
 }

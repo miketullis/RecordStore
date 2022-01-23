@@ -33,13 +33,11 @@
 
 <div class="latest-products">
     <div class="container">
-
         <div class="row">
             <div class="col-md-12">
                 <div class="section-heading">
                     <h2>Latest Products</h2>
                 </div>
-
                 <div class="pageSearch">
                     <div class="psLeft">
                         @Html.PagedListPager(Model, page => Url.Action("Index", new { page }))
@@ -58,9 +56,8 @@
                     </div>
                 </div>
                 <div class="clearfix"></div>
-              <hr />
+                <hr />
             </div>
-
             @if (Model.PageCount > 0)
             {
                 foreach (var item in Model)
@@ -74,10 +71,10 @@
                             </div>
                             <div class="down-content">
                                 <div>
-                                    <a href="@Url.Action("Details", "Album", new { id = item.AlbumID })" style="font-weight:bold; color: black;">
+                                    <a href="@Url.Action("Details", "Album", new { id = item.AlbumID })" class="abTitle"
+                                       style="font-weight:bold; color: black;">
                                         @Html.DisplayFor(modelItem => item.AlbumName)
                                     </a>
-
                                     <a href="@Url.Action("Details", "Album", new { id = item.AlbumID })" color: black;">
                                         @foreach (var artist in item.AlbumArtist)
                                         {
@@ -91,9 +88,6 @@
                                         @Html.DisplayFor(modelItem => item.Format.FormatType) | (@Html.DisplayFor(modelItem => item.Year))
                                     </div>
                                 </div>
-
-                                <div class="clearfix"></div>
-
                                 <div>
                                     <h6 class="pr-pull-left">@Html.DisplayFor(modelItem => item.Price)</h6>
 
@@ -102,17 +96,17 @@
 
                                         if (item.UnitsInStock == 0)
                                         {
-                                            <div class="btn-pull-right"><input value="Unavailible" class="btn btn-danger" style="width: 120px;" /></div>
+                                            <div class="btn-pull-right"><input value="Unavailible" class="btn btn-danger btn115" /></div>
                                         }
                                         else
                                         {
                                             @Html.TextBox("qty", 1, new { @class = "form-control", @style = "max-width: 50px; display: none;", onkeyup = "checkQty()" })
                                             <div id="btnSubmit" class="btn-pull-right">
-                                                <input type="submit" value="Add To Cart" class="btn btn-dark" />
+                                                <input type="submit" value="Add To Cart" class="btn btn-dark btn115" />
                                             </div>
                                         }
                                     }
-                                    <div class="clearfix"></div>
+
                                 </div>
                             </div>
                         </div>
@@ -121,14 +115,17 @@
             }
             else
             {
-                <h4 class="text-danger">Sorry, your search criteria did not return any results.<br /> Please try again or hit "Search" again to refresh.</h4>
+                <div class="text-center max700 mb-4">
+                    <h3 class="text-danger pb-4">Wait, Stop The Music!</h3>
+                    <img src="~/Content/assets/images/SpinningRecord.gif" class="text-center max80p" />
+                    <h5 class="text-danger pt-4 pb-4">Sorry, your search criteria did not return any results.<br /> Please try again or hit "Search" again to refresh the page.</h5>
+                </div>
             }
         </div>
         @Html.PagedListPager(Model, page => Url.Action("Index", new { page }))
         <hr />
     </div>
 </div>
-
 <div class="best-features">
     <div class="container">
         <div class="row">
@@ -148,12 +145,12 @@
                         <li>Hard-To-Find Imports</li>
                         <li>Collector's Items</li>
                     </ul>
-                    
+
                 </div>
             </div>
             <div class="col-md-6">
                 <div class="right-image">
-                    <img src="~/Content/assets/images/feature-image.jpg" alt="Woman listening to music with headphones" class="feature-image">
+                    <img src="~/Content/assets/images/feature-image.jpg" alt="Woman listening to music with headphones" class="feature-image max700">
                 </div>
             </div>
         </div>

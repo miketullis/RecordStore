@@ -6,7 +6,6 @@ using RecordStore.Data.EF;//added for access to the Domain/Entity models
 using System.ComponentModel.DataAnnotations; //added to validation and display of metadata
 
 
-
 namespace RecordStore.UI.MVC.Models
 {
     public class CartItemViewModel

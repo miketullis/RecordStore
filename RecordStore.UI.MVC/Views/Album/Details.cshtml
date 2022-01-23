@@ -163,7 +163,7 @@
                 {
                     @Html.HiddenFor(a => a.AlbumID)
                     <span class="label">Quantity: </span>
-                    @Html.TextBox("qty", 1, new { @class = "form-control text-center", @style = "max-width: 45px; display: inline; position:relative; bottom: 4px;", onkeyup = "checkQty()" })
+                    @Html.TextBox("qty", 1, new { @class = "form-control text-center unitsSelected", onkeyup = "checkQty()" })
                     <div id="btnSubmit" class="d-inline">
                         <input type="submit" value="Add To Cart" class="btn btn-dark" />
                     </div>

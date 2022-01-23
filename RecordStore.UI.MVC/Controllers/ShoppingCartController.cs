@@ -9,6 +9,7 @@ namespace RecordStore.UI.MVC.Controllers
 {
     public class ShoppingCartController : Controller
     {
+        #region Index
         // GET: ShoppingCart
         public ActionResult Index()
         {
@@ -31,7 +32,9 @@ namespace RecordStore.UI.MVC.Controllers
 
             return View(shoppingCart);
         }
+        #endregion
 
+        #region Update Cart
         public ActionResult UpdateCart(int albumID, int qty)
         {
             Dictionary<int, CartItemViewModel> shoppingCart = (Dictionary<int, CartItemViewModel>)Session["cart"];
@@ -58,9 +61,10 @@ namespace RecordStore.UI.MVC.Controllers
             //}
 
             return RedirectToAction("Index");
-
         }
+        #endregion
 
+        #region Remove From Cart
         public ActionResult RemoveFromCart(int id)
         {
 
@@ -72,8 +76,16 @@ namespace RecordStore.UI.MVC.Controllers
 
             return RedirectToAction("Index");
         }
+        #endregion
 
+        #region Checkout
+        [HttpGet]
+        public ActionResult Checkout()
+        {
+            return View();
+        }
 
+        #endregion
 
     }
 }

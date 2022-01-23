@@ -12,6 +12,17 @@
     min-height: 100vh;
 }
 
+body{
+    font-size: .96rem;
+}
+
+.unitsSelected {
+    max-width: 45px;
+    display: inline;
+    position: relative;
+    bottom: 4px;
+}
+
 #MessageDisplay {
     padding-left: 20%;
     padding-right: 20%;
@@ -78,10 +89,6 @@
     height: auto;
 }
 
-.error {
-    max-width: 90%;
-}
-
 .feature-image {
     box-shadow: 0 5px 8px 3px #808080;
 }
@@ -116,9 +123,7 @@ label {
     padding-top: 0;
 }
 
-.btn-dark {
-    min-width: 80px;
-}
+
 
 
 
@@ -162,10 +167,26 @@ label {
     margin-left: auto;
     margin-right: auto;
 }
+.max1000 {
+    max-width: 1000px;
+    margin-left: auto;
+    margin-right: auto;
+}
+.max1100 {
+    max-width: 1100px;
+    margin-left: auto;
+    margin-right: auto;
+}
 
 
-/*AJAX Popup Dialog Styling*/
-.ui-widget-header {
+
+
+
+
+
+
+    /*AJAX Popup Dialog Styling*/
+    .ui-widget-header {
     border: 1px solid #dddddd;
     background-color: #23272B;
     color: white;
@@ -270,16 +291,6 @@ ul #checkArtists, ul #checkGenres, ul #checkRecordings {
     margin-bottom: unset;
 }
 
-.btn-pull-right {
-    position: absolute;
-    right: 20px;
-    bottom: 10px;
-}
-
-.pr-pull-left {
-    position: absolute;
-    bottom: 20px;
-}
 
 .calcWidth {
     width: calc(100% - 160px);
@@ -296,6 +307,26 @@ dd {
     margin-left: 0;
 }
 
+.abTitle{
+    color: black;
+    font-weight: bold;
+    font-size: 1rem;
+}
+
+
+#map {
+    border: 0;
+    box-shadow: 0 5px 8px 3px #808080;
+}
+
+
+
+/*Button Styling*/
+.btn {
+    font-size: .95rem;
+    min-width: 70px;
+}
+
 .btn-light {
     color: #fff;
     background-color: #656464;
@@ -308,52 +339,21 @@ dd {
         border-color: #C0C0C0;
     }
 
-
-
-/*Home Page Product Restyling*/
-.product-item {
-    margin-bottom: 30px;
-    box-shadow: 0 5px 8px 3px #808080;
-    max-width: 500px;
-}
-
-    .product-item .down-content {
-        padding: 15px 30px 15px 30px;
-        /*padding-top: 15px;
-        padding-right: 30px;
-        padding-bottom: 15px;
-        padding-left: 30px;*/
-        min-height: 175px;
+    .btn115{
+        width: 115px;
+        height: 36px;
+        font-size: .95rem;
     }
 
-        .product-item .down-content h4 {
-            margin-bottom: 20px !important;
-        }
+.btn-pull-right {
+    position: absolute;
+    right: 30px;
+    bottom: 35px;
+}
 
-        .product-item .down-content h2 {
-            font-size: 16px;
-            color: black;
-            font-weight: 300;
-        }
-
-        .product-item .down-content h6 {
-            position: absolute !important;
-            /*top: 30px !important;
-            right: 30px !important;*/
-            top: unset;
-            right: unset;
-            font-size: 1.4em;
-        }
-
-        .product-item .down-content span {
-            position: absolute !important;
-            right: 30px !important;
-            bottom: 30px !important;
-        }
-
-#map {
-    border: 0;
-    box-shadow: 0 5px 8px 3px #808080;
+.pr-pull-left {
+    position: absolute;
+    bottom: 45px;
 }
 
 
