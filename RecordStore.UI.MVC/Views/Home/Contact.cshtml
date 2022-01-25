@@ -121,6 +121,7 @@
                 data: formData,
                 datatype: 'json',
                 success: function (data) {
+                    console.log(data)
                     $("#contactForm").hide();
                     $("#contactConfirm").show();
                     $("#contactConfirm").delay(4000).hide("slow");

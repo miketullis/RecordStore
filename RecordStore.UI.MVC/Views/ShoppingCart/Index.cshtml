@@ -1,10 +1,7 @@
 ﻿@*@model IEnumerable<RecordStore.DATA.EF.Album>*@
 @model Dictionary<int, RecordStore.UI.MVC.Models.CartItemViewModel>
 
-
 @{
-    /**/
-
     ViewBag.Title = "Cart";
 
     //add local variable for calculations later on the page
@@ -23,7 +20,7 @@
             <table class="table">
                 <tr class="text-center">
                     <th></th>
-                    <th class="text-left">Title</th>
+                    <th>Title</th>
                     <th>Price</th>
                     <th>Quantity</th>
                     <th>Total</th>
@@ -69,7 +66,7 @@
             </table>
             <hr />
             <p class="text-right mb-3">
-                @Html.ActionLink("Checkout", "Checkout", "ShoppingCart", null, new { @class = "btn btn-dark" })
+                @Html.ActionLink("Checkout", "Checkout", null, new { @class = "btn btn-dark" })
                 @Html.ActionLink("Continue Shopping", "Index", "Home", null, new { @class = "btn btn-dark" })
             </p>
             <p class="alert alert-success text-center" style="font-size: 1.25em;">

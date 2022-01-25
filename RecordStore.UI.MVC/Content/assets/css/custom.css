@@ -125,7 +125,10 @@ label {
 
 
 
-
+.max50vh{
+    max-height: 50vh;
+   
+}
 
 .max80p {
     max-width: 80%;
@@ -174,6 +177,18 @@ label {
 }
 .max1100 {
     max-width: 1100px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.max1400 {
+    max-width: 1400px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.max2100 {
+    max-width: 2100px;
     margin-left: auto;
     margin-right: auto;
 }
@@ -325,6 +340,7 @@ dd {
 .btn {
     font-size: .95rem;
     min-width: 70px;
+    
 }
 
 .btn-light {
@@ -339,21 +355,23 @@ dd {
         border-color: #C0C0C0;
     }
 
-    .btn115{
-        width: 115px;
-        height: 36px;
-        font-size: .95rem;
-    }
+.btn115 {
+    width: 115px;
+    height: 36px;
+    font-size: .95rem;
+    padding: unset;
+}
+
 
 .btn-pull-right {
     position: absolute;
-    right: 30px;
-    bottom: 35px;
+    right: 15px;
+    bottom: 9px;
 }
 
 .pr-pull-left {
     position: absolute;
-    bottom: 45px;
+    bottom: 15px;
 }
 
 
@@ -361,37 +379,6 @@ dd {
 
 
 
-
-
-/*fix media queries!!!!!*/
-@media screen and (min-width: 1080px) {
-    #rrWrapper {
-        padding-left: 20%;
-        padding-right: 20%;
-    }
-}
-
-
-
-
-/*@media screen and (min-width: 1800px) {
-
-    div.container {
-        max-width: 1800px;
-    }
-}
-
-@media (min-width: 992px) {
-    div.container {
-        max-width: 80%;
-    }
-}*/
-
-@media (min-width: 557px) {
-    .container {
-        max-width: 90%;
-    }
-}
 
 
 @media (max-width: 768px) {
@@ -403,9 +390,6 @@ dd {
 }
 
 @media (max-width: 991px) {
-    div .container {
-        width: 90%;
-    }
 
     .psLeft {
         float: unset;
@@ -414,16 +398,30 @@ dd {
     .psRight {
         float: left;
     }
+
+    .btn115 {
+        width: 105px;
+        height: 30px;
+        font-size: .90rem;
+        text-align: center;
+    }
+
+
 }
 
-@media (max-width: 575px) {
+
+@media (max-width: 2400px) {
     .text-sm-center {
         text-align: center !important;
     }
+
+    .max2100 {
+        max-width: 80%;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
 }
 
-@media (min-width: 1200px) {
-    .container {
-        max-width: 80%;
-    }
-}
+
+

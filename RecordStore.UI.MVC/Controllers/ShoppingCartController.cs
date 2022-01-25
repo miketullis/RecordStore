@@ -78,6 +78,7 @@ namespace RecordStore.UI.MVC.Controllers
         }
         #endregion
 
+
         #region Checkout
         [HttpGet]
         public ActionResult Checkout()
@@ -86,6 +87,7 @@ namespace RecordStore.UI.MVC.Controllers
         }
 
         #endregion
+
 
     }
 }
