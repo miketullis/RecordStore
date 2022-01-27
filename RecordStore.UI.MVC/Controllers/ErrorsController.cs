@@ -9,15 +9,23 @@ namespace RecordStore.UI.MVC.Controllers
     public class ErrorsController : Controller
     {
         // GET: Errors
+        [HandleError]
         public ActionResult Index()
         {
-            return View();
+            return View("Unresolved");
         }
 
         //Basic "Default Custom Error Page" 
         public ActionResult Unresolved() 
         {
             return View();
+        }
+
+        //Basic "Default 404 Error Page" 
+        public ActionResult NotFound() 
+        {
+            
+            return HttpNotFound();
         }
 
 

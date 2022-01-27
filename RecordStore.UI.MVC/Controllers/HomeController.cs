@@ -12,7 +12,6 @@ using System.Data;
 using PagedList; //Added for access to the PagedList base classes
 using PagedList.Mvc; //Added for access to the PagedList.MVC functionality
 
-
 namespace RecordStore.UI.MVC.Controllers
 //namespace RecordStore.Controllers
 {
@@ -21,14 +20,13 @@ namespace RecordStore.UI.MVC.Controllers
         private RecordStoreEntities db = new RecordStoreEntities();
 
         #region Index
+        [HandleError]
         public ActionResult Index(string searchFilter, int page = 1)
         {
-            int pageSize = 12; //value to set number of records/objects per page
+            int pageSize = 12; //We will use this value to set how many records/objects per page
 
             var albums = db.Album.OrderBy(x => x.AlbumID).ToList();
-
-
-            #region SearchFilter
+  
             var artist = db.Artist.ToList();
             var albumArtist = db.AlbumArtist.ToList();
             var genre = db.Genre.ToList();
@@ -36,7 +34,7 @@ namespace RecordStore.UI.MVC.Controllers
             var recording = db.Recording.ToList();
             var albumRecording = db.AlbumRecording.ToList();
 
-
+            #region SearchFilter
             if (!String.IsNullOrEmpty(searchFilter))
             {
                 albums = (from a in albums
@@ -46,19 +44,18 @@ namespace RecordStore.UI.MVC.Controllers
                           join g in genre on ag.GenreID equals g.GenreID
                           join art in albumRecording on a.AlbumID equals art.AlbumID
                           join rt in recording on art.RecordingID equals rt.RecordingID
-                          where a.AlbumName.ToLower().Contains(searchFilter.ToLower()) ||
-                          a.Label.LabelName.ToLower().Contains(searchFilter.ToLower()) ||
-                          a.Year.ToString().Contains(searchFilter) ||
-                          ar.ArtistName.ToLower().Contains(searchFilter.ToLower()) ||
-                          g.GenreName.ToLower().Contains(searchFilter.ToLower()) ||
-                          a.CatalogNum.ToLower().Contains(searchFilter.ToLower()) ||
-                          a.Label.Country.ToLower().Contains(searchFilter.ToLower()) ||
-                          a.Description.ToLower().Contains(searchFilter.ToLower()) ||
-                          rt.RecordingType.ToLower().Contains(searchFilter.ToLower())
+                          where (a.AlbumName != null && a.AlbumName.ToLower().Contains(searchFilter.ToLower())) ||
+                          (a.Label.LabelName != null && a.Label.LabelName.ToLower().Contains(searchFilter.ToLower())) ||
+						  (a.Year != null && a.Year.ToString().Contains(searchFilter)) ||
+						  (ar.ArtistName != null && ar.ArtistName.ToLower().Contains(searchFilter.ToLower())) ||
+						  (g.GenreName != null && g.GenreName.ToLower().Contains(searchFilter.ToLower())) ||
+						  (a.CatalogNum != null && a.CatalogNum.ToLower().Contains(searchFilter.ToLower())) ||
+						  (a.Label.Country != null && a.Label.Country.ToLower().Contains(searchFilter.ToLower())) ||
+						  (a.Description != null && a.Description.ToLower().Contains(searchFilter.ToLower())) ||
+						  (rt.RecordingType != null && rt.RecordingType.ToLower().Contains(searchFilter.ToLower()))
                           select a).Distinct().ToList();
             }
             #endregion
-
             return View(albums.ToPagedList(page, pageSize));
         }
         #endregion
@@ -124,6 +121,12 @@ namespace RecordStore.UI.MVC.Controllers
 
             //Send them back to the View with their completed form data
             return Json(cvm);
+        }
+
+
+        public PartialViewResult EmailConfirmation(ContactViewModel cvm)
+        {
+            return PartialView("Emailconfirmation", cvm);
         }
 
         #endregion

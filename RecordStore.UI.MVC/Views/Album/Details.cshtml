@@ -1,7 +1,7 @@
 ﻿@model RecordStore.Data.EF.Album
 
 @{
-    ViewBag.Title = "Details | " + @Model.AlbumName;
+    ViewBag.Title = "Details";
 }
 
 <div id="rrWrapper">
@@ -25,8 +25,8 @@
                                 if ((bool)artist.PrimaryArtist)
                                 {
                                     <div>
-                                        <span style="font-weight: bold;">
-                                            Artist@(Model.AlbumArtist.Count == 1 ? ":" : "s:" )
+                                        <span class="font-weight-bold">
+                                            Artist@(Model.AlbumArtist.Count == 1 ? ":" : "s:" )&nbsp;&nbsp;
                                         </span>
                                         @artist.Artist.ArtistName
                                     </div>
@@ -42,14 +42,21 @@
                             {
                                 if ((bool)artist.PrimaryArtist == false)
                                 {
-                                    if (Model.AlbumArtist.ToList().IndexOf(artist) == Model.AlbumArtist.Count - 1)
+								
+								    if (Model.AlbumArtist.Count == 2)
                                     {
                                         @artist.Artist.ArtistName
                                     }
-                                    else
-                                    {
-                                        @artist.Artist.ArtistName<span>, </span>
-                                    }
+									else{		
+									     if (Model.AlbumArtist.ToList().IndexOf(artist) == Model.AlbumArtist.Count - 1)
+										{
+											@artist.Artist.ArtistName
+										}
+										else
+										{
+											@artist.Artist.ArtistName<span>, </span>
+										}
+									}	
                                 }
                             }
                         </div>

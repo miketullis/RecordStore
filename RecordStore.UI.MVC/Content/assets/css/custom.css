@@ -12,7 +12,7 @@
     min-height: 100vh;
 }
 
-body{
+body {
     font-size: .96rem;
 }
 
@@ -60,7 +60,7 @@ body{
 }
 
 .dropdown-menu {
-    /*position: absolute;*/
+    position: absolute;
     top: 100%;
     left: initial;
     z-index: 1000;
@@ -119,15 +119,10 @@ label {
 }
 
 
-.banner {
-    padding-top: 0;
-}
 
 
-
-.max50vh{
+.max50vh {
     max-height: 50vh;
-   
 }
 
 .max80p {
@@ -141,6 +136,7 @@ label {
     margin-left: auto;
     margin-right: auto;
 }
+
 .max100p {
     max-width: 100%;
     margin-left: auto;
@@ -170,11 +166,13 @@ label {
     margin-left: auto;
     margin-right: auto;
 }
+
 .max1000 {
     max-width: 1000px;
     margin-left: auto;
     margin-right: auto;
 }
+
 .max1100 {
     max-width: 1100px;
     margin-left: auto;
@@ -200,8 +198,8 @@ label {
 
 
 
-    /*AJAX Popup Dialog Styling*/
-    .ui-widget-header {
+/*AJAX Popup Dialog Styling*/
+.ui-widget-header {
     border: 1px solid #dddddd;
     background-color: #23272B;
     color: white;
@@ -322,7 +320,7 @@ dd {
     margin-left: 0;
 }
 
-.abTitle{
+.abTitle {
     color: black;
     font-weight: bold;
     font-size: 1rem;
@@ -340,7 +338,6 @@ dd {
 .btn {
     font-size: .95rem;
     min-width: 70px;
-    
 }
 
 .btn-light {
@@ -378,16 +375,20 @@ dd {
 
 
 
+@media (max-width: 2400px) {
+    .text-sm-center {
+        text-align: center !important;
+    }
 
-
-
-@media (max-width: 768px) {
-    .product-item .down-content h6 {
-        position: absolute;
-        right: unset;
-        top: unset;
+    .max2100, .max1400 {
+        max-width: 80%;
+        margin-left: auto;
+        margin-right: auto;
     }
 }
+
+
+
 
 @media (max-width: 991px) {
 
@@ -405,23 +406,32 @@ dd {
         font-size: .90rem;
         text-align: center;
     }
-
-
 }
 
 
-@media (max-width: 2400px) {
-    .text-sm-center {
-        text-align: center !important;
-    }
 
-    .max2100 {
+@media (max-width: 768px) {
+    .product-item .down-content h6 {
+        position: absolute;
+        right: unset;
+        top: unset;
+    }
+}
+
+
+@media (max-width: 575px) {
+    .best-features {
         max-width: 80%;
         margin-left: auto;
         margin-right: auto;
     }
 
+    .owl-banner .owl-dots {
+        bottom: 30px;
+    }
+
+    .banner-item-01, .banner-item-02, .banner-item-03 {
+        padding: 120px 0px;
+    }
+
 }
-
-
-

@@ -94,8 +94,10 @@
                     <li>
                         <a>Get your music out there</a>
                         <div class="content">
-                            <p>Got a demo or just put out your first album? Reckless will help you get that album in front of the people.<br><br>
-                            We are here to help connect bands to their fans. Let us know about your upcoming releases and we’ll help you get copies into the hands of local fans. And with our international shipping, we can connect you with fans around the globe.</p>
+                            <p>
+                                Got a demo or just put out your first album? Reckless will help you get that album in front of the people.<br><br>
+                                We are here to help connect bands to their fans. Let us know about your upcoming releases and we’ll help you get copies into the hands of local fans. And with our international shipping, we can connect you with fans around the globe.
+                            </p>
                         </div>
                     </li>
                     <li>
@@ -122,11 +124,14 @@
                 datatype: 'json',
                 success: function (data) {
                     console.log(data)
-                    $("#contactForm").hide();
-                    $("#contactConfirm").show();
-                    $("#contactConfirm").delay(4000).hide("slow");
-                    $("#ContactCreateForm")[0].reset();
-                    $("#contactForm").delay(4500).show("slow");
+                    if (data.Name != null && data.Message != null && data.Email != null) {
+                        $("#contactForm").hide();
+                        $("#contactConfirm").load('@Url.Action("EmailConfirmation", "Home")',
+                          { name: data.Name, email: data.Email, subject: data.Subject, message: data.Message }).show();
+                        $("#contactConfirm").delay(5000).hide("slow");
+                        $("#ContactCreateForm")[0].reset();
+                        $("#contactForm").delay(5500).show("slow");
+                    }
                 }
             });
         });

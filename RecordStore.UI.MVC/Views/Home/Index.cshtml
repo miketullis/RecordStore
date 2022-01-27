@@ -88,7 +88,7 @@
                                         @Html.DisplayFor(modelItem => item.Format.FormatType) | (@Html.DisplayFor(modelItem => item.Year))
                                     </div>
                                 </div>
-                                
+
                                 <div>
                                     <h6 class="pr-pull-left">@Html.DisplayFor(modelItem => item.Price)</h6>
 
@@ -108,7 +108,7 @@
                                         }
                                     }
                                 </div>
-                               
+
                             </div>
                         </div>
                     </div>
@@ -123,6 +123,8 @@
                 </div>
             }
         </div>
+
+
         @Html.PagedListPager(Model, page => Url.Action("Index", new { page }))
         <hr />
     </div>

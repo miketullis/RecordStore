@@ -350,5 +350,5 @@ MigrationBackup/
 .ionide/
 
 
-#Prevent Sensistve data from being submitted
+#Prevent Sensitive data from being submitted
 /RecordStore.UI.MVC/configs
