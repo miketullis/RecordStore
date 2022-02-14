@@ -68,7 +68,6 @@ namespace RecordStore.Data.EF//.Metadata
 
         [Range(1900, 9999, ErrorMessage = "* Value must be a valid year *")]
         public Nullable<int> Year { get; set; }
-
     }
 
     [MetadataType(typeof(AlbumMetadata))]
@@ -232,7 +231,7 @@ namespace RecordStore.Data.EF//.Metadata
         [Display(Name = "First Name")]
         public string FirstName { get; set; }
 
-        [Required(ErrorMessage = "* Lastst Name is required *")]
+        [Required(ErrorMessage = "* Last Name is required *")]
         [StringLength(25, ErrorMessage = "* Cannot exceed 25 characters")]
         [Display(Name = "Last Name")]
         public string LastName { get; set; }

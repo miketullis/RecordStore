@@ -237,6 +237,7 @@
     <Content Include="Content\assets\images\albumImages\AeroUnplugged1990.jpg" />
     <Content Include="Content\assets\images\albumImages\AeroWoodstock94.jpg" />
     <Content Include="Content\assets\images\albumImages\AeroYoungLust.jpg" />
+    <Content Include="Content\assets\images\albumImages\apple-touch-icon.png" />
     <Content Include="Content\assets\images\albumImages\bbsHomecoming.jpg" />
     <Content Include="Content\assets\images\albumImages\bbsLeaveAScar.jpg" />
     <Content Include="Content\assets\images\albumImages\BBSLiveAtPeach.jpg" />
@@ -296,6 +297,7 @@
     <Content Include="Content\assets\images\albumImages\t_noImage.jpg" />
     <Content Include="Content\assets\images\albumImages\t_OffspringAmerica99.jpg" />
     <Content Include="Content\assets\images\albumImages\t_StonesStLouis2021.jpg" />
+    <Content Include="Content\assets\images\apple-touch-icon.png" />
     <Content Include="Content\assets\images\contact-heading.jpg" />
     <Content Include="Content\assets\images\Error.png" />
     <Content Include="Content\assets\images\feature-image.jpg" />

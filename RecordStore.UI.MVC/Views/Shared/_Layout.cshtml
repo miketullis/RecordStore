@@ -9,30 +9,25 @@
     <link href="https://fonts.googleapis.com/css?family=Poppins:100,200,300,400,500,600,700,800,900&display=swap" rel="stylesheet">
 
     <title>Reckless Records | @ViewBag.Title</title>
-
     <!-- Bootstrap core CSS -->
     <link href="~/Content/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
     <link href="~/Content/assets/bootstrap-toggle/bootstrap-toggle.css" rel="stylesheet" />
-
     <!-- jQuery UI -->
     <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-
     <!-- Additional CSS Files -->
     <link rel="stylesheet" href="~/Content/assets/css/fontawesome.css">
     <link rel="stylesheet" href="~/Content/assets/css/main.css">
     <link rel="stylesheet" href="~/Content/assets/css/owl.css">
-
     <!-- PagedList & PagedListMVC -->
     <link rel="stylesheet" href="~/Content/PagedList.css" />
-
     <!-- Datatables.net -->
     <link rel="stylesheet" href="//cdn.datatables.net/1.11.3/css/jquery.dataTables.min.css">
-
     <!-- Custom Styling -->
     <link rel="stylesheet" href="~/Content/assets/css/custom.css">
+    <!-- Apple Touch Icon -->
+    <link rel="apple-touch-icon" href="~/Content/assets/images/apple-touch-icon.png">
 
 </head>
-
 <body>
 
     <!-- ***** Preloader Start ***** -->
@@ -61,8 +56,8 @@
                             </a>
                         </li>
                         @*<li class="nav-item">
-                            <a class="nav-link" href="@Url.Action("Index", "Album")">Albums</a>
-                        </li>*@
+                                <a class="nav-link" href="@Url.Action("Index", "Album")">Albums</a>
+                            </li>*@
                         <li class="nav-item">
                             <a class="nav-link" href="@Url.Action("Contact", "Home")">Contact Us</a>
                         </li>
@@ -99,16 +94,12 @@
         </nav>
     </header>
     <div id="rrContainer">
-
         @* section for confirmation/error messages when using AJAX *@
         <div id="MessageDisplay" class="row">
             <div class="col-md-12" id="MessageContent"></div>
         </div>
 
-
         @RenderBody()
-
-
 
         <footer>
             <div class="container">
@@ -118,7 +109,6 @@
                             <p class="max80p">
                                 <span>Copyright &copy; @DateTime.Now.Year &nbsp;&nbsp;</span>|<span>&nbsp;&nbsp;Reckless Records&nbsp;&nbsp;</span>|<span>&nbsp;&nbsp;All Rights Reserved</span>
                             </p>
-
                             @if (User.IsInRole("Admin"))
                             {
                                 <p>
@@ -145,7 +135,6 @@
         <!-- ADDED jQuery Ajax CDN-->
         <script src="https://cdn.jsdelivr.net/jquery.ajax.unobtrusive/3.2.4/jquery.unobtrusive-ajax.min.js"></script>
         <script src="~/Content/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-
         <!-- Additional Scripts -->
         <script src="~/Content/assets/js/custom.js"></script>
         <script src="~/Content/assets/js/owl.js"></script>
@@ -173,9 +162,7 @@
         <!-- Bootstrap Toggle -->
         <script src="~/Content/assets/bootstrap-toggle/bootstrap-toggle.js"></script>
 
-
     </div> <!-- end of container -->
     @RenderSection("Scripts", required: false)
 </body>
-
 </html>

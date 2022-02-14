@@ -23,9 +23,10 @@ namespace RecordStore.UI.MVC.Controllers
         [HandleError]
         public ActionResult Index(string searchFilter, int page = 1)
         {
-            int pageSize = 12; //We will use this value to set how many records/objects per page
+            int pageSize = 12; //records/objects per page
 
-            var albums = db.Album.OrderBy(x => x.AlbumID).ToList();
+           //var albums = db.Album.OrderBy(x => x.AlbumID).ToList();
+            var albums = db.Album.OrderBy(x => Guid.NewGuid()).ToList();//Returns albums in a random order
   
             var artist = db.Artist.ToList();
             var albumArtist = db.AlbumArtist.ToList();
@@ -52,7 +53,8 @@ namespace RecordStore.UI.MVC.Controllers
 						  (a.CatalogNum != null && a.CatalogNum.ToLower().Contains(searchFilter.ToLower())) ||
 						  (a.Label.Country != null && a.Label.Country.ToLower().Contains(searchFilter.ToLower())) ||
 						  (a.Description != null && a.Description.ToLower().Contains(searchFilter.ToLower())) ||
-						  (rt.RecordingType != null && rt.RecordingType.ToLower().Contains(searchFilter.ToLower()))
+						  (rt.RecordingType != null && rt.RecordingType.ToLower().Contains(searchFilter.ToLower())) ||
+                          (a.Format.FormatType != null && a.Format.FormatType.ToLower().Contains(searchFilter.ToLower()))
                           select a).Distinct().ToList();
             }
             #endregion

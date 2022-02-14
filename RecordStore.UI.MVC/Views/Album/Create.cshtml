@@ -27,7 +27,7 @@
                 </div>
                 <div class="form-group col-md-12">
                     <div class="selectBox" onclick="showArtists()">
-                        <select style="color:#888B7D;">
+                        <select class="dropdown">
                             <option>Select Album Artist(s)</option>
                         </select>
                         <div class="overSelect"></div>
@@ -108,7 +108,7 @@
                             <div class="col-md-4">
                                 <label class="control-label">Genre</label>
                                 <div class="selectBox" onclick="showGenres()">
-                                    <select style="color:#888B7D;">
+                                    <select class="dropdown">
                                         <option>Select Genre(s)</option>
                                     </select>
                                     <div class="overSelect"></div>
@@ -126,7 +126,7 @@
                             <div class="col-md-4">
                                 <label class="control-label">Recording Type</label>
                                 <div class="selectBox" onclick="showRecordings()">
-                                    <select style="color:#888B7D;">
+                                    <select class="dropdown">
                                         <option>Select Type(s)</option>
                                     </select>
                                     <div class="overSelect"></div>
@@ -187,7 +187,7 @@
                 <div class="form-group">
                     <div class="col-md-offset-2 col-md-12">
                         <input type="submit" value="Create New Album" class="btn btn-dark" id="checkform" />
-                        @Html.ActionLink("Cancel", "Index", "Home", null, new { @class = "btn btn-dark" })
+                        <a href="javascript:void(0);" onclick="history.go(-1);" class="btn btn-dark">Cancel</a>
                     </div>
                 </div>
             </div>
