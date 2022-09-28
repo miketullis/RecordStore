@@ -1,0 +1,49 @@
+﻿@model IEnumerable<RecordStore.Data.EF.Recording>
+
+@{
+    ViewBag.Title = "Recording Types";
+}
+
+<div id="rrWrapper">
+    <h2 class="text-center mb-5"> @ViewBag.Title</h2>
+    <div class="max600">
+        <table class="table" id="myTable" style="max-width: 700px">
+            <thead>
+                <tr>
+                    <th class="text-left">
+                        @Html.DisplayNameFor(model => model.RecordingType)
+                    </th>
+                    <th class="text-right">
+                        @Html.ActionLink("Add New Recording Type", "Create")
+                        @*<a href="" class="FormatCreate">Add New Format</a>*@
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td class="text-left">
+                            @Html.DisplayFor(modelItem => item.RecordingType)
+                        </td>
+                        <td class="text-right">
+                            @Html.ActionLink("Edit", "Edit", new { id = item.RecordingID }) |
+                            @Html.ActionLink("Delete", "Delete", new { id = item.RecordingID })
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+
+    <script>
+        $(document).ready(function () {
+            $('#myTable').DataTable();
+        });
+    </script>
+}

@@ -1,0 +1,38 @@
+﻿@model RecordStore.Data.EF.Artist
+
+@{
+    ViewBag.Title = "Artist Details: " + @Model.ArtistName;
+}
+
+<div id="rrWrapper">
+    <div class="max700">
+        <h2 class="text-center mb-4">@ViewBag.Title</h2>
+        <div>
+            <dl class="dl-horizontal text-center">
+                <dt>
+                    @Html.DisplayNameFor(model => model.ArtistName)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.ArtistName)
+                </dd>
+                <dt>
+                    @Html.DisplayNameFor(model => model.IsStillActive)
+                </dt>
+                <dd>
+                    @*@Html.DisplayFor(model => model.IsStillActive)*@
+                    @if (Model.IsStillActive == true)
+                    {<span>Yes</span>}
+                    else
+                    { <span>No</span>}
+                </dd>
+            </dl>
+        </div>
+        <p class="text-center pt-2">
+            @Html.ActionLink("Edit", "Edit", new { id = Model.ArtistID }, new { @class = "btn btn-dark" })
+            @Html.ActionLink("Delete", "Delete", new { id = Model.ArtistID }, new { @class = "btn btn-dark" })
+            <a href="javascript:void(0);" onclick="history.go(-1);" class="btn btn-dark">Return</a>
+            @*@Html.ActionLink("Return to Artists", "Index", "Artist", null, new { @class = "btn btn-dark" })*@
+        </p>
+    </div>
+</div>

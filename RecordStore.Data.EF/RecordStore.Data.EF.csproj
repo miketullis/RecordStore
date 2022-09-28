@@ -120,6 +120,9 @@
     <Compile Include="AspNetUsers.cs">
       <DependentUpon>RecordStore.tt</DependentUpon>
     </Compile>
+    <Compile Include="Channel.cs">
+      <DependentUpon>RecordStore.tt</DependentUpon>
+    </Compile>
     <Compile Include="Department.cs">
       <DependentUpon>RecordStore.tt</DependentUpon>
     </Compile>

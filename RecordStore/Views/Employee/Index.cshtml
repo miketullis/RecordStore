@@ -1,0 +1,83 @@
+﻿@model IEnumerable<RecordStore.Data.EF.Employee>
+
+@{
+    ViewBag.Title = "Employees";
+}
+
+<div id="rrWrapper">
+    <div class="max100p">
+        <h2 class="text-center mb-5">@ViewBag.Title</h2>
+        <table class="table" id="myTable">
+            <thead>
+                <tr class="text-center">
+                    <th class="text-left">
+                        @Html.DisplayNameFor(model => model.FirstName)
+                    </th>
+                    <th class="text-left">
+                        @Html.DisplayNameFor(model => model.LastName)
+                    </th>
+                    <th>
+                        Department
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Position)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.PayRate)
+                    </th>
+
+                    <th>
+                        @Html.DisplayNameFor(model => model.Phone)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.HireDate)
+                    </th>
+                    <th class="text-right">
+                        @Html.ActionLink("Add New Employee", "Create")
+                    </th>
+                </tr>
+            </thead>
+            <tbody class="text-center">
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td class="text-left">
+                            @Html.DisplayFor(modelItem => item.FirstName)
+                        </td>
+                        <td class="text-left">
+                            @Html.DisplayFor(modelItem => item.LastName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Department.DepartmentName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Position)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.PayRate)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Phone)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.HireDate)
+                        </td>
+                        <td class="text-right">
+                            @Html.ActionLink("Edit", "Edit", new { id = item.EmployeeID }) |
+                            @Html.ActionLink("Details", "Details", new { id = item.EmployeeID }) |
+                            @Html.ActionLink("Delete", "Delete", new { id = item.EmployeeID })
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+@section Scripts{
+    <script>
+        $(document).ready(function () {
+            $('#myTable').DataTable();
+        });
+    </script>
+}

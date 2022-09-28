@@ -1,0 +1,443 @@
+﻿/*wrapper/container for footer placement*/
+#rrWrapper {
+    padding-top: 60px;
+    padding-left: 10%;
+    padding-right: 10%;
+    min-height: calc(100vh - 302px); /*height of footer & header*/
+}
+
+#rrContainer {
+    position: relative;
+    padding-top: 80px; /*height of header*/
+    min-height: 100vh;
+}
+
+body {
+    font-size: .96rem;
+}
+
+.unitsSelected {
+    max-width: 45px;
+    display: inline;
+    position: relative;
+    bottom: 4px;
+}
+
+#MessageDisplay {
+    padding-left: 20%;
+    padding-right: 20%;
+}
+
+.navbar-nav .dropdown-menu {
+    /*position: static;*/
+    float: none;
+    color: white;
+    background-color: #232323;
+}
+
+.navbar-nav .dropdown-menu {
+    position: absolute;
+}
+
+.navbar-right {
+    display: inline-block;
+    align-content: center;
+    color: white;
+    background-color: #232323;
+    text-align: center;
+    right: 0;
+}
+
+    .navbar-right hr {
+        border-top: 1.5px solid rgb(255,0,0);
+        margin: 10px 0 10px 0;
+    }
+
+.navbar-nav .dropdown-menu a {
+    color: white;
+    text-align: center;
+    margin: auto;
+}
+
+.dropdown-menu {
+    position: absolute;
+    top: 100%;
+    left: initial;
+    z-index: 1000;
+    display: none;
+    min-width: 5rem;
+    padding: 1rem 1.5rem 1rem 1.5rem;
+    margin: -1.1rem 2px 2px -1rem;
+    font-size: 1rem;
+    color: #212529;
+    text-align: center;
+    list-style: none;
+    background-color: #fff;
+    background-clip: padding-box;
+    border: 1px solid rgba(0, 0, 0, 0.15);
+    border-radius: 0.25rem;
+}
+
+#albumArt {
+    box-shadow: 0 5px 8px 3px #808080;
+    /*margin-bottom: 2em;*/
+}
+
+.albumArtBG {
+    width: 100%;
+    object-fit: cover;
+    height: auto;
+}
+
+.feature-image {
+    box-shadow: 0 5px 8px 3px #808080;
+}
+
+#contactConfirm {
+    display: none;
+}
+
+.conForm {
+    padding-bottom: 1.5em;
+}
+
+#adminNav {
+    padding-bottom: 8em;
+}
+
+    #adminNav a {
+        color: white;
+    }
+
+label {
+    font-weight: bold;
+}
+
+
+.textSwell {
+    font-size: 1rem;
+}
+
+
+
+
+.max50vh {
+    max-height: 50vh;
+}
+
+.max80p {
+    max-width: 80%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.max90p {
+    max-width: 90%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.max100p {
+    max-width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.max600 {
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.max700 {
+    max-width: 700px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.max800 {
+    max-width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.max900 {
+    max-width: 900px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.max1000 {
+    max-width: 1000px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.max1100 {
+    max-width: 1100px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.max1400 {
+    max-width: 1400px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.max2100 {
+    max-width: 2100px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+
+
+
+
+
+
+
+/*AJAX Popup Dialog Styling*/
+.ui-widget-header {
+    border: 1px solid #dddddd;
+    background-color: #23272B;
+    color: white;
+    font-weight: bold;
+}
+
+.ui-widget-content a.btn-dark {
+    color: white;
+}
+
+/*dropdown with checkboxes*/
+.selectBox {
+    position: relative;
+    border: 1px solid #ced4da;
+    border-radius: 0.25rem;
+    background-color: #fff;
+    height: calc(2.25rem + 2px);
+    padding: 0.375rem 0.5rem;
+    font-size: 1rem;
+    line-height: 1.5;
+    color: #495057;
+    transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+    display: block;
+    width: 100%;
+}
+
+    .selectBox select {
+        width: 100%;
+        border: none;
+    }
+
+.overSelect {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+}
+
+select.dropdown {
+    background-color: white;
+    color:#888B7D;
+}
+
+
+#checkArtists, #checkGenres, #checkRecordings {
+    display: none;
+    border: 1px solid #ced4da;
+    padding: 0;
+    margin: 0;
+    z-index: 99;
+    width: auto;
+    max-height: 125px;
+    overflow-x: hidden;
+    overflow-y: auto;
+    box-shadow: 0 1px 3px 2px #808080;
+}
+
+ul #checkArtists, ul #checkGenres, ul #checkRecordings {
+    display: none;
+    background-color: gray;
+}
+
+#checkArtists label, #checkGenres label, #checkRecordings label {
+    display: block;
+}
+
+    #checkArtists label:hover, #checkGernes label:hover, #checkRecordings label:hover {
+        background-color: #1e90ff;
+    }
+
+.pagination {
+    margin: unset;
+}
+
+.pagination-container {
+    display: inline-block;
+}
+
+.pagination > .active > a, .pagination > .active > span, .pagination > .active > a:hover, .pagination > .active > span:hover, .pagination > .active > a:focus, .pagination > .active > span:focus {
+    background-color: #23272B;
+    border-color: #23272B
+}
+
+.pagination a {
+    color: #23272B;
+    border-color: #23272B
+}
+
+.psLeft {
+    float: left;
+}
+
+.psRight {
+    float: right;
+}
+
+.pageCount {
+    padding-left: 10px;
+    position: relative;
+    bottom: 13px;
+}
+
+#checkerror, #radioerror {
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.6;
+    margin-bottom: unset;
+}
+
+
+.calcWidth {
+    width: calc(100% - 160px);
+}
+
+.ArtistCreate {
+    position: absolute;
+    bottom: 0;
+    right: 15px;
+}
+
+dd {
+    margin-bottom: 1rem;
+    margin-left: 0;
+}
+
+.abTitle {
+    color: black;
+    font-weight: bold;
+    font-size: 1rem;
+}
+
+
+#map {
+    border: 0;
+    box-shadow: 0 5px 8px 3px #808080;
+}
+
+
+
+/*Button Styling*/
+.btn {
+    font-size: .95rem;
+    min-width: 70px;
+}
+
+.btn-light {
+    color: #fff;
+    background-color: #656464;
+    border-color: #656464;
+}
+
+    .btn-light:hover {
+        color: #fff;
+        background-color: #C0C0C0;
+        border-color: #C0C0C0;
+    }
+
+.btn115 {
+    width: 115px;
+    height: 36px;
+    font-size: .95rem;
+    padding: unset;
+}
+
+
+.btn-pull-right {
+    position: absolute;
+    right: 15px;
+    bottom: 9px;
+}
+
+.pr-pull-left {
+    position: absolute;
+    bottom: 15px;
+}
+
+
+
+
+
+@media (max-width: 2400px) {
+    .text-sm-center {
+        text-align: center !important;
+    }
+
+    .max2100, .max1400 {
+        max-width: 80%;
+        margin-left: auto;
+        margin-right: auto;
+    }
+}
+
+
+
+
+@media (max-width: 991px) {
+
+    .psLeft {
+        float: unset;
+    }
+
+    .psRight {
+        float: left;
+    }
+
+    .btn115 {
+        width: 105px;
+        height: 30px;
+        font-size: .90rem;
+        text-align: center;
+    }
+}
+
+
+
+@media (max-width: 768px) {
+    .product-item .down-content h6 {
+        position: absolute;
+        right: unset;
+        top: unset;
+    }
+}
+
+
+@media (max-width: 575px) {
+    .best-features {
+        max-width: 80%;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .owl-banner .owl-dots {
+        bottom: 30px;
+    }
+
+    .banner-item-01, .banner-item-02, .banner-item-03 {
+        padding: 120px 0px;
+    }
+
+}

@@ -1,0 +1,134 @@
+﻿@model IEnumerable<RecordStore.Data.EF.Label>
+
+@{
+    ViewBag.Title = "Record Labels";
+}
+
+<div id="rrWrapper">
+    <div class="max800">
+        <h2 class="text-center mb-3"> @ViewBag.Title</h2>
+
+        <table class="table" id="myTable">
+            <thead>
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.FirstOrDefault().LabelName)
+                    </th>
+                    <th class="text-center">
+                        @Html.DisplayNameFor(model => model.FirstOrDefault().Country)
+                    </th>
+                    <th class="text-center">
+                        @Html.DisplayNameFor(model => model.FirstOrDefault().IsStillDistributing)
+                    </th>
+                    <th class="text-right">
+                        @Html.ActionLink("Add A New Label", "Create")
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.LabelName)
+                        </td>
+                        <td class="text-center">
+                            @Html.DisplayFor(modelItem => item.Country)
+                        </td>
+                        <td class="text-center">
+                            @if (item.IsStillDistributing == true)
+                            {<span>Yes</span>}
+                            else
+                            { <span>No</span>}
+                        </td>
+                        <td class="text-right">
+                            @Html.ActionLink("Edit", "Edit", new { id = item.LabelID }) |
+                            @Html.ActionLink("Delete", "Delete", new { id = item.LabelID })
+
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+
+    <script>
+        $(document).ready(function () {
+            $('#myTable').DataTable();
+        });
+
+        //*********** AJAX LABEL DELETE DIALOG/POP-UP BOX ************//
+        $('a.LabelDelete').click(function (e) {
+            e.preventDefault();
+            $("#LabelDelete")
+                .dialog({
+                    width: 450,
+                    height: 150,
+                    open: function () {
+                        $(this).load("/Label/AjaxLabelDelete");
+                    },
+                    title: "Delete Label",
+                    modal: true,
+                    resizable: false
+                }); //End dialog box for the div
+        }); //End details button click event handler
+
+        //*********** AJAX LABEL CREATE DIALOG/POP-UP BOX ************//
+        $('a.LabelCreate').click(function (e) {
+            e.preventDefault();
+            $("#LabelCreate")
+                .dialog({
+                    width: 450,
+                    height: 350,
+                    open: function () {
+                        $(this).load("/Label/AjaxLabelCreate");
+                    },
+                    title: "Create New Label",
+                    modal: true,
+                    resizable: false
+                }); //End dialog box for the div
+         }); //End details button click event handler
+
+
+       @*//*********** AJAX CREATE ************//*@
+        $("#LabelCreateForm").submit(function (e) {
+            var formData = $(this).serializeArray();
+            console.log(formData);
+            e.preventDefault();//Prevent the default page reload on submit
+
+            $.ajax({
+                url: "/Label/AjaxLabelCreate",
+                type: "POST",
+                data: formData,
+                dataType: "json",
+                error: function (e) {
+                    $("#MessageContent").html("<div class='alert alert-danger'>There was a problem.</div>");
+                    $("#MessageContent").delay(4000).hide("slow");
+                },
+                success: function (foo) {
+                    $("#MessageContent").html("<div class='alert alert-success'>Label created successfully.</div>");
+                    $("#MessageContent").delay(4000).hide("slow");
+                    $("#LabelCreateForm")[0].reset();
+
+                    $(function () {
+                        var row =
+                            '<tr><td>' + foo.LabelName +
+                            '</td><td>' + foo.Country +
+                            '</td><td>' + foo.IsStillDistributing +
+                            '</td><td>Refresh to view</td></tr>';
+                        $("#myTable").append(row);
+                    }); //End of build & append label functionality
+
+                    //close dialog on successful submit
+                    $("#LabelCreate").dialog("close");
+                } //End success
+            }); //End Ajax form submission properties
+        }); //End form submit event handler
+    </script>
+}
+

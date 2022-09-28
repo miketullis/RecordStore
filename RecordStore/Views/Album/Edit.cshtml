@@ -1,0 +1,376 @@
+﻿@model RecordStore.Data.EF.Album
+
+@{
+    ViewBag.Title = "Edit | " + @Model.AlbumName;
+}
+
+<div id="rrWrapper">
+    <div class="max100p">
+        <h3 class="text-center mb-5">@ViewBag.title</h3>
+        @using (Html.BeginForm("Edit", "Album", FormMethod.Post, new { enctype = "multipart/form-data" }))
+        {
+            @Html.AntiForgeryToken()
+            @Html.HiddenFor(x => x.AlbumID)
+            @Html.HiddenFor(x => x.AlbumImage)
+
+            <div class="form-horizontal">
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+                <div class="row">
+                    <div class="form-group col-md-4">
+                        <img src="~/Content/assets/images/albumImages/@Model.AlbumImage" id="albumArt" class="albumArtBG mb-4" />
+                        <input type="file" name="albumCover" />
+                        @Html.ValidationMessageFor(model => model.AlbumImage, "", new { @class = "text-danger" })
+                    </div>
+                    <div class="col-md-8 p-0">
+                        <div class="form-group col-md-12">
+                            @Html.LabelFor(model => model.AlbumName, "Name", htmlAttributes: new { @class = "control-label" })
+                            @Html.EditorFor(model => model.AlbumName, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.AlbumName, "", new { @class = "text-danger" })
+                        </div>
+                        <!-- #region Current Artist Display -->
+                        <div class="col-md-12">
+                            @foreach (var artist in Model.AlbumArtist)
+                            {
+                                if (artist.PrimaryArtist != null)
+                                {
+                                    if ((bool)artist.PrimaryArtist)
+                                    {
+                                        <div>
+                                            <span style="font-weight: bold;">Current Artist (s):&nbsp;&nbsp;</span>
+                                            @artist.Artist.ArtistName
+                                        </div>
+                                    }
+                                }
+                            }
+                            <div class="calcWidth pull-left">
+                                @* Create comma separated list Of non-primary Artists.  Add "feat." before list *@
+                                @if (Model.AlbumArtist.Count > 1)
+                                {
+                                    <span>Featuring: </span>
+                                }
+                                @foreach (var artist in Model.AlbumArtist)
+                                {
+                                    if ((bool)artist.PrimaryArtist == false)
+                                    {
+                                        if (Model.AlbumArtist.ToList().IndexOf(artist) == Model.AlbumArtist.Count - 1)
+                                        {
+                                            <span>@artist.Artist.ArtistName</span>
+                                        }
+                                        else
+                                        {
+                                            <span>@artist.Artist.ArtistName, </span>
+                                        }
+                                    }
+                                }
+                            </div>
+                            <a href="" class="ArtistCreate pull-right">Need A New Artist?</a>
+                            <div class="clearfix"></div>
+                        </div>
+                        <!-- #endregion -->
+                        <!-- #region MultiSelect Artist Dropdown with Primary Artist -->
+                        <div class="form-group col-md-12 pt-2">
+
+                            <div class="selectBox" onclick="showArtists()">
+                                <select class="dropdown">
+                                    <option>Select Album Artist(s)</option>
+                                </select>
+                                <div class="overSelect"></div>
+                            </div>
+                            <ul id="checkArtists">
+                                @foreach (RecordStore.Data.EF.Artist artist in ViewBag.Artist)
+                                {
+                                    <li>
+                                        <div class="row">
+                                            <div class="col-md-5">
+                                                @{ RecordStore.Data.EF.RecordStoreEntities db = new RecordStore.Data.EF.RecordStoreEntities();}
+                                                @if (artist.AlbumArtist.Contains(Model.AlbumArtist.Where
+                                                    (x => x.AlbumID == Model.AlbumID && x.ArtistID == artist.ArtistID).SingleOrDefault()))
+                                                {
+                                                    <input type="checkbox" name="artists" value="@artist.ArtistID" checked="checked" />
+                                                    <span>&nbsp;@artist.ArtistName</span>
+                                                }
+                                                else
+                                                {
+                                                    <input type="checkbox" name="artists" value="@artist.ArtistID" />
+                                                    <span>&nbsp;@artist.ArtistName</span>
+                                                }
+                                            </div>
+                                            <div class="col-md-4">
+                                                @if (artist.AlbumArtist.Contains(Model.AlbumArtist.Where
+                                                    (x => x.AlbumID == Model.AlbumID && x.ArtistID == artist.ArtistID).SingleOrDefault()))
+                                                {
+                                                    <input type="radio" name="primaryArtistID" value="@artist.ArtistID" checked="checked" />
+                                                    <span style="font-size:12px; font-weight:400;">&nbsp;Primary Artist</span>
+                                                }
+                                                else
+                                                {
+                                                    <input type="radio" name="primaryArtistID" value="@artist.ArtistID" />
+                                                    <span style="font-size:12px; font-weight:400;">&nbsp;Primary Artist</span>
+                                                }
+                                            </div>
+                                        </div>
+                                    </li>
+                                }
+                            </ul>
+                            <p id="checkerror" class="text-danger">* Artist is required *</p>
+                            <p id="radioerror" class="text-danger">* Primary Artist is required *</p>
+                        </div>
+                        <!-- #endregion -->
+                        <div class="form-group col-md-12">
+                            @Html.LabelFor(model => model.LabelID, "Label", htmlAttributes: new { @class = "control-label" })
+                            <a style="float:right;" href="" class="LabelCreate">Need A New Label?</a>
+                            <div>
+                                @Html.DropDownList("LabelID", null, "", htmlAttributes: new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.LabelID, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        @Html.LabelFor(model => model.CatalogNum, htmlAttributes: new { @class = "control-label" })
+                                        @Html.EditorFor(model => model.CatalogNum, new { htmlAttributes = new { @class = "form-control" } })
+                                        @Html.ValidationMessageFor(model => model.CatalogNum, "", new { @class = "text-danger" })
+                                    </div>
+                                    <div class="col-md-6">
+                                        @Html.LabelFor(model => model.Year, "Release Year", htmlAttributes: new { @class = "control-label", })
+                                        @Html.EditorFor(model => model.Year, new { htmlAttributes = new { @class = "form-control" } })
+                                        @Html.ValidationMessageFor(model => model.Year, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group col-md-12">
+                            @Html.LabelFor(model => model.Description, htmlAttributes: new { @class = "control-label" })
+                            @Html.EditorFor(model => model.Description, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col-md-4">
+                            @Html.LabelFor(model => model.FormatID, "Format", htmlAttributes: new { @class = "control-label" })
+                            @Html.DropDownList("FormatID", null, "", htmlAttributes: new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.FormatID, "", new { @class = "text-danger" })
+                        </div>
+                        <div class="col-md-4">
+                            @Html.LabelFor(model => model.Num, "No. of CDs/LPs/Etc.", htmlAttributes: new { @class = "control-label" })
+                            @Html.EditorFor(model => model.Num, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.Num, "", new { @class = "text-danger" })
+                        </div>
+                        <div class="col-md-4">
+                            @Html.LabelFor(model => model.Tracks, "No. of Tracks", htmlAttributes: new { @class = "control-label" })
+                            @Html.EditorFor(model => model.Tracks, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.Tracks, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <label class="control-label">Genre</label>
+                            <div class="selectBox" onclick="showGenres()">
+                                <select class="dropdown">
+                                    <option>Select Genre(s)</option>
+                                </select>
+                                <div class="overSelect"></div>
+                            </div>
+                            <ul id="checkGenres">
+                                @foreach (RecordStore.Data.EF.Genre genre in ViewBag.Genre)
+                                {
+                                    <li class="col-md-12">
+                                        @{ RecordStore.Data.EF.RecordStoreEntities db = new RecordStore.Data.EF.RecordStoreEntities();}
+                                        @if (genre.AlbumGenre.Contains(Model.AlbumGenre.Where
+                                            (x => x.AlbumID == Model.AlbumID && x.GenreID == genre.GenreID).SingleOrDefault()))
+                                        {
+                                            <input type="checkbox" name="genres" value="@genre.GenreID" checked="checked" />
+                                            <span>&nbsp;@genre.GenreName</span>
+                                        }
+                                        else
+                                        {
+                                            <input type="checkbox" name="genres" value="@genre.GenreID" />
+                                            <span>&nbsp;@genre.GenreName</span>
+                                        }
+                                    </li>
+                                }
+                            </ul>
+                        </div>
+                        <div class="col-md-4">
+                            <label class="control-label">Recording Type</label>
+                            <div class="selectBox" onclick="showRecordings()">
+                                <select class="dropdown">
+                                    <option>Select Type(s)</option>
+                                </select>
+                                <div class="overSelect"></div>
+                            </div>
+                            <ul id="checkRecordings">
+                                @foreach (RecordStore.Data.EF.Recording recording in ViewBag.Recording)
+                                {
+                                    <li class="col-md-12">
+                                        @{ RecordStore.Data.EF.RecordStoreEntities db = new RecordStore.Data.EF.RecordStoreEntities();}
+                                        @if (recording.AlbumRecording.Contains(Model.AlbumRecording.Where
+                                            (x => x.AlbumID == Model.AlbumID && x.RecordingID == recording.RecordingID).SingleOrDefault()))
+                                        {
+                                            <input type="checkbox" name="Recordings" value="@recording.RecordingID" checked="checked" />
+                                            <span>&nbsp;@recording.RecordingType</span>
+                                        }
+                                        else
+                                        {
+                                            <input type="checkbox" name="Recordings" value="@recording.RecordingID" />
+                                            <span>&nbsp;@recording.RecordingType</span>
+                                        }
+                                    </li>
+                                }
+                            </ul>
+                        </div>
+                        <div class="col-md-4">
+                            @Html.LabelFor(model => model.Price, htmlAttributes: new { @class = "control-label" })
+                            @Html.EditorFor(model => model.Price, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.Price, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col-md-4">
+                            @Html.LabelFor(model => model.UnitsInStock, htmlAttributes: new { @class = "control-label" })
+                            @Html.EditorFor(model => model.UnitsInStock, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.UnitsInStock, "", new { @class = "text-danger" })
+                        </div>
+                        <div class="col-md-4">
+                            @Html.LabelFor(model => model.AlbumStatusID, "Status", htmlAttributes: new { @class = "control-label" })
+                            @Html.DropDownList("AlbumStatusID", null, "", htmlAttributes: new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.AlbumStatusID, "", new { @class = "text-danger" })
+                        </div>
+                        <div class="col-md-2 col-sm-6 text-center">
+                            @Html.LabelFor(model => model.CompilationAlbum, "Compilation", htmlAttributes: new { @class = "control-label" })
+                            <div class="checkbox">
+                                @Html.CheckBoxFor(model => model.CompilationAlbum, new { data_toggle = "toggle", data_on = "Yes", data_off = "No" })
+                                @Html.ValidationMessageFor(model => model.CompilationAlbum, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="col-md-2 col-sm-6 col- text-center">
+                            @Html.LabelFor(model => model.IsInPrint, htmlAttributes: new { @class = "control-label" })
+                            <div class="checkbox">
+                                @Html.CheckBoxFor(model => model.IsInPrint, new { data_toggle = "toggle", data_on = "Yes", data_off = "No" })
+                                @Html.ValidationMessageFor(model => model.IsInPrint, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-12 pl-0 text-md-left text-sm-center pt-3">
+                        <input type="submit" value="Save Changes" class="btn btn-dark" />
+                        @Html.ActionLink("Delete", "Delete", new { id = Model.AlbumID }, new { @class = "btn btn-dark" })
+                        <a href="javascript:void(0);" onclick="history.go(-1);" class="btn btn-dark">Cancel</a>
+                    </div>
+                </div>
+            </div>
+        }
+
+        @* Placeholder for the creating a new Artist or Label in a dialog box *@
+        <div id="ArtistCreate"></div>
+        <div id="LabelCreate"></div>
+    </div>
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+
+    <script>
+        var expanded = false;
+
+        function showArtists() {
+            var checkArtists = document.getElementById("checkArtists");
+            if (!expanded) {
+                checkArtists.style.display = "block";
+                expanded = true;
+            } else {
+                checkArtists.style.display = "none";
+                expanded = false;
+            }
+        }
+
+        function showGenres() {
+            var checkGenres = document.getElementById("checkGenres");
+            if (!expanded) {
+                checkGenres.style.display = "block";
+                expanded = true;
+            } else {
+                checkGenres.style.display = "none";
+                expanded = false;
+            }
+        }
+
+        function showRecordings() {
+            var checkRecordings = document.getElementById("checkRecordings");
+            if (!expanded) {
+                checkRecordings.style.display = "block";
+                expanded = true;
+            } else {
+                checkRecordings.style.display = "none";
+                expanded = false;
+            }
+        }
+
+        //*********** AJAX ARTIST CREATE DIALOG/POP-UP BOX ************//
+        $('a.ArtistCreate').click(function (e) {
+            e.preventDefault();
+            $("#ArtistCreate")
+                .dialog({
+                    width: 400,
+                    height: 260,
+                    open: function () {
+                        $(this).load("/Album/ArtistCreate");
+                    },
+                    title: "Create New Artist",
+                    modal: true,
+                    resizable: false
+                }); //End dialog box for the div
+        }); //End details button click event handler
+
+
+        //*********** AJAX LABEL CREATE DIALOG/POP-UP BOX ************//
+        $('a.LabelCreate').click(function (e) {
+            e.preventDefault();
+            $("#LabelCreate")
+                .dialog({
+                    width: 400,
+                    height: 350,
+                    open: function () {
+                        $(this).load("/Album/LabelCreate");
+                    },
+                    title: "Create New Label",
+                    modal: true,
+                    resizable: false
+                }); //End dialog box for the div
+        }); //End details button click event handler
+
+
+        //*********** VALIDATE CHECK & RADIO BOXES ************//
+        $(document).ready(function () {
+            $('#radioerror').hide();
+            $('#checkerror').hide();
+        });
+
+        $('#checkform').click(function (e) {
+            if (!$('input[type=radio][name=primaryArtistID]:checked').length != 0) {
+                $('#radioerror').show();
+                e.preventDefault();
+            }
+            else {
+                $('#radioerror').hide();
+            }
+
+            if ($('input[type=checkbox][name=artists]:checked').length < 1) {
+                $('#checkerror').show();
+                e.preventDefault();
+            }
+            else {
+                $('#checkerror').hide();
+            }
+        });
+    </script>
+}

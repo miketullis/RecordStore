@@ -1,0 +1,160 @@
+﻿@*@model IEnumerable<RecordStore.Data.EF.Album>*@
+@model PagedList.IPagedList<RecordStore.Data.EF.Album>
+@using PagedList.Mvc
+
+@{
+    ViewBag.Title = "Home";
+}
+
+<!-- Banner Starts Here -->
+<div class="banner header-text">
+    <div class="owl-banner owl-carousel">
+        <div class="banner-item-01">
+            <div class="text-content">
+                <h4>Best Offer</h4>
+                <h2>New Arrivals On Sale</h2>
+            </div>
+        </div>
+        <div class="banner-item-02">
+            <div class="text-content">
+                <h4>Flash Deals</h4>
+                <h2>Get your best products</h2>
+            </div>
+        </div>
+        <div class="banner-item-03">
+            <div class="text-content">
+                <h4>Last Minute</h4>
+                <h2>Grab last minute deals</h2>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Banner Ends Here -->
+
+<div class="latest-products">
+    <div class="max2100">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="section-heading">
+                    <h2>Latest Products</h2>
+                </div>
+                <div class="pageSearch">
+                    <div class="psLeft">
+                        @Html.PagedListPager(Model, page => Url.Action("Index", new { page }))
+                        <span class="pageCount">
+                            Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+                        </span>
+                    </div>
+                    <div class="psRight">
+                        @using (Html.BeginForm("Index", "Home", FormMethod.Get))
+                        {
+                            <div>
+                                <input type="text" name="searchFilter" />
+                                <input type="submit" value="Search" class="btn-dark" />
+                            </div>
+                        }
+                    </div>
+                </div>
+                <div class="clearfix"></div>
+                <hr />
+            </div>
+            @if (Model.PageCount > 0)
+            {
+                foreach (var item in Model)
+                {
+                    <div class=" col-lg-4 col-md-6 col-xl-3 col-sm-6">
+                        <div class="product-item mx-auto">
+                            <div class="col-md-12 albumArtBG text-center">
+                                <a href="@Url.Action("Details", "Album", new { id = item.AlbumID })">
+                                    <img src="~/Content/assets/images/albumImages/@item.AlbumImage" alt="@item.AlbumName cover" title="@item.AlbumName cover" id="albumArt" class="albumArtBG text-center mt-3" />
+                                </a>
+                            </div>
+                            <div class="down-content">
+                                <div>
+                                    <a href="@Url.Action("Details", "Album", new { id = item.AlbumID })" class="abTitle"
+                                       style="font-weight:bold; color: black;">
+                                        @Html.DisplayFor(modelItem => item.AlbumName)
+                                    </a>
+                                    <a href="@Url.Action("Details", "Album", new { id = item.AlbumID })" color: black;">
+                                        @foreach (var artist in item.AlbumArtist)
+                                        {
+                                            if (artist.PrimaryArtist == true)
+                                            {
+                                                <h2>by @artist.Artist.ArtistName</h2>
+                                            }
+                                        }
+                                    </a>
+                                    <div class="pt-1 pb-1">
+                                        @Html.DisplayFor(modelItem => item.Format.FormatType) | (@Html.DisplayFor(modelItem => item.Year))
+                                    </div>
+                                </div>
+
+                                <div>
+                                    <h6 class="pr-pull-left">@Html.DisplayFor(modelItem => item.Price)</h6>
+
+                                    @using (Html.BeginForm("AddToCart", "Album", new { albumID = item.AlbumID }, FormMethod.Post))
+                                    {
+
+                                        if (item.UnitsInStock == 0)
+                                        {
+                                            <div class="btn-pull-right"><input value="Unavailible" class="btn btn-danger btn115" /></div>
+                                        }
+                                        else
+                                        {
+                                            @Html.TextBox("qty", 1, new { @class = "form-control", @style = "max-width: 50px; display: none;", onkeyup = "checkQty()" })
+                                            <div id="btnSubmit" class="btn-pull-right">
+                                                <input type="submit" value="Add To Cart" class="btn btn-dark btn115" />
+                                            </div>
+                                        }
+                                    }
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                }
+            }
+            else
+            {
+                <div class="text-center max700 mb-4">
+                    <h3 class="text-danger pb-4">Wait, Stop The Music!</h3>
+                    <img src="~/Content/assets/images/SpinningRecord.gif" class="text-center max80p" />
+                    <h5 class="text-danger pt-4 pb-4">Sorry, your search criteria did not return any results.<br /> Please try again or hit "Search" again to refresh the page.</h5>
+                </div>
+            }
+        </div>
+        @Html.PagedListPager(Model, page => Url.Action("Index", new { page }))
+        <hr />
+    </div>
+</div>
+<div class="best-features">
+    <div class="max1400">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="section-heading">
+                    <h2>About Reckless Records</h2>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="left-content">
+                    <h4>Looking for rare and live recordings?</h4>
+                    <p>Here at Reckless Records, we pride ourselves on being one of the top sources of rare and hard to find recordings in the United States, with a particular focus on live concerts.  We understand that not everyone can attend every show, so we offer our customers the ability to own a piece of music history they may otherwise never experience.  <a href="@Url.Action("Contact", "Home")">Contact Us</a> for more info.</p>
+                    <h4 class="mb-2">What we specialize in:</h4>
+                    <ul class="featured-list">
+                        <li>Live Concert Recordings</li>
+                        <li>Rare Studio Recordings</li>
+                        <li>Hard-To-Find Imports</li>
+                        <li>Collector's Items</li>
+                    </ul>
+
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="right-image">
+                    <img src="~/Content/assets/images/feature-image.jpg" alt="Woman listening to music with headphones" class="feature-image max700">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

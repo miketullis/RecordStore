@@ -1,0 +1,51 @@
+﻿@model IEnumerable<RecordStore.Data.EF.Department>
+
+@{
+    ViewBag.Title = "Departments";
+}
+
+<div id="rrWrapper">
+    <div class="max800">
+        <h2 class="text-center mb-5"> @ViewBag.Title</h2>
+        <table class="table" id="myTable">
+            <thead>
+                <tr>
+                    <th class="text-left">
+                        @Html.DisplayNameFor(model => model.DepartmentName)
+                    </th>
+                    <th class="text-center">
+                        @Html.DisplayNameFor(model => model.DeptDescription)
+                    </th>
+                    <th class="text-right">
+                        @Html.ActionLink("Add New Dept.", "Create")
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td class="text-left">
+                            @Html.DisplayFor(modelItem => item.DepartmentName)
+                        </td>
+                        <td class="text-center">
+                            @Html.DisplayFor(modelItem => item.DeptDescription)
+                        </td>
+                        <td class="text-right">
+                            @Html.ActionLink("Edit", "Edit", new { id = item.DepartmentID }) |
+                            @Html.ActionLink("Delete", "Delete", new { id = item.DepartmentID })
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+@section Scripts{
+    <script>
+        $(document).ready(function () {
+            $('#myTable').DataTable();
+        });
+    </script>
+}

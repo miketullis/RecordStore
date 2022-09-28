@@ -1,0 +1,58 @@
+﻿@model IEnumerable<RecordStore.Data.EF.Format>
+
+@{
+    ViewBag.Title = "Album Formats";
+}
+
+<div id="rrWrapper">
+    <div class="max600">
+        <h2 class="text-center mb-5"> @ViewBag.Title</h2>
+        <table class="table" id="myTable">
+            <thead>
+                <tr>
+                    <th class="text-left">
+                        @Html.DisplayNameFor(model => model.FormatType)
+                    </th>
+                    <th class="text-center">
+                        @Html.DisplayNameFor(model => model.MultiFormat)
+                    </th>
+                    <th class="text-right">
+                        @Html.ActionLink("Add New Format", "Create")
+                    </th>
+                </tr>
+            </thead>
+
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td class="text-left">
+                            @Html.DisplayFor(modelItem => item.FormatType)
+                        </td>
+                        <td class="text-center m-auto">
+                            @if (item.MultiFormat == true)
+                            {<span>Yes</span>}
+                            else
+                            { <span>No</span>}
+                        </td>
+                        <td class="text-right">
+                            @Html.ActionLink("Edit", "Edit", new { id = item.FormatID }) |
+                            @Html.ActionLink("Delete", "Delete", new { id = item.FormatID })
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+
+    <script>
+        $(document).ready(function () {
+            $('#myTable').DataTable();
+        });
+    </script>
+}

@@ -1,0 +1,169 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="author" content="Michael R. Tullis" />
+    <meta name="keywords" content="Music, Record Store, CD, Vinyl, Rock N Roll, Bootleg Recording, Rare Imports, Hard-to-Find" />
+    <link href="https://fonts.googleapis.com/css?family=Poppins:100,200,300,400,500,600,700,800,900&display=swap" rel="stylesheet">
+
+    <title>Reckless Records | @ViewBag.Title</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="~/Content/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="~/Content/assets/bootstrap-toggle/bootstrap-toggle.css" rel="stylesheet" />
+    <!-- jQuery UI -->
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <!-- Additional CSS Files -->
+    <link rel="stylesheet" href="~/Content/assets/css/fontawesome.css">
+    <link rel="stylesheet" href="~/Content/assets/css/main.css">
+    <link rel="stylesheet" href="~/Content/assets/css/owl.css">
+    <!-- PagedList & PagedListMVC -->
+    <link rel="stylesheet" href="~/Content/PagedList.css" />
+    <!-- Datatables.net -->
+    <link rel="stylesheet" href="//cdn.datatables.net/1.11.3/css/jquery.dataTables.min.css">
+    <!-- Custom Styling -->
+    <link rel="stylesheet" href="~/Content/assets/css/custom.css">
+	<!-- Apple Touch Icon -->
+	<link rel="apple-touch-icon" href="~/Content/assets/images/apple-touch-icon.png">
+	
+</head>
+<body>
+
+    <!-- ***** Preloader Start ***** -->
+    <div id="preloader">
+        <div class="jumper">
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
+    </div>
+    <!-- ***** Preloader End ***** -->
+    <!-- Header -->
+    <header class="">
+        <nav class="navbar navbar-expand-lg">
+            <div class="container">
+                <a class="navbar-brand" href="@Url.Action("Index", "Home")"><h2>Reckless <em>Records</em></h2></a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarResponsive">
+                    <ul class="navbar-nav ml-auto">
+                        <li class="nav-item active">
+                            <a class="nav-link" href="@Url.Action("Index", "Home")">
+                                Home
+                                <span class="sr-only">(current)</span>
+                            </a>
+                        </li>
+                        @*<li class="nav-item">
+                                <a class="nav-link" href="@Url.Action("Index", "Album")">Albums</a>
+                            </li>*@
+                        <li class="nav-item">
+                            <a class="nav-link" href="@Url.Action("Contact", "Home")">Contact Us</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Account</a>
+                            <div class="dropdown-menu account-dropdown">
+                                @Html.Partial("_LoginPartial")
+                            </div>
+                        </li>
+                        <li class="nav-item">
+                            @* only show the icon for the cart if the session cart exists and has more than 0 items *@
+                            @if (Session["cart"] != null && ((Dictionary<int, RecordStore.UI.MVC.Models.CartItemViewModel>)Session["cart"]).Count > 0)
+                            {
+                                <a class="nav-link dropdown-item" href="/ShoppingCart/Index">Cart<i class="fa fa-shopping-cart"></i></a>
+                            }
+                            else
+                            {
+                                <a class="nav-link" href="@Url.Action("Index", "Shoppingcart")">Cart</a>
+                            }
+                        </li>
+                        @if (User.IsInRole("Admin"))
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Admin</a>
+                                <div class="dropdown-menu account-dropdown">
+                                    @Html.Partial("_AminPartial")
+                                </div>
+                            </li>
+                        }
+
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+    <div id="rrContainer">
+        @* section for confirmation/error messages when using AJAX *@
+        <div id="MessageDisplay" class="row">
+            <div class="col-md-12" id="MessageContent"></div>
+        </div>
+
+        @RenderBody()
+
+        <footer>
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="inner-content">
+                            <p class="max80p">
+                                <span>Copyright &copy; @DateTime.Now.Year &nbsp;&nbsp;</span>|<span>&nbsp;&nbsp;Reckless Records&nbsp;&nbsp;</span>|<span>&nbsp;&nbsp;All Rights Reserved</span>
+                            </p>
+                            @if (User.IsInRole("Admin"))
+                            {
+                                <p>
+                                    @Html.ActionLink("Albums", "Index", "Album") |
+                                    @Html.ActionLink("Artists", "Index", "Artist") |
+                                    @Html.ActionLink("Formats", "Index", "Format") |
+                                    @Html.ActionLink("Genres", "Index", "Genre") |
+                                    @Html.ActionLink("Labels", "Index", "Label") |
+                                    <br />
+                                    @Html.ActionLink("Recordings", "Index", "Recording") |
+                                    @Html.ActionLink("Departments", "Index", "Department") |
+                                    @Html.ActionLink("Employees", "Index", "Employee")
+                                </p>
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </footer>
+
+        <!-- Bootstrap core JavaScript -->
+        @*<script src="~/Content/vendor/jquery/jquery.min.js"></script>*@
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.js"></script>
+        <!-- ADDED jQuery Ajax CDN-->
+        <script src="https://cdn.jsdelivr.net/jquery.ajax.unobtrusive/3.2.4/jquery.unobtrusive-ajax.min.js"></script>
+        <script src="~/Content/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+        <!-- Additional Scripts -->
+        <script src="~/Content/assets/js/custom.js"></script>
+        <script src="~/Content/assets/js/owl.js"></script>
+        <script src="~/Content/assets/js/slick.js"></script>
+        <script src="~/Content/assets/js/isotope.js"></script>
+        <script src="~/Content/assets/js/accordions.js"></script>
+
+        <script language="text/Javascript">
+            cleared[0] = cleared[1] = cleared[2] = 0; //set a cleared flag for each field
+            function clearField(t) {                   //declaring the array outside of the
+                if (!cleared[t.id]) {                      // function makes it static and global
+                    cleared[t.id] = 1;  // you could use true and false, but that's more typing
+                    t.value = '';         // with more chance of typos
+                    t.style.color = '#fff';
+                }
+            }
+        </script>
+
+        <!-- jQueryUI Reference -->
+        <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+        <!-- Datatables.net -->
+        <script src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>
+
+        <!-- Bootstrap Toggle -->
+        <script src="~/Content/assets/bootstrap-toggle/bootstrap-toggle.js"></script>
+
+    </div> <!-- end of container -->
+    @RenderSection("Scripts", required: false)
+</body>
+</html>

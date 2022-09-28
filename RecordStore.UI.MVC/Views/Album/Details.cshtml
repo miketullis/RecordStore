@@ -42,21 +42,22 @@
                             {
                                 if ((bool)artist.PrimaryArtist == false)
                                 {
-								
-								    if (Model.AlbumArtist.Count == 2)
+
+                                    if (Model.AlbumArtist.Count == 2)
                                     {
                                         @artist.Artist.ArtistName
                                     }
-									else{		
-									     if (Model.AlbumArtist.ToList().IndexOf(artist) == Model.AlbumArtist.Count - 1)
-										{
-											@artist.Artist.ArtistName
-										}
-										else
-										{
-											@artist.Artist.ArtistName<span>, </span>
-										}
-									}	
+                                    else
+                                    {
+                                        if (Model.AlbumArtist.ToList().IndexOf(artist) == Model.AlbumArtist.Count - 1)
+                                        {
+                                            @artist.Artist.ArtistName
+                                        }
+                                        else
+                                        {
+                                            @artist.Artist.ArtistName<span>, </span>
+                                        }
+                                    }
                                 }
                             }
                         </div>
@@ -107,7 +108,17 @@
                     </dd>
                     <dd>
                         <span class="font-weight-bold">Label:&nbsp;&nbsp;</span>
-                        @Html.DisplayFor(model => model.Label.LabelName)
+
+                            @if (Model.Label.LabelName.Contains("unknown/none"))
+                            {
+                                <span>unknown/none</span>
+                            }
+                            else
+                            {
+                                @Html.DisplayFor(model => model.Label.LabelName)
+                            }
+                        
+                        @* @Html.DisplayFor(model => model.Label.LabelName) *@
                     </dd>
                     <dd>
                         <span class="font-weight-bold">Catalog No.:&nbsp;&nbsp;</span>

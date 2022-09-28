@@ -1,0 +1,139 @@
+﻿@model RecordStore.UI.MVC.Models.ContactViewModel
+
+@{
+    ViewBag.Title = "Contact";
+}
+
+<!-- Page Content -->
+<div class="page-heading contact-heading header-text">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="text-content">
+                    <h4>contact reckless records</h4>
+                    <h2>drop us a line</h2>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="rrWrapper">
+    <div class="max1100">
+        <div class="row mb-5">
+            <div class="col-md-12">
+                <div class="section-heading">
+                    <h2>Visit Our Store</h2>
+                </div>
+            </div>
+            <div class="col-md-8">
+                <!-- How to change your own map point
+                1. Go to Google Maps
+                2. Click on your location point
+                3. Click "Share" and choose "Embed map" tab
+                4. Copy only URL and paste it within the src="" field below-->
+                <div id="map" class="m-4">
+                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d193.64491612194308!2d-94.59092676126315!3d39.05365165745574!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x87c0efc4d24bd505%3A0xb70f2ef4e033693!2s4053%20Broadway%20Blvd%2C%20Kansas%20City%2C%20MO%2064111!5e0!3m2!1sen!2sus!4v1635987248550!5m2!1sen!2sus" allowfullscreen="" loading="lazy"></iframe>
+                </div>
+            </div>
+            <div class="col-md-4 find-us">
+                <div class="left-content">
+                    <h4>Shop us in person</h4>
+                    <p>For that authentic record store experience and an even wider selection of music and merch from your favorite artists, come visit our brick and mortar location in the heart of Kansas City. </p>
+                    <p class="text-center">
+                        Mon-Thurs: 10am-9pm<br />
+                        Fri & Sat: 10am-11pm<br />
+                        Closed Sundays
+                    </p>
+                    <ul class="social-icons text-center">
+                        <li><a href="#"><i class="fa fa-facebook"></i></a></li>
+                        <li><a href="#"><i class="fa fa-twitter"></i></a></li>
+                        <li><a href="#"><i class="fa fa-linkedin"></i></a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        @*--------Contact Form---------- *@
+        <div class="col-md-12 mt-5">
+            <div class="section-heading">
+                <h2>Send us a Message</h2>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-8">
+                <div id="contact-form">
+                    <div id="contactForm">
+                        @Html.Partial("ContactAjax", new RecordStore.UI.MVC.Models.ContactViewModel())
+                    </div>
+                    <div id="contactConfirm">
+                        @Html.Partial("EmailConfirmation", new RecordStore.UI.MVC.Models.ContactViewModel())
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <ul class="accordion">
+                    <li>
+                        <a>Can find your title?</a>
+                        <div class="content">
+                            <p>
+                                Searching for that hard-to-find title that no one seems to have? Let us know what you are looking for and we will help you track it down.<br><br>
+                                Our expert music detectives are skilled at tracking down copies of those elusive titles. Whether it be a small shop in Phuket or the garage sale around the corner, we will find what you are searching for.
+                            </p>
+                        </div>
+                    </li>
+                    <li>
+                        <a>Need a recommendation?</a>
+                        <div class="content">
+                            <p>
+                                Wanting to know the best new metal record, need that perfect playlist for an upcoming event, or just wanting to broaden your tastes with some new tunes? Let us know!<br><br>
+                                Our staff is passionate about music and always willing to help turn you on to your next favorite album.
+                            </p>
+                        </div>
+                    </li>
+                    <li>
+                        <a>Get your music out there</a>
+                        <div class="content">
+                            <p>
+                                Got a demo or just put out your first album? Reckless will help you get that album in front of the people.<br><br>
+                                We are here to help connect bands to their fans. Let us know about your upcoming releases and we’ll help you get copies into the hands of local fans. And with our international shipping, we can connect you with fans around the globe.
+                            </p>
+                        </div>
+                    </li>
+                    <li>
+                        <a>Wanna Get Reckless?</a>
+                        <div class="content">
+                            <p>Join the Reckless Records Crue! We are always looking for bright individuals with a passion for music and helping others. Crue members get exclusive access to new releases and exceptional Crue discounts. <br><br>Message us today to set up an interview.</p>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts{
+    <script>
+        $("#ContactCreateForm").submit(function (e) {
+            var formData = $(this).serializeArray();
+            e.preventDefault();
+            $.ajax({
+                url: '@Url.Action("ContactAjax", "Home")',
+                type: 'POST',
+                data: formData,
+                datatype: 'json',
+                success: function (data) {
+                    console.log(data)
+                    if (data.Name != null && data.Message != null && data.Email != null) {
+                        $("#contactForm").hide();
+                        $("#contactConfirm").load('@Url.Action("EmailConfirmation", "Home")',
+                          { name: data.Name, email: data.Email, subject: data.Subject, message: data.Message }).show();
+                        $("#contactConfirm").delay(5000).hide("slow");
+                        $("#ContactCreateForm")[0].reset();
+                        $("#contactForm").delay(5500).show("slow");
+                    }
+                }
+            });
+        });
+    </script>
+}

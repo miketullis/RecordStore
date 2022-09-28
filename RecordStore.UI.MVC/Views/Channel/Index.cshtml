@@ -1,0 +1,49 @@
+﻿@model IEnumerable<RecordStore.Data.EF.Channel>
+
+@{
+    ViewBag.Title = "Audio Channel Options";
+}
+
+<div id="rrWrapper">
+    <div class="max600">
+        <h2 class="text-center mb-5"> @ViewBag.Title</h2>
+        <table class="table" id="myTable">
+            <thead>
+                <tr>
+                    <th class="text-left">
+                        @Html.DisplayNameFor(model => model.ChannelType)
+                    </th>
+                    <th class="text-right">
+                        @Html.ActionLink("Add New Channel Type", "Create")
+                    </th>
+                </tr>
+            </thead>
+
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td class="text-left">
+                            @Html.DisplayFor(modelItem => item.ChannelType)
+                        </td>
+                        <td class="text-right">
+                            @Html.ActionLink("Edit", "Edit", new { id = item.ChannelID }) |
+                            @Html.ActionLink("Delete", "Delete", new { id = item.ChannelID })
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+
+    <script>
+        $(document).ready(function () {
+            $('#myTable').DataTable();
+        });
+    </script>
+}

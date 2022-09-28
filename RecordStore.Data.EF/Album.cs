@@ -40,6 +40,7 @@ namespace RecordStore.Data.EF
         public Nullable<int> Year { get; set; }
         public string AlbumNameSort { get; set; }
         public string RearImage { get; set; }
+        public Nullable<int> ChannelID { get; set; }
     
         public virtual AlbumStatus AlbumStatus { get; set; }
         public virtual Format Format { get; set; }
@@ -50,5 +51,6 @@ namespace RecordStore.Data.EF
         public virtual ICollection<AlbumGenre> AlbumGenre { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<AlbumRecording> AlbumRecording { get; set; }
+        public virtual Channel Channel { get; set; }
     }
 }

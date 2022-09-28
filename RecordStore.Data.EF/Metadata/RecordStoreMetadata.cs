@@ -320,5 +320,25 @@ namespace RecordStore.Data.EF//.Metadata
 
     }
     #endregion
-}
+
+    #region Channel Metadata
+    public class ChannelMetadata
+    {
+        //public int ChannelID { get; set; }
+
+        [Required(ErrorMessage = "* Channel Type is required *")]
+        [StringLength(25, ErrorMessage = "* Cannot exceed 25 characters *")]
+        [Display(Name = "Channel Type")]
+        public string FormatType { get; set; }
+
+    }
+
+    [MetadataType(typeof(FormatMetadata))]
+    public partial class Channel
+    {
+
+    }
+    #endregion
+
+    }
 

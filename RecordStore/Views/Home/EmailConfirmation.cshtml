@@ -1,0 +1,13 @@
+﻿@model RecordStore.UI.MVC.Models.ContactViewModel
+
+
+<div>
+    @if (Model != null)
+    {
+        <div class="pl-2">
+            <h5>Thank you, @Model.Name! We have received your message.</h5>
+            <p>Message:<br />@Model.Message</p>
+            <h5>We will respond to @Model.Email as soon as possible.</h5>
+        </div>
+    }
+</div>

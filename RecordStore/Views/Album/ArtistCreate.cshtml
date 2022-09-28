@@ -1,0 +1,79 @@
+﻿@model RecordStore.Data.EF.Artist
+
+
+@using (Html.BeginForm("", "", FormMethod.Post, new { id = "ArtistCreateForm" }))
+{
+    @Html.AntiForgeryToken()
+    <div class="form-horizontal">
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="form-group">
+            @Html.LabelFor(model => model.ArtistName, htmlAttributes: new { @class = "control-label mt-2 col-md-12" })
+            <div class="col-md-12 pb-2">
+                @Html.EditorFor(model => model.ArtistName, new { htmlAttributes = new { @class = "form-control", placeholder = "Artist Name" } })
+                @Html.ValidationMessageFor(model => model.ArtistName, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="row">
+                <div class="col-md-6 ml-3 pr-0">
+                    @Html.LabelFor(model => model.IsStillActive, htmlAttributes: new { @class = "control-label" })
+                </div>
+                <div class="col-md-1">
+                    <div class="checkbox">
+                        @Html.EditorFor(model => model.IsStillActive, "", new { @class = "" })
+                        @Html.ValidationMessageFor(model => model.IsStillActive, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-12">
+            <input type="submit" value="Create New Artist" class="btn btn-dark" />
+        </div>
+    </div>
+
+}
+
+
+@*//*********** AJAX ARTIST CREATE DIALOG/POP-UP BOX ************//*@
+<script src="https://cdn.jsdelivr.net/jquery.ajax.unobtrusive/3.2.4/jquery.unobtrusive-ajax.min.js"></script>
+
+<script>
+    $("#ArtistCreateForm").submit(function (e) {
+        var formData = $(this).serializeArray();
+        console.log(formData);
+        e.preventDefault();//Prevent the default page reload on submit
+
+        $.ajax({
+            url: "/Album/ArtistCreate",
+            type: "POST",
+            data: formData,
+            dataType: "json",
+            error: function (e) {
+                $("#MessageContent").html("<div class='alert alert-danger text-center'>There was a problem.</div>");
+                $("#MessageContent").delay(4000).hide("slow");
+            },
+            success: function (foo) {
+                //If you want to see this 'Artist created successfully' message, make sure you've got the #MessageContent element in the Create view
+                $("#MessageContent").html("<div class='alert alert-success text-center'>Artist created successfully.</div>");
+                $("#MessageContent").delay(4000).hide("slow");
+                $("#ArtistCreateForm")[0].reset();
+                $(function () {
+                    var li =
+                        '<div class="row"><div class="col-md-4 ml-3"><input type="checkbox" name="artists" value = "' +
+                        foo.ArtistID + '" /><span>&nbsp;&nbsp;' +
+                        foo.ArtistName + '</span></div><div class="col-md-4"><input type="radio" name="primaryArtistID" value="' +
+                        foo.ArtistID + '" /><span style="font-size:12px; font-weight:400;">&nbsp;&nbsp;Primary Artist</span></div></div>';
+                    $("#checkArtists").append(li);
+                }); //End of build & append label functionality
+
+                //close dialog on successful submit (not working)
+                $("#ArtistCreate").dialog("close");
+
+            } //End success
+        }); //End Ajax form submission properties
+    }); //End form submit event handler
+</script>
+
+
+
+

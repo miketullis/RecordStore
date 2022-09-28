@@ -27,6 +27,7 @@
           <Property Name="IsInPrint" Type="bit" Nullable="false" />
           <Property Name="FormatID" Type="int" Nullable="false" />
           <Property Name="AlbumStatusID" Type="int" Nullable="false" />
+          <Property Name="ChannelID" Type="int" />
         </EntityType>
         <EntityType Name="AlbumArtist">
           <Key>
@@ -121,6 +122,13 @@
           <Property Name="AccessFailedCount" Type="int" Nullable="false" />
           <Property Name="UserName" Type="nvarchar" MaxLength="256" Nullable="false" />
         </EntityType>
+        <EntityType Name="Channel">
+          <Key>
+            <PropertyRef Name="ChannelID" />
+          </Key>
+          <Property Name="ChannelID" Type="int" Nullable="false" />
+          <Property Name="ChannelType" Type="nvarchar" MaxLength="25" Nullable="false" />
+        </EntityType>
         <EntityType Name="Department">
           <Key>
             <PropertyRef Name="DepartmentID" />
@@ -208,6 +216,18 @@
             </Principal>
             <Dependent Role="Album">
               <PropertyRef Name="AlbumStatusID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Album_Channels">
+          <End Role="Channel" Type="Self.Channel" Multiplicity="0..1" />
+          <End Role="Album" Type="Self.Album" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Channel">
+              <PropertyRef Name="ChannelID" />
+            </Principal>
+            <Dependent Role="Album">
+              <PropertyRef Name="ChannelID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -411,6 +431,7 @@
           <EntitySet Name="AspNetUserLogins" EntityType="Self.AspNetUserLogins" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="AspNetUserRoles" EntityType="Self.AspNetUserRoles" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="AspNetUsers" EntityType="Self.AspNetUsers" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Channel" EntityType="Self.Channel" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Department" EntityType="Self.Department" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Employee" EntityType="Self.Employee" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Format" EntityType="Self.Format" Schema="dbo" store:Type="Tables" />
@@ -421,6 +442,10 @@
           <EntitySet Name="UserDetails" EntityType="Self.UserDetails" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK_Album_AlbumStatus" Association="Self.FK_Album_AlbumStatus">
             <End Role="AlbumStatus" EntitySet="AlbumStatus" />
+            <End Role="Album" EntitySet="Album" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Album_Channels" Association="Self.FK_Album_Channels">
+            <End Role="Channel" EntitySet="Channel" />
             <End Role="Album" EntitySet="Album" />
           </AssociationSet>
           <AssociationSet Name="FK_Album_Format" Association="Self.FK_Album_Format">
@@ -567,6 +592,11 @@
             <End Role="Recording" EntitySet="Recording" />
             <End Role="AlbumRecording" EntitySet="AlbumRecording" />
           </AssociationSet>
+          <EntitySet Name="Channel" EntityType="RecordStoreModel.Channel" />
+          <AssociationSet Name="FK_Album_Channels1" Association="RecordStoreModel.FK_Album_Channels1">
+            <End Role="Channel" EntitySet="Channel" />
+            <End Role="Album" EntitySet="Album" />
+          </AssociationSet>
           </EntityContainer>
         <EntityType Name="Album">
           <Key>
@@ -596,6 +626,8 @@
           <Property Name="AlbumNameSort" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="RearImage" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="AlbumRecording" Relationship="RecordStoreModel.FK_AlbumRecording_Album" FromRole="Album" ToRole="AlbumRecording" />
+          <Property Name="ChannelID" Type="Int32" />
+          <NavigationProperty Name="Channel" Relationship="RecordStoreModel.FK_Album_Channels1" FromRole="Album" ToRole="Channel" />
         </EntityType>
         <EntityType Name="AlbumArtist">
           <Key>
@@ -960,6 +992,26 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="Channel">
+          <Key>
+            <PropertyRef Name="ChannelID" />
+          </Key>
+          <Property Name="ChannelID" Type="Int32" Nullable="false" />
+          <Property Name="ChannelType" Type="String" Nullable="false" MaxLength="25" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Album" Relationship="RecordStoreModel.FK_Album_Channels1" FromRole="Channel" ToRole="Album" />
+        </EntityType>
+        <Association Name="FK_Album_Channels1">
+          <End Type="RecordStoreModel.Channel" Role="Channel" Multiplicity="0..1" />
+          <End Type="RecordStoreModel.Album" Role="Album" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Channel">
+              <PropertyRef Name="ChannelID" />
+            </Principal>
+            <Dependent Role="Album">
+              <PropertyRef Name="ChannelID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -969,6 +1021,7 @@
           <EntitySetMapping Name="Album">
             <EntityTypeMapping TypeName="RecordStoreModel.Album">
               <MappingFragment StoreEntitySet="Album">
+                <ScalarProperty Name="ChannelID" ColumnName="ChannelID" />
                 <ScalarProperty Name="RearImage" ColumnName="RearImage" />
                 <ScalarProperty Name="AlbumNameSort" ColumnName="AlbumNameSort" />
                 <ScalarProperty Name="Year" ColumnName="Year" />
@@ -1173,6 +1226,14 @@
               <MappingFragment StoreEntitySet="Recording">
                 <ScalarProperty Name="RecordingType" ColumnName="RecordingType" />
                 <ScalarProperty Name="RecordingID" ColumnName="RecordingID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Channel">
+            <EntityTypeMapping TypeName="RecordStoreModel.Channel">
+              <MappingFragment StoreEntitySet="Channel">
+                <ScalarProperty Name="ChannelType" ColumnName="ChannelType" />
+                <ScalarProperty Name="ChannelID" ColumnName="ChannelID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

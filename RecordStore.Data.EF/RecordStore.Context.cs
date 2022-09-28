@@ -43,5 +43,6 @@ namespace RecordStore.Data.EF
         public virtual DbSet<sysdiagrams> sysdiagrams { get; set; }
         public virtual DbSet<AlbumRecording> AlbumRecording { get; set; }
         public virtual DbSet<Recording> Recording { get; set; }
+        public virtual DbSet<Channel> Channel { get; set; }
     }
 }

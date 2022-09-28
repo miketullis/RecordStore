@@ -31,6 +31,8 @@
         <EntityTypeShape EntityType="RecordStoreModel.Recording" Width="1.5" PointX="0.625" PointY="7.125" />
         <AssociationConnector Association="RecordStoreModel.FK_AlbumRecording_Album" />
         <AssociationConnector Association="RecordStoreModel.FK_AlbumRecording_Recording" />
+        <EntityTypeShape EntityType="RecordStoreModel.Channel" Width="1.5" PointX="4.625" PointY="8.875" />
+        <AssociationConnector Association="RecordStoreModel.FK_Album_Channels1" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

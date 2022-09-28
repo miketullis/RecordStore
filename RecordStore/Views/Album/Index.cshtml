@@ -1,0 +1,157 @@
+﻿@model IEnumerable<RecordStore.Data.EF.Album>
+@using RecordStore.UI.MVC.Helpers;
+
+@{
+    ViewBag.Title = "Albums";
+}
+
+<!-- Banner Starts Here -->
+<div class="banner header-text">
+    <div class="owl-banner owl-carousel">
+        <div class="banner-item-01">
+            <div class="text-content">
+                <h4>Best Offer</h4>
+                <h2>New Arrivals On Sale</h2>
+            </div>
+        </div>
+        <div class="banner-item-02">
+            <div class="text-content">
+                <h4>Flash Deals</h4>
+                <h2>Get your best products</h2>
+            </div>
+        </div>
+        <div class="banner-item-03">
+            <div class="text-content">
+                <h4>Last Minute</h4>
+                <h2>Grab last minute deals</h2>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Banner Ends Here -->
+
+
+<div id="rrWrapper">
+    <div class="max100p">
+        <table class="table" id="myTable">
+            <thead>
+                <tr class="text-center">
+                    <th>
+                    </th>
+                    <th class="text-left">
+                        @Html.DisplayNameFor(model => model.FirstOrDefault().AlbumName)
+                    </th>
+                    <th>
+                        Artist
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.FirstOrDefault().Year)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.FirstOrDefault().Label.LabelName)
+                    </th>
+                    <th>
+                        Genre(s)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.FirstOrDefault().Format.FormatType)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.FirstOrDefault().Price)
+                    </th>
+                    <th class="text-right">
+                        @if (User.IsInRole("Admin"))
+                        {
+                            @Html.ActionLink("Add New Album", "Create", "Album", null)
+                        }
+                    </th>
+                </tr>
+            </thead>
+
+            <tbody class="text-center">
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            <a href="@Url.Action("Details", new { id = item.AlbumID })">
+                                <img src="~/Content/assets/images/albumImages/t_@item.AlbumImage" alt="@item.AlbumName cover" title="@item.AlbumName cover" id="albumArt" />
+                            </a>
+                        </td>
+                        <td class="text-left">
+                            <a href="@Url.Action("Details", new { id = item.AlbumID })" style="font-weight:bold; color: black;">
+                                @Html.DisplayFor(modelItem => item.AlbumNameSort)
+                            </a>
+                        </td>
+                        <td>
+                            @foreach (var artist in item.AlbumArtist)
+                            {
+                                //only list primary artist in index listing
+                                if (artist.PrimaryArtist == true)
+                                {
+                                    <span>@artist.Artist.ArtistName</span>
+                                }
+                            }
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Year)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Label.LabelName)
+                        </td>
+                        <td>
+                            @foreach (var genre in item.AlbumGenre)
+                            {
+                                <ul>
+                                    <li>@genre.Genre.GenreName</li>
+                                </ul>
+                            }
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Format.FormatType)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Price)
+                        </td>
+                        <td class="text-right">
+                            @using (Html.BeginForm("AddToCart", "Album", new { albumID = item.AlbumID }, FormMethod.Post))
+                            {
+
+                                if (User.IsInRole("Admin"))
+                                {
+                                    @Html.ActionLink("Edit", "Edit", new { id = item.AlbumID })<span>|</span>
+                                    @Html.ActionLink("Details", "Details", new { id = item.AlbumID })<span>|</span>
+                                    @Html.ActionLink("Delete", "Delete", new { id = item.AlbumID })
+                                }
+                                else
+                                {
+                                    if (item.UnitsInStock == 0)
+                                    {
+                                        <div>
+                                            <input value="Unavailible" class="btn btn-danger" style="width: 120px;" />
+                                        </div>
+                                    }
+                                    else
+                                    {
+                                        @Html.TextBox("qty", 1, new { @class = "form-control text-center", @style = "max-width: 50px; display: none;", onkeyup = "checkQty()" })
+                                        <div id="btnSubmit">
+                                            <input type="submit" value="Add To Cart" class="btn btn-dark" />
+                                        </div>
+                                    }
+                                }
+                            }
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+
+    </div>
+</div>
+
+@section Scripts{
+    <script>
+        $(document).ready(function () {
+            $('#myTable').DataTable();
+        });
+    </script>
+}
